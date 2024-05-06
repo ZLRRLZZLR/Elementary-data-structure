@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\C\u2014\u2014code\\Elementary data structure\\Elementary data structure\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{CBA552D9-DB91-43F9-B3AE-4CE2ECBE2AC4}|Elementary data structure\\Elementary data structure.vcxproj|E:\\C\u2014\u2014code\\Elementary data structure\\Elementary data structure\\Elementary data structure\\test.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CBA552D9-DB91-43F9-B3AE-4CE2ECBE2AC4}|Elementary data structure\\Elementary data structure.vcxproj|solutionrelative:Elementary data structure\\test.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 337,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "test.c",
+              "DocumentMoniker": "E:\\C\u2014\u2014code\\Elementary data structure\\Elementary data structure\\Elementary data structure\\test.c",
+              "RelativeDocumentMoniker": "Elementary data structure\\test.c",
+              "ToolTip": "E:\\C\u2014\u2014code\\Elementary data structure\\Elementary data structure\\Elementary data structure\\test.c",
+              "RelativeToolTip": "Elementary data structure\\test.c",
+              "ViewState": "AQIAADcBAAAAAAAAAAAuwE8BAAADAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-05-06T14:26:13.655Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
