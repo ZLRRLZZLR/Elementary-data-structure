@@ -3,6 +3,9 @@
 #include<stdlib.h>
 #include<stdbool.h>
 #include<assert.h>
+#include<stdio.h>
+
+
 // 支持动态增长的栈
 typedef int STDataType;
 
