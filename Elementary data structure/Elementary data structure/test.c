@@ -1,6 +1,350 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 
 
+
+
+
+
+
+//用队列实现栈
+//#include<stdio.h>
+//#include<assert.h>
+//#include<stdlib.h>
+//#include"stdbool.h"
+//
+//typedef int QDataType;
+//
+//// 链式结构：表示队列 
+//typedef struct QListNode
+//{
+//	struct QListNode* _next;
+//	QDataType _data;
+//}QNode;
+//
+//// 队列的结构 
+//typedef struct Queue
+//{
+//	QNode* _front;
+//	QNode* _rear;
+//	int _size;
+//}Queue;
+//void QueueInit(Queue* q)
+//{
+//	q->_front = NULL;
+//
+//	q->_rear = NULL;
+//
+//	q->_size = 0;
+//}
+//
+//// 队尾入队列 
+//void QueuePush(Queue* q, QDataType data)
+//{
+//	assert(q);
+//	QNode* newnode = (QNode*)malloc(sizeof(QNode));
+//
+//	if (NULL == newnode)
+//	{
+//		perror("QueuePush:malloc failed");
+//		exit(1);
+//	}
+//
+//	newnode->_data = data;
+//	newnode->_next = NULL;
+//
+//	if (0 == q->_size)
+//	{
+//		q->_front = q->_rear = newnode;
+//	}
+//	else
+//	{
+//		q->_rear->_next = newnode;
+//		q->_rear = q->_rear->_next;
+//	}
+//	q->_size++;
+//}
+//
+//// 队头出队列 
+//void QueuePop(Queue* q)
+//{
+//	assert(q);
+//	assert(q->_size);
+//
+//	QNode* next = q->_front->_next;
+//	free(q->_front);
+//	q->_front = next;
+//
+//	if (q->_size == 1)
+//	{
+//		q->_rear = NULL;
+//	}
+//
+//	q->_size--;
+//
+//}
+//
+//// 获取队列头部元素 
+//QDataType QueueFront(Queue* q)
+//{
+//	assert(q);
+//	assert(q->_size);
+//
+//	return q->_front->_data;
+//}
+//
+//// 获取队列队尾元素 
+//QDataType QueueBack(Queue* q)
+//{
+//	assert(q);
+//	assert(q->_size);
+//
+//	return q->_rear->_data;
+//
+//}
+//
+//// 获取队列中有效元素个数 
+//int QueueSize(Queue* q)
+//{
+//	assert(q);
+//
+//	return q->_size;
+//}
+//
+//// 检测队列是否为空，如果为空返回非零结果，如果非空返回0 
+//bool QueueEmpty(Queue* q)
+//{
+//	assert(q);
+//
+//	return q->_size == 0;
+//}
+//
+//// 销毁队列 
+//void QueueDestroy(Queue* q)
+//{
+//	assert(q);
+//
+//	QNode* cur = q->_front;
+//	while (cur)
+//	{
+//		QNode* next = cur->_next;
+//		free(cur);
+//
+//		cur = next;
+//	}
+//
+//	q->_front = q->_rear = NULL;
+//	q->_size = 0;
+//}
+//typedef struct {
+//	Queue q1;
+//	Queue q2;
+//} MyStack;
+//
+//
+//MyStack* myStackCreate() {
+//	MyStack* pst = (MyStack*)malloc(sizeof(MyStack));
+//	if (NULL == pst)
+//	{
+//		perror("malloc");
+//		exit(1);
+//	}
+//	QueueInit(&pst->q1);
+//	QueueInit(&pst->q2);
+//	return pst;
+//}
+//
+//void myStackPush(MyStack* obj, int x) {
+//	if (!QueueEmpty(&obj->q1))
+//	{
+//		QueuePush(&obj->q1, x);
+//	}
+//	else
+//	{
+//		QueuePush(&obj->q2, x);
+//	}
+//}
+//
+//int myStackPop(MyStack* obj) {
+//	Queue* empty = &obj->q1;
+//	Queue* nonempty = &obj->q2;
+//	if (!QueueEmpty(&obj->q1))
+//	{
+//		nonempty = &obj->q1;
+//		empty = &obj->q2;
+//	}
+//	while (QueueSize(nonempty) > 1)
+//	{
+//		QueuePush(empty, QueueFront(nonempty));
+//		QueuePop(nonempty);
+//	}
+//
+//	int top = QueueFront(nonempty);
+//	QueuePop(nonempty);
+//	return  top;
+//}
+//
+//int myStackTop(MyStack* obj) {
+//	if (!QueueEmpty(&obj->q1))
+//	{
+//		return QueueBack(&obj->q1);
+//	}
+//	else
+//	{
+//		return QueueBack(&obj->q2);
+//	}
+//}
+//
+//bool myStackEmpty(MyStack* obj) {
+//	return QueueEmpty(&obj->q1) && QueueEmpty(&obj->q2);
+//}
+//
+//void myStackFree(MyStack* obj) {
+//	QueueDestroy(&obj->q1);
+//	QueueDestroy(&obj->q2);
+//
+//	free(obj);
+//}
+
+/**
+ * Your MyStack struct will be instantiated and called as such:
+ * MyStack* obj = myStackCreate();
+ * myStackPush(obj, x);
+
+ * int param_2 = myStackPop(obj);
+
+ * int param_3 = myStackTop(obj);
+
+ * bool param_4 = myStackEmpty(obj);
+
+ * myStackFree(obj);
+*/
+//括号匹配
+//#include<stdlib.h>
+//#include<stdbool.h>
+//#include<assert.h>
+//#include<stdio.h>
+
+
+//// 支持动态增长的栈
+//typedef int STDataType;
+//
+//typedef struct Stack
+//{
+//	STDataType* _a;
+//	int _top;		// 栈顶
+//	int _capacity;  // 容量 
+//}Stack;
+//
+//// 初始化栈 
+//void StackInit(Stack* ps)
+//{
+//	ps->_a = NULL;
+//	ps->_capacity = ps->_top = 0;
+//}
+//
+//// 入栈 
+//void StackPush(Stack* ps, STDataType data)
+//{
+//	assert(ps);
+//	if (ps->_capacity == ps->_top)
+//	{
+//		int newcapacity = ps->_capacity == 0 ? 4 : 2 * ps->_capacity;
+//		STDataType* newnode = (STDataType*)realloc(ps->_a, newcapacity * sizeof(STDataType));
+//
+//		if (NULL == newnode)
+//		{
+//			perror("StackInit:realloc");
+//			exit(1);
+//		}
+//		ps->_a = newnode;
+//		ps->_capacity = newcapacity;
+//	}
+//
+//	ps->_a[ps->_top] = data;
+//	ps->_top++;
+//}
+//
+//// 出栈 
+//void StackPop(Stack* ps)
+//{
+//
+//	assert(ps);
+//	assert(ps->_top > 0);
+//
+//	ps->_top--;
+//
+//}
+//
+//// 获取栈顶元素 
+//STDataType StackTop(Stack* ps)
+//{
+//
+//	assert(ps);
+//	assert(ps->_top > 0);
+//
+//	return ps->_a[ps->_top - 1];
+//}
+//
+//// 获取栈中有效元素个数 
+//int StackSize(Stack* ps)
+//{
+//	assert(ps);
+//
+//	return ps->_top;
+//}
+//
+//// 检测栈是否为空，如果为空返回0，如果不为空返回非零结果
+//bool StackEmpty(Stack* ps)
+//{
+//	assert(ps);
+//	return ps->_top;
+//}
+//
+//// 销毁栈 
+//void StackDestroy(Stack* ps)
+//{
+//	assert(ps);
+//	free(ps->_a);
+//	ps->_a = NULL;
+//	ps->_capacity = ps->_top = 0;
+//}
+//
+//
+//bool isValid(char* s)
+//{
+//	Stack p;
+//	StackInit(&p);
+//	while (*s)
+//	{
+//		//左括号入栈
+//		if (*s == '(' || *s == '{' || *s == '[')
+//		{
+//			StackPush(&p, *s);
+//		}
+//		else//右括号取栈顶左括号尝试匹配
+//		{
+//			if (!StackEmpty(&p))//栈内没有左括号
+//			{
+//				StackDestroy(&p);
+//				return false;
+//			}
+//			char top = 0;
+//			top = StackTop(&p);//不匹配
+//			if (top == '(' && *s != ')' || top == '{' && *s != '}' || top == '[' && *s != ']')
+//			{
+//				StackDestroy(&p);
+//				return false;
+//			}
+//			StackPop(&p);
+//		}
+//
+//		s++;
+//	}
+//	int ret = !StackEmpty(&p);//栈内是否有多余左括号
+//	StackDestroy(&p);
+//	return ret;
+//}
+
 ////随机链表的复制
 ///**
 // * Definition for a Node.
