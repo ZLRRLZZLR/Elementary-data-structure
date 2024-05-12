@@ -1,7 +1,483 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 
+#include<stdlib.h>
+#include<stdbool.h>
+#include<assert.h>
+#include<stdio.h>
 
 
+
+
+
+typedef struct {
+    int k;
+    int head;
+    int tail;
+    int* a;
+} MyCircularQueue;
+
+
+MyCircularQueue* myCircularQueueCreate(int k) {
+    MyCircularQueue* p = (MyCircularQueue*)malloc(sizeof(MyCircularQueue));
+    p->a = (int*)malloc((k + 1) * sizeof(int));
+    p->head = 0;
+    p->tail = 0;
+    p->k = k;
+    return p;
+}
+bool myCircularQueueIsEmpty(MyCircularQueue* obj);
+bool myCircularQueueIsFull(MyCircularQueue* obj);
+
+bool myCircularQueueEnQueue(MyCircularQueue* obj, int value) {
+    if (myCircularQueueIsFull(obj))
+    {
+        return false;
+    }
+    else
+    {
+        obj->a[obj->tail] = value;
+        obj->tail = (obj->tail + 1) % (obj->k + 1);
+        return true;
+    }
+}
+
+bool myCircularQueueDeQueue(MyCircularQueue* obj) {
+    if (myCircularQueueIsEmpty(obj))
+    {
+        return false;
+    }
+
+    obj->head = (obj->head + 1) % (obj->k + 1);
+    return true;
+
+}
+
+int myCircularQueueFront(MyCircularQueue* obj) {
+    if (myCircularQueueIsEmpty(obj))
+    {
+        return -1;
+    }
+    else
+    {
+        return obj->a[obj->head];
+    }
+}
+
+int myCircularQueueRear(MyCircularQueue* obj) {
+    if (myCircularQueueIsEmpty(obj))
+    {
+        return -1;
+    }
+    else
+    {
+        return obj->a[(obj->tail - 1 + obj->k + 1) % (obj->k + 1)];
+    }
+}
+
+bool myCircularQueueIsEmpty(MyCircularQueue* obj) {
+    return obj->head == obj->tail;
+
+}
+
+bool myCircularQueueIsFull(MyCircularQueue* obj) {
+    return (obj->tail + 1) % (obj->k + 1) == obj->head)
+
+}
+
+void myCircularQueueFree(MyCircularQueue* obj) {
+    free(obj->a);
+    free(obj);
+}
+
+/**
+ * Your MyCircularQueue struct will be instantiated and called as such:
+ * MyCircularQueue* obj = myCircularQueueCreate(k);
+ * bool param_1 = myCircularQueueEnQueue(obj, value);
+
+ * bool param_2 = myCircularQueueDeQueue(obj);
+
+ * int param_3 = myCircularQueueFront(obj);
+
+ * int param_4 = myCircularQueueRear(obj);
+
+ * bool param_5 = myCircularQueueIsEmpty(obj);
+
+ * bool param_6 = myCircularQueueIsFull(obj);
+
+ * myCircularQueueFree(obj);
+*/
+int main()
+{
+    MyCircularQueue* p;
+    p = myCircularQueueCreate(8);
+    int a = myCircularQueueEnQueue(p,3);
+    int b = myCircularQueueEnQueue(p,9);
+    int c = myCircularQueueEnQueue(p,5);
+    int d = myCircularQueueEnQueue(p,0);
+    int e = myCircularQueueDeQueue(p);
+    int f = myCircularQueueDeQueue(p);
+    int g = myCircularQueueIsEmpty(p);
+    int h = myCircularQueueIsEmpty(p);
+    int i = myCircularQueueRear(p);
+    int j = myCircularQueueRear(p);
+    return 0;
+}
+//#include<stdlib.h>
+//#include<stdbool.h>
+//#include<assert.h>
+//#include<stdio.h>
+//
+//
+//// 支持动态增长的栈
+//typedef int STDataType;
+//
+//typedef struct Stack
+//{
+//	STDataType* _a;
+//	int _top;		// 栈顶
+//	int _capacity;  // 容量 
+//}Stack;
+//// 初始化栈 
+//void StackInit(Stack* ps)
+//{
+//	ps->_a = NULL;
+//	ps->_capacity = ps->_top = 0;
+//}
+//
+//// 入栈 
+//void StackPush(Stack* ps, STDataType data)
+//{
+//	assert(ps);
+//	if (ps->_capacity == ps->_top)
+//	{
+//		int newcapacity = ps->_capacity == 0 ? 4 : 2 * ps->_capacity;
+//		STDataType* newnode = (STDataType*)realloc(ps->_a, newcapacity * sizeof(STDataType));
+//
+//		if (NULL == newnode)
+//		{
+//			perror("StackInit:realloc");
+//			exit(1);
+//		}
+//		ps->_a = newnode;
+//		ps->_capacity = newcapacity;
+//	}
+//
+//	ps->_a[ps->_top] = data;
+//	ps->_top++;
+//}
+//
+//// 出栈 
+//void StackPop(Stack* ps)
+//{
+//
+//	assert(ps);
+//	assert(ps->_top > 0);
+//
+//	ps->_top--;
+//
+//}
+//
+//// 获取栈顶元素 
+//STDataType StackTop(Stack* ps)
+//{
+//
+//	assert(ps);
+//	assert(ps->_top > 0);
+//
+//	return ps->_a[ps->_top - 1];
+//}
+//
+//// 获取栈中有效元素个数 
+//int StackSize(Stack* ps)
+//{
+//	assert(ps);
+//
+//	return ps->_top;
+//}
+//
+//// 检测队列是否为空，如果为空返回非零结果，如果非空返回0 
+//bool StackEmpty(Stack* ps)
+//{
+//	assert(ps);
+//	return ps->_top == 0;
+//}
+//
+//// 销毁栈 
+//void StackDestroy(Stack* ps)
+//{
+//	assert(ps);
+//	free(ps->_a);
+//	ps->_a = NULL;
+//	ps->_capacity = ps->_top = 0;
+//}
+//typedef struct {
+//	Stack pushst;
+//	Stack popst;
+//} MyQueue;
+//
+//
+//MyQueue* myQueueCreate() {
+//	MyQueue* q1 = (MyQueue*)malloc(sizeof(MyQueue));
+//	StackInit(&q1->pushst);
+//	StackInit(&q1->popst);
+//	return q1;
+//}
+//
+//void myQueuePush(MyQueue* obj, int x) {
+//	StackPush(&obj->pushst, x);
+//}
+//
+//int myQueuePeek(MyQueue* obj);
+//int myQueuePop(MyQueue* obj) {
+//	int top = myQueuePeek(obj);
+//	StackPop(&obj->popst);
+//	return top;
+//
+//}
+//
+//int myQueuePeek(MyQueue* obj) {
+//	if (StackEmpty(&obj->popst))
+//	{
+//		while (!StackEmpty(&obj->pushst))
+//		{
+//			StackPush(&obj->popst, StackTop(&obj->pushst));
+//			StackPop(&obj->pushst);
+//		}
+//		return StackTop(&obj->popst);
+//	}
+//	else
+//	{
+//		return StackTop(&obj->popst);
+//	}
+//}
+//
+//bool myQueueEmpty(MyQueue* obj) {
+//	return StackEmpty(&obj->pushst) && StackEmpty(&obj->popst);
+//}
+//
+//void myQueueFree(MyQueue* obj) {
+//	StackDestroy(&obj->pushst);
+//	StackDestroy(&obj->popst);
+//	free(obj);
+//}
+//
+///**
+// * Your MyQueue struct will be instantiated and called as such:
+// * MyQueue* obj = myQueueCreate();
+// * myQueuePush(obj, x);
+//
+// * int param_2 = myQueuePop(obj);
+//
+// * int param_3 = myQueuePeek(obj);
+//
+// * bool param_4 = myQueueEmpty(obj);
+//
+// * myQueueFree(obj);
+//*/
+//int main()
+//{
+//    MyQueue* q1;
+//    q1 = myQueueCreate();
+//    myQueuePush(q1, 1);
+//    myQueuePush(q1, 2);
+//	myQueuePeek(q1);
+//	myQueuePop(q1);
+//	myQueueEmpty(q1);
+//    return 0;
+//}
+//#include<stdlib.h>
+//#include<stdbool.h>
+//#include<assert.h>
+//#include<stdio.h>
+//
+//
+//// 支持动态增长的栈
+//typedef int STDataType;
+//
+//typedef struct Stack
+//{
+//    STDataType* _a;
+//    int _top;		// 栈顶
+//    int _capacity;  // 容量 
+//}Stack;
+//
+//
+//// 初始化栈 
+//void StackInit(Stack* ps)
+//{
+//    ps->_a = NULL;
+//    ps->_capacity = ps->_top = 0;
+//}
+//
+//// 入栈 
+//void StackPush(Stack* ps, STDataType data)
+//{
+//    assert(ps);
+//    if (ps->_capacity == ps->_top)
+//    {
+//        int newcapacity = ps->_capacity == 0 ? 4 : 2 * ps->_capacity;
+//        STDataType* newnode = (STDataType*)realloc(ps->_a, newcapacity * sizeof(STDataType));
+//
+//        if (NULL == newnode)
+//        {
+//            perror("StackInit:realloc");
+//            exit(1);
+//        }
+//        ps->_a = newnode;
+//        ps->_capacity = newcapacity;
+//    }
+//
+//    ps->_a[ps->_top] = data;
+//    ps->_top++;
+//}
+//
+//// 出栈 
+//void StackPop(Stack* ps)
+//{
+//
+//    assert(ps);
+//    assert(ps->_top > 0);
+//
+//    ps->_top--;
+//
+//}
+//
+//// 获取栈顶元素 
+//STDataType StackTop(Stack* ps)
+//{
+//
+//    assert(ps);
+//    assert(ps->_top > 0);
+//
+//    return ps->_a[ps->_top - 1];
+//}
+//
+//// 获取栈中有效元素个数 
+//int StackSize(Stack* ps)
+//{
+//    assert(ps);
+//
+//    return ps->_top;
+//}
+//
+//// 检测队列是否为空，如果为空返回非零结果，如果非空返回0 
+//bool StackEmpty(Stack* ps)
+//{
+//    assert(ps);
+//    return ps->_top == 0;
+//}
+//
+//// 销毁栈 
+//void StackDestroy(Stack* ps)
+//{
+//    assert(ps);
+//    free(ps->_a);
+//    ps->_a = NULL;
+//    ps->_capacity = ps->_top = 0;
+//}
+//
+//
+//typedef struct {
+//    Stack s1;
+//    Stack s2;
+//} MyQueue;
+//
+//
+//MyQueue* myQueueCreate() {
+//    MyQueue* pqu = (MyQueue*)malloc(sizeof(MyQueue));
+//
+//    StackInit(&pqu->s1);
+//    StackInit(&pqu->s2);
+//
+//    return pqu;
+//}
+//
+//void myQueuePush(MyQueue* obj, int x) {
+//    if (StackEmpty(&obj->s1))
+//    {
+//        StackPush(&obj->s1, x);
+//    }
+//    else
+//    {
+//        StackPush(&obj->s2, x);
+//    }
+//}
+//
+//int myQueuePop(MyQueue* obj) {
+//    Stack* empty = &obj->s1;
+//    Stack* nonempty = &obj->s2;
+//
+//    if (!StackEmpty(&obj->s1))
+//    {
+//        nonempty = &obj->s1;
+//        empty = &obj->s2;
+//    }
+//    while (nonempty->_top > 1)
+//    {
+//        StackPush(empty, StackTop(nonempty));
+//        StackPop(nonempty);
+//    }
+//
+//    int top = StackTop(nonempty);
+//    StackPop(nonempty);
+//    return top;
+//}
+//
+//int myQueuePeek(MyQueue* obj) {
+//
+//    if (!StackEmpty(&obj->s1))
+//    {
+//        return &obj->s1._a[0];
+//    }
+//    else
+//    {
+//        return &obj->s2._a[0];
+//    }
+//}
+//
+//bool myQueueEmpty(MyQueue* obj) {
+//
+//    return StackEmpty(&obj->s1) && StackEmpty(&obj->s2);
+//
+//}
+//
+//void myQueueFree(MyQueue* obj) {
+//    StackDestroy(&obj->s1);
+//    StackDestroy(&obj->s2);
+//
+//    free(obj);
+//}
+//
+///**
+// * Your MyQueue struct will be instantiated and called as such:
+// * MyQueue* obj = myQueueCreate();
+// * myQueuePush(obj, x);
+//
+// * int param_2 = myQueuePop(obj);
+//
+// * int param_3 = myQueuePeek(obj);
+//
+// * bool param_4 = myQueueEmpty(obj);
+//
+// * myQueueFree(obj);
+//*/
+//
+//int main()
+//{
+//    MyQueue* q1;
+//    q1 = myQueueCreate();
+//    myQueuePush(q1, 1);
+//    myQueuePush(q1, 2);
+//    myQueuePush(q1, 3);
+//    myQueuePush(q1, 4);
+//    int a = myQueuePop(q1);
+//    myQueuePush(q1, 5);
+//    int b = myQueuePop(q1);
+//    int c = myQueuePop(q1);
+//    int d = myQueuePop(q1);
+//    int e = myQueuePop(q1);
+//    return 0;
+//}
 
 
 

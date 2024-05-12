@@ -58,11 +58,11 @@ int StackSize(Stack* ps)
 	return ps->_top;
 }
 
-// 检测栈是否为空，如果为空返回0，如果不为空返回非零结果
+// 检测队列是否为空，如果为空返回非零结果，如果非空返回0 
 bool StackEmpty(Stack* ps)
 {
 	assert(ps);
-	return ps->_top;
+	return ps->_top == 0;
 }
 
 // 销毁栈 
