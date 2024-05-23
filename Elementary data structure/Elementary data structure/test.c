@@ -6,88 +6,169 @@
 #include<stdio.h>
 
 
+///**µ¥Öµ¶þ²æÊ÷
+// * Definition for a binary tree node.
+// * struct TreeNode {
+// *     int val;
+// *     struct TreeNode *left;
+// *     struct TreeNode *right;
+// * };
+// */
+//bool isUnivalTree(struct TreeNode* root) {
+//    if (root == NULL)
+//        return true;
+//
+//    if (root->left && root->left->val != root->val)
+//        return false;
+//
+//    if (root->right && root->right->val != root->val)
+//        return false;
+//
+//    return isUnivalTree(root->left) && isUnivalTree(root->right);
+//
+//}
+//typedef struct TreeNode {
+//     int val;
+//     struct TreeNode *left;
+//     struct TreeNode *right;
+//}TreeNode;
+// 
+//bool isUnivalTree(struct TreeNode* root) {
+//    if (root == NULL)
+//        return true;
+//
+//    if (root->left == NULL && root->right == NULL)
+//        return true;
+//
+//    if ((root->right == NULL && root->val != root->left->val) || (root->left == NULL && root->val != root->right->val))
+//        return false;
+//
+//    if (root->val != root->left->val && root->val != root->right->val)
+//        return false;
+//
+//    return isUnivalTree(root->left) && isUnivalTree(root->right);
+//
+//}
+//
+//TreeNode* CreateNode(int x)
+//{
+//    TreeNode* newnode = (TreeNode*)malloc(sizeof(TreeNode));
+//    if(NULL == newnode)
+//    {
+//        perror("mallco:");
+//        exit(1);
+//    }
+//    newnode->left = NULL;
+//    newnode->right = NULL;
+//    newnode->val = x;
+//
+//    return newnode;
+//}
+//
+//
+//
+//int main()
+//{
+//    TreeNode* n1 = CreateNode(1);
+//    TreeNode* n2 = CreateNode(1);
+//    TreeNode* n3 = CreateNode(1);
+//    TreeNode* n4 = CreateNode(1);
+//    TreeNode* n5 = CreateNode(1);
+//    TreeNode* n6 = NULL;
+//    TreeNode* n7 = CreateNode(1);
+//    n1->left = n2;
+//    n2->left = n3;
+//    n2->right = n4;
+//    n1->right = n5;
+//    n5->right = n7;
+//    n5->left = n6;
+//    isUnivalTree(n1);
+//
+//    return 0;
+//}
 
 
 
-typedef struct {
-    int k;
-    int head;
-    int tail;
-    int* a;
-} MyCircularQueue;
 
-
-MyCircularQueue* myCircularQueueCreate(int k) {
-    MyCircularQueue* p = (MyCircularQueue*)malloc(sizeof(MyCircularQueue));
-    p->a = (int*)malloc((k + 1) * sizeof(int));
-    p->head = 0;
-    p->tail = 0;
-    p->k = k;
-    return p;
-}
-bool myCircularQueueIsEmpty(MyCircularQueue* obj);
-bool myCircularQueueIsFull(MyCircularQueue* obj);
-
-bool myCircularQueueEnQueue(MyCircularQueue* obj, int value) {
-    if (myCircularQueueIsFull(obj))
-    {
-        return false;
-    }
-    else
-    {
-        obj->a[obj->tail] = value;
-        obj->tail = (obj->tail + 1) % (obj->k + 1);
-        return true;
-    }
-}
-
-bool myCircularQueueDeQueue(MyCircularQueue* obj) {
-    if (myCircularQueueIsEmpty(obj))
-    {
-        return false;
-    }
-
-    obj->head = (obj->head + 1) % (obj->k + 1);
-    return true;
-
-}
-
-int myCircularQueueFront(MyCircularQueue* obj) {
-    if (myCircularQueueIsEmpty(obj))
-    {
-        return -1;
-    }
-    else
-    {
-        return obj->a[obj->head];
-    }
-}
-
-int myCircularQueueRear(MyCircularQueue* obj) {
-    if (myCircularQueueIsEmpty(obj))
-    {
-        return -1;
-    }
-    else
-    {
-        return obj->a[(obj->tail - 1 + obj->k + 1) % (obj->k + 1)];
-    }
-}
-
-bool myCircularQueueIsEmpty(MyCircularQueue* obj) {
-    return obj->head == obj->tail;
-
-}
-
-bool myCircularQueueIsFull(MyCircularQueue* obj) {
-    return (obj->tail + 1) % (obj->k + 1) == obj->head)
-
-}
-
-void myCircularQueueFree(MyCircularQueue* obj) {
-    free(obj->a);
-    free(obj);
-}
+//typedef struct {
+//    int k;
+//    int head;
+//    int tail;
+//    int* a;
+//} MyCircularQueue;
+//
+//
+//MyCircularQueue* myCircularQueueCreate(int k) {
+//    MyCircularQueue* p = (MyCircularQueue*)malloc(sizeof(MyCircularQueue));
+//    p->a = (int*)malloc((k + 1) * sizeof(int));
+//    p->head = 0;
+//    p->tail = 0;
+//    p->k = k;
+//    return p;
+//}
+//bool myCircularQueueIsEmpty(MyCircularQueue* obj);
+//bool myCircularQueueIsFull(MyCircularQueue* obj);
+//
+//bool myCircularQueueEnQueue(MyCircularQueue* obj, int value) {
+//    if (myCircularQueueIsFull(obj))
+//    {
+//        return false;
+//    }
+//    else
+//    {
+//        obj->a[obj->tail] = value;
+//        obj->tail = (obj->tail + 1) % (obj->k + 1);
+//        return true;
+//    }
+//}
+//
+//bool myCircularQueueDeQueue(MyCircularQueue* obj) {
+//    if (myCircularQueueIsEmpty(obj))
+//    {
+//        return false;
+//    }
+//
+//    obj->head = (obj->head + 1) % (obj->k + 1);
+//    return true;
+//
+//}
+//
+//int myCircularQueueFront(MyCircularQueue* obj) {
+//    if (myCircularQueueIsEmpty(obj))
+//    {
+//        return -1;
+//    }
+//    else
+//    {
+//        return obj->a[obj->head];
+//    }
+//}
+//
+//int myCircularQueueRear(MyCircularQueue* obj) {
+//    if (myCircularQueueIsEmpty(obj))
+//    {
+//        return -1;
+//    }
+//    else
+//    {
+//        return obj->a[(obj->tail - 1 + obj->k + 1) % (obj->k + 1)];
+//    }
+//}
+//
+//bool myCircularQueueIsEmpty(MyCircularQueue* obj) {
+//    return obj->head == obj->tail;
+//
+//}
+//
+//bool myCircularQueueIsFull(MyCircularQueue* obj) {
+//    return (obj->tail + 1) % (obj->k + 1) == obj->head)
+//
+//}
+//
+//void myCircularQueueFree(MyCircularQueue* obj) {
+//    free(obj->a);
+//    free(obj);
+//}
 
 /**
  * Your MyCircularQueue struct will be instantiated and called as such:
@@ -106,22 +187,22 @@ void myCircularQueueFree(MyCircularQueue* obj) {
 
  * myCircularQueueFree(obj);
 */
-int main()
-{
-    MyCircularQueue* p;
-    p = myCircularQueueCreate(8);
-    int a = myCircularQueueEnQueue(p,3);
-    int b = myCircularQueueEnQueue(p,9);
-    int c = myCircularQueueEnQueue(p,5);
-    int d = myCircularQueueEnQueue(p,0);
-    int e = myCircularQueueDeQueue(p);
-    int f = myCircularQueueDeQueue(p);
-    int g = myCircularQueueIsEmpty(p);
-    int h = myCircularQueueIsEmpty(p);
-    int i = myCircularQueueRear(p);
-    int j = myCircularQueueRear(p);
-    return 0;
-}
+//int main()
+//{
+//    MyCircularQueue* p;
+//    p = myCircularQueueCreate(8);
+//    int a = myCircularQueueEnQueue(p,3);
+//    int b = myCircularQueueEnQueue(p,9);
+//    int c = myCircularQueueEnQueue(p,5);
+//    int d = myCircularQueueEnQueue(p,0);
+//    int e = myCircularQueueDeQueue(p);
+//    int f = myCircularQueueDeQueue(p);
+//    int g = myCircularQueueIsEmpty(p);
+//    int h = myCircularQueueIsEmpty(p);
+//    int i = myCircularQueueRear(p);
+//    int j = myCircularQueueRear(p);
+//    return 0;
+//}
 //#include<stdlib.h>
 //#include<stdbool.h>
 //#include<assert.h>
