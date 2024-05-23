@@ -5,7 +5,23 @@
 #include<assert.h>
 #include<stdio.h>
 
-
+///**二叉树的最大深度
+// * Definition for a binary tree node.
+// * struct TreeNode {
+// *     int val;
+// *     struct TreeNode *left;
+// *     struct TreeNode *right;
+// * };
+// */
+//int maxDepth(struct TreeNode* root) {
+//    if (root == NULL)
+//        return 0;
+//
+//    int k1 = maxDepth(root->left);
+//    int k2 = maxDepth(root->right);
+//
+//    return k1 > k2 ? k1 + 1 : k2 + 1;
+//}
 ///**单值二叉树
 // * Definition for a binary tree node.
 // * struct TreeNode {
