@@ -5,6 +5,148 @@
 #include<assert.h>
 #include<stdio.h>
 
+///**检查两棵树是否相等
+// * Definition for a binary tree node.
+// * struct TreeNode {
+// *     int val;
+// *     struct TreeNode *left;
+// *     struct TreeNode *right;
+// * };
+// */
+//bool isSameTree(struct TreeNode* p, struct TreeNode* q) {
+//
+//
+//    if (p == NULL && q == NULL)
+//        return true;
+//
+//
+//    if (p == NULL || q == NULL)
+//        return false;
+//
+//
+//    if (p->val != q->val)
+//        return false;
+//
+//    return isSameTree(p->right, q->right) && isSameTree(p->left, q->left);
+//}
+//
+///**后序遍历
+// * Definition for a binary tree node.
+// * struct TreeNode {
+// *     int val;
+// *     struct TreeNode *left;
+// *     struct TreeNode *right;
+// * };
+// */
+// /**
+//  * Note: The returned array must be malloced, assume caller calls free().
+//  */
+//int TreeSize(struct TreeNode* root)
+//{
+//
+//    return root == NULL ? 0 : TreeSize(root->left) + TreeSize(root->right) + 1;
+//}
+//
+//void PostOrder(struct TreeNode* root, int* arr, int* pi)
+//{
+//    if (root == NULL)
+//        return;
+//
+//    PostOrder(root->left, arr, pi);
+//    PostOrder(root->right, arr, pi);
+//
+//    arr[(*pi)++] = root->val;
+//
+//}
+//
+//int* postorderTraversal(struct TreeNode* root, int* returnSize) {
+//    *returnSize = TreeSize(root);
+//    int* arr = (int*)malloc(sizeof(int) * (*returnSize));
+//    int i = 0;
+//    PostOrder(root, arr, &i);
+//
+//    return arr;
+//}
+
+///**中序遍历
+// * Definition for a binary tree node.
+// * struct TreeNode {
+// *     int val;
+// *     struct TreeNode *left;
+// *     struct TreeNode *right;
+// * };
+// */
+// /**
+//  * Note: The returned array must be malloced, assume caller calls free().
+//  */
+//int TreeSize(struct TreeNode* root)
+//{
+//
+//    return root == NULL ? 0 : TreeSize(root->left) + TreeSize(root->right) + 1;
+//}
+//
+//void InOrder(struct TreeNode* root, int* arr, int* pi)
+//{
+//    if (root == NULL)
+//        return;
+//
+//    InOrder(root->left, arr, pi);
+//
+//    arr[(*pi)++] = root->val;
+//
+//    InOrder(root->right, arr, pi);
+//
+//}
+//
+//int* inorderTraversal(struct TreeNode* root, int* returnSize) {
+//    *returnSize = TreeSize(root);
+//    int* arr = (int*)malloc(sizeof(int) * (*returnSize));
+//    int i = 0;
+//    InOrder(root, arr, &i);
+//
+//    return arr;
+//}
+
+
+/**二叉数的前序遍历
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+ /**
+  * Note: The returned array must be malloced, assume caller calls free().
+  */
+//int TreeSize(struct TreeNode* root)
+//{
+//
+//    return root == NULL ? 0 : TreeSize(root->left) + TreeSize(root->right) + 1;
+//}
+//
+//void PrevOrder(struct TreeNode* root, int* arr, int* pi)
+//{
+//    if (root == NULL)
+//        return;
+//
+//    arr[(*pi)++] = root->val;
+//
+//    PrevOrder(root->left, arr, pi);
+//    PrevOrder(root->right, arr, pi);
+//
+//}
+//
+//int* preorderTraversal(struct TreeNode* root, int* returnSize) {
+//    *returnSize = TreeSize(root);
+//    int* arr = (int*)malloc(sizeof(int) * (*returnSize));
+//    int i = 0;
+//    PrevOrder(root, arr, &i);
+//
+//    return arr;
+//
+//
+//}
 ///**二叉树的最大深度
 // * Definition for a binary tree node.
 // * struct TreeNode {
@@ -48,7 +190,7 @@
 //     struct TreeNode *left;
 //     struct TreeNode *right;
 //}TreeNode;
-// 
+ 
 //bool isUnivalTree(struct TreeNode* root) {
 //    if (root == NULL)
 //        return true;
@@ -62,6 +204,22 @@
 //    if (root->val != root->left->val && root->val != root->right->val)
 //        return false;
 //
+//    return isUnivalTree(root->left) && isUnivalTree(root->right);
+//
+//}
+
+//bool isUnivalTree(struct TreeNode* root) {
+//    if (root == NULL)
+//        return true;
+//
+//    if (root->left == NULL && root->right == NULL)
+//        return true;
+//
+//    if ((root->right == NULL && root->val != root->left->val) || (root->left == NULL && root->val != root->right->val))
+//        return false;
+//
+//    if ((root->right != NULL && root->val != root->right->val) && (root->left != NULL && root->val != root->left->val))
+//        return false;
 //    return isUnivalTree(root->left) && isUnivalTree(root->right);
 //
 //}
@@ -85,19 +243,15 @@
 //
 //int main()
 //{
-//    TreeNode* n1 = CreateNode(1);
-//    TreeNode* n2 = CreateNode(1);
-//    TreeNode* n3 = CreateNode(1);
-//    TreeNode* n4 = CreateNode(1);
-//    TreeNode* n5 = CreateNode(1);
-//    TreeNode* n6 = NULL;
-//    TreeNode* n7 = CreateNode(1);
+//    TreeNode* n1 = CreateNode(2);
+//    TreeNode* n2 = CreateNode(2);
+//    TreeNode* n3 = CreateNode(2);
+//    TreeNode* n4 = CreateNode(5);
+//    TreeNode* n5 = CreateNode(2);
 //    n1->left = n2;
-//    n2->left = n3;
-//    n2->right = n4;
-//    n1->right = n5;
-//    n5->right = n7;
-//    n5->left = n6;
+//    n2->left = n4;
+//    n2->right = n5;
+//    n1->right = n3;
 //    isUnivalTree(n1);
 //
 //    return 0;
