@@ -5,6 +5,126 @@
 #include<assert.h>
 #include<stdio.h>
 
+#include <stdio.h>
+
+typedef struct TreeNode {
+    char val;
+    struct TreeNode* left;
+    struct TreeNode* right;
+}TreeNode;
+
+
+
+int TreeSize(struct TreeNode* root)
+{
+
+
+    return root == NULL ? 0 : TreeSize(root->left) + TreeSize(root->right) + 1;
+}
+
+
+void PrevOrder(struct TreeNode* root, char* arr, int* pi)
+{
+    if (arr[*pi] == '#')
+    {
+        (*pi)++;
+        return;
+    }
+    if (arr[*pi] != '#')
+    {
+        root = (TreeNode*)malloc(sizeof(TreeNode));
+        root->val = arr[(*pi)++];
+    }
+
+    PrevOrder(root->left, arr, pi);
+    PrevOrder(root->right, arr, pi);
+
+
+}
+
+void InOrder(struct TreeNode* root, char* arr, int* pi)
+{
+    if (root == NULL)
+        return;
+
+    InOrder(root->left, arr, pi);
+
+    printf("%c", root->val);
+
+    InOrder(root->right, arr, pi);
+
+}
+
+int main() {
+    TreeNode* root = NULL;
+    int i = 0;
+    char arr[100] = { 0 };
+    scanf("%s", arr);
+    PrevOrder(root, arr, &i);
+    InOrder(root, arr, &i);
+    return 0;
+}
+///**另一个数的子树
+// * Definition for a binary tree node.
+// * struct TreeNode {
+// *     int val;
+// *     struct TreeNode *left;
+// *     struct TreeNode *right;
+// * };
+// */
+//bool isSameTree(struct TreeNode* p, struct TreeNode* q) {
+//
+//    if (p == NULL && q == NULL)
+//        return true;
+//
+//    if (p == NULL || q == NULL)
+//        return false;
+//
+//    if (p->val != q->val)
+//        return false;
+//
+//    return isSameTree(p->right, q->right) && isSameTree(p->left, q->left);
+//}
+//
+//bool isSubtree(struct TreeNode* root, struct TreeNode* subRoot) {
+//    if (root == NULL)
+//        return false;
+//
+//    if (isSameTree(root, subRoot))
+//        return true;
+//
+//    return isSubtree(root->left, subRoot) || isSubtree(root->right, subRoot);
+//}
+///**对称二叉树
+// * Definition for a binary tree node.
+// * struct TreeNode {
+// *     int val;
+// *     struct TreeNode *left;
+// *     struct TreeNode *right;
+// * };
+// */
+//bool IsSymmetric(struct TreeNode* rootleft, struct TreeNode* rootright)
+//{
+//    if (rootleft == NULL && rootright == NULL)
+//        return true;
+//
+//    if (rootleft == NULL || rootright == NULL)
+//        return false;
+//
+//    if (rootleft->val != rootright->val)
+//        return false;
+//
+//    return IsSymmetric(rootleft->left, rootright->right) && IsSymmetric(rootleft->right, rootright->left);
+//
+//}
+//
+//
+//bool isSymmetric(struct TreeNode* root) {
+//
+//    return IsSymmetric(root->left, root->right);
+//
+//}
+
 ///**检查两棵树是否相等
 // * Definition for a binary tree node.
 // * struct TreeNode {
