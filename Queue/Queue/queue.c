@@ -15,6 +15,7 @@ void QueueInit(Queue* q)
 void QueuePush(Queue* q, QDataType data)
 {
 	assert(q);
+
 	QNode* newnode = (QNode*)malloc(sizeof(QNode));
 
 	if (NULL == newnode)
@@ -26,15 +27,17 @@ void QueuePush(Queue* q, QDataType data)
 	newnode->_data = data;
 	newnode->_next = NULL;
 
-	if (0 == q->_size)
+	if (NULL == q->_rear)
 	{
 		q->_front = q->_rear = newnode;
 	}
+
 	else
 	{
 		q->_rear->_next = newnode;
-		q->_rear = q->_rear->_next;
+		q->_rear = newnode;
 	}
+
 	q->_size++;
 }
 
@@ -61,7 +64,7 @@ void QueuePop(Queue* q)
 QDataType QueueFront(Queue* q)
 {
 	assert(q);
-	assert(q->_size);
+	assert(q->_front);
 
 	return q->_front->_data;
 }
@@ -70,7 +73,7 @@ QDataType QueueFront(Queue* q)
 QDataType QueueBack(Queue* q)
 {
 	assert(q);
-	assert(q->_size);
+	assert(q->_rear);
 
 	return q->_rear->_data;
 
@@ -96,7 +99,6 @@ bool QueueEmpty(Queue* q)
 void QueueDestroy(Queue* q)
 {
 	assert(q);
-	assert(q->_size);
 
 	QNode* cur = q->_front;
 	while(cur)

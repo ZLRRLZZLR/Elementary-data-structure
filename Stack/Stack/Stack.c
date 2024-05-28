@@ -3,14 +3,25 @@
 // 初始化栈 
 void StackInit(Stack* ps)
 {
+	assert(ps);
+
 	ps->_a = NULL;
-	ps->_capacity = ps->_top = 0;
+
+	// top指向栈顶数据的下一个位置
+	ps->_top = 0;
+
+	// top指向栈顶数据
+	//ps->_top = -1;
+
+	ps->_capacity = 0;
 }
 
 // 入栈 
 void StackPush(Stack* ps, STDataType data)
 {
 	assert(ps);
+
+	//扩容
 	if(ps->_capacity == ps->_top)
 	{
 		int newcapacity = ps->_capacity == 0 ? 4 : 2 * ps->_capacity;
@@ -21,6 +32,7 @@ void StackPush(Stack* ps, STDataType data)
 			perror("StackInit:realloc");
 			exit(1);
 		}
+
 		ps->_a = newnode;
 		ps->_capacity = newcapacity;
 	}
@@ -62,6 +74,7 @@ int StackSize(Stack* ps)
 bool StackEmpty(Stack* ps)
 {
 	assert(ps);
+
 	return ps->_top == 0;
 }
 
@@ -69,6 +82,7 @@ bool StackEmpty(Stack* ps)
 void StackDestroy(Stack* ps)
 {
 	assert(ps);
+
 	free(ps->_a);
 	ps->_a = NULL;
 	ps->_capacity = ps->_top = 0;
