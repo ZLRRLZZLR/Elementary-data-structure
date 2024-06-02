@@ -5,6 +5,7 @@
 //Ωªªª
 void Swap(int* a,int* b);
 
+
 // ≤Â»Î≈≈–Ú
 void InsertSort(int* a, int n);
 
@@ -13,7 +14,6 @@ void ShellSort(int* a, int n);
 
 // —°‘Ò≈≈–Ú
 void SelectSort(int* a, int n);
-
 
 // ∂—≈≈–Ú
 void AdjustDwon(int* a, int n, int root);
