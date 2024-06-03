@@ -2,10 +2,10 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 #include<stdio.h>
 #include<assert.h>
+#include<stdlib.h>
 
 
-
-typedef char BTDataType;
+typedef int BTDataType;
 
 typedef struct BinaryTreeNode
 {
@@ -46,3 +46,6 @@ void BinaryTreeLevelOrder(BTNode* root);
 
 // 判断二叉树是否是完全二叉树
 int BinaryTreeComplete(BTNode* root);
+
+//树高
+int TreeHeight(BTNode* root);

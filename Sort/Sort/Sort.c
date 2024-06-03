@@ -127,10 +127,45 @@ void SelectSort(int* a, int n)
 // ∂—≈≈–Ú
 void AdjustDwon(int* a, int n, int root)
 {
-	int parent = (n - 1 - 1) / 2;
-	for()
+	int child = (root * 2) + 1;
+
+	while(child < n)
 	{
 
+		if (a[child] < a[child + 1] && child + 1 < n)
+		{
+			++child;
+		}
+			
+		if (a[root] < a[child])
+		{
+			Swap(&a[root], &a[child]);
+
+			root = child;
+
+			child = (root * 2) + 1;
+		}
+		else
+		{
+			break;
+		}
 	}
 }
-void HeapSort(int* a, int n);
+
+void HeapSort(int* a, int n)
+{
+	int end = n - 1;
+	for(int i = (n - 1 - 1) / 2;i >= 0;i--)
+	{
+		AdjustDwon(a, n, i);
+	}
+
+	while(end > 0)
+	{
+
+		Swap(&a[0],&a[end]);
+		AdjustDwon(a, end--, 0);
+	}
+
+
+}

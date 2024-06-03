@@ -5,14 +5,16 @@
 #include<stdlib.h>
 #include"stdbool.h"
 
-typedef int QDataType;
+typedef struct BinaryTreeNode* QDataType;
 
 // 链式结构：表示队列 
 typedef struct QListNode
 {
 	struct QListNode* _next;
 	QDataType _data;
+
 }QNode;
+
 
 // 队列的结构 
 typedef struct Queue
