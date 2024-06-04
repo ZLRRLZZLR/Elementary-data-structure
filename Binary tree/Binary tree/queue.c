@@ -96,7 +96,6 @@ bool QueueEmpty(Queue* q)
 void QueueDestroy(Queue* q)
 {
 	assert(q);
-	assert(q->_size);
 
 	QNode* cur = q->_front;
 	while(cur)

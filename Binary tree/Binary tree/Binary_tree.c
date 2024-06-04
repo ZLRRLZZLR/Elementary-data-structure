@@ -1,8 +1,42 @@
 #include"Binary_tree.h"
 #include"queue.h"
 
+BTNode* BuyNode(int x)
+{
+	BTNode* node = (BTNode*)malloc(sizeof(BTNode));
+	if (node == NULL)
+	{
+		perror("malloc fail");
+		return NULL;
+	}
+
+	node->_data = x;
+	node->_left = NULL;
+	node->_right = NULL;
+
+	return node;
+}
+
 // 通过前序遍历的数组"ABD##E#H##CF##G##"构建二叉树
-BTNode* BinaryTreeCreate(BTDataType* a, int n, int* pi);
+BTNode* BinaryTreeCreate(BTDataType* a, int n, int* pi)
+{
+	BTNode* node = NULL;
+
+	if (*pi >= n)
+		return NULL;
+	if(a[*pi] == '#')
+	{
+		(*pi)++;
+		return NULL;
+	}
+
+	node = BuyNode(a[(*pi)++]);
+
+	node->_left = BinaryTreeCreate(a,n,pi);
+	node->_right = BinaryTreeCreate(a, n, pi);
+
+	return node;
+}
 
 // 二叉树销毁
 void BinaryTreeDestory(BTNode** root)
@@ -90,6 +124,7 @@ void BinaryTreePrevOrder(BTNode* root)
 		printf("N");
 		return;
 	}
+
 	printf("%d",root->_data);
 
 	BinaryTreePrevOrder(root->_left);
@@ -105,9 +140,9 @@ void BinaryTreeInOrder(BTNode* root)
 		printf("NULL");
 	}
 
-	BinaryTreePrevOrder(root->_left);
+	BinaryTreeInOrder(root->_left);
 	printf("%d", root->_data);
-	BinaryTreePrevOrder(root->_right);
+	BinaryTreeInOrder(root->_right);
 }
 
 // 二叉树后序遍历
@@ -126,7 +161,35 @@ void BinaryTreePostOrder(BTNode* root)
 // 层序遍历
 void BinaryTreeLevelOrder(BTNode* root)
 {
+	Queue q;
+	QueueInit(&q);
 
+	if (root)
+	{
+		QueuePush(&q, root);
+	}
+
+	else
+	{
+		QueueDestroy(&q);
+		return ;
+	}
+
+	while (!QueueEmpty(&q))
+	{
+		BTNode* front = QueueFront(&q);
+		QueuePop(&q);
+
+		printf("%d",front->_data);
+
+		if(front->_left)
+		QueuePush(&q, front->_left);
+
+		if(front->_right)
+		QueuePush(&q, front->_right);
+	}
+
+	QueueDestroy(&q);
 }
 
 // 判断二叉树是否是完全二叉树
@@ -134,9 +197,19 @@ int BinaryTreeComplete(BTNode* root)
 {
 	Queue q;
 	QueueInit(&q);
-	QueuePush(&q, root);
 
-	while (!(QueueEmpty(&q)))
+	if (root) 
+	{
+		QueuePush(&q, root);
+	}
+
+	else
+	{
+		QueueDestroy(&q);
+		return false;
+	}
+
+	while (!QueueEmpty(&q))
 	{
 		BTNode* front = QueueFront(&q);
 		QueuePop(&q);
@@ -146,8 +219,8 @@ int BinaryTreeComplete(BTNode* root)
 			break;
 		}
 
-		QueuePush(&q, root->_left);
-		QueuePush(&q, root->_right);
+		QueuePush(&q, front->_left);
+		QueuePush(&q, front->_right);
 	}
 
 	while (!(QueueEmpty(&q)))
@@ -155,15 +228,15 @@ int BinaryTreeComplete(BTNode* root)
 		BTNode* front = QueueFront(&q);
 		QueuePop(&q);
 
-		if (NULL == front)
+		if (front)
 		{
+			QueueDestroy(&q);
 			return false;
 		}
 
-		QueuePush(&q, root->_left);
-		QueuePush(&q, root->_right);
 	}
 
+	QueueDestroy(&q);
 	return true;
 }
 

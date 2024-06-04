@@ -5,7 +5,7 @@
 #include<stdlib.h>
 
 
-typedef int BTDataType;
+typedef char BTDataType;
 
 typedef struct BinaryTreeNode
 {
@@ -13,6 +13,8 @@ typedef struct BinaryTreeNode
 	struct BinaryTreeNode* _left;
 	struct BinaryTreeNode* _right;
 }BTNode;
+
+BTNode* BuyNode(int x);
 
 // 通过前序遍历的数组"ABD##E#H##CF##G##"构建二叉树
 BTNode* BinaryTreeCreate(BTDataType* a, int n, int* pi);
@@ -49,3 +51,4 @@ int BinaryTreeComplete(BTNode* root);
 
 //树高
 int TreeHeight(BTNode* root);
+

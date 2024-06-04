@@ -1,20 +1,6 @@
 #include"Binary_tree.h"
 
-BTNode* BuyNode(int x)
-{
-	BTNode* node = (BTNode*)malloc(sizeof(BTNode));
-	if (node == NULL)
-	{
-		perror("malloc fail");
-		return NULL;
-	}
 
-	node->_data = x;
-	node->_left = NULL;
-	node->_right = NULL;
-
-	return node;
-}
 
 BTNode* CreatBinaryTree()
 {
@@ -40,34 +26,40 @@ BTNode* CreatBinaryTree()
 int main()
 {
 	BTNode* n = CreatBinaryTree();
+	BTDataType* a = { "ABD##E#H##CF##G##" };
+	BTNode* n1 = NULL;
+
 	//BinaryTreePrevOrder(n);
-	/*BinaryTreeInOrder(n);*/
+	//BinaryTreeInOrder(n);
 
-	/*BinaryTreeDestory(&n);*/
+	//BinaryTreeDestory(&n);
 
-	/*printf("%d\n",BinaryTreeSize(n));*/
+	//printf("%d\n",BinaryTreeSize(n));
 
-	//printf("%d\n", BinaryTreeLeafSize(n));
-	//printf("%d\n", BinaryTreeLevelKSize(n, 4));
-	//BTNode* find = BinaryTreeFind(n, 10);
+	printf("%d\n", BinaryTreeLeafSize(n));
+	printf("%d\n", BinaryTreeLevelKSize(n, 4));
+	BTNode* find = BinaryTreeFind(n, 10);
 
-	//if(find)
-	//{
-	//	printf("%d", find->_data);
-
-	//}
-	//else
-	//{
-	//	puts("NULL");
-	//}
-
-	//printf("%d\n", TreeHeight(n));
-
-	if(!BinaryTreeComplete(n));
+	if(find)
 	{
-		puts("false");
+		printf("%d\n", find->_data);
+
+	}
+	else
+	{
+		printf("%s\n","NULL");
 	}
 
+	printf("%d\n", TreeHeight(n));
 
+	int ret = BinaryTreeComplete(n);
+	printf("%d\n",ret);
+
+	BinaryTreeLevelOrder(n);
+	int i = 0;
+	BTNode* root = BinaryTreeCreate(a,sizeof(a)/sizeof(a[0]), &i);
+		BinaryTreePrevOrder(n);
+		printf("\n");
+		BinaryTreePrevOrder(root);
 	return 0;
 }
