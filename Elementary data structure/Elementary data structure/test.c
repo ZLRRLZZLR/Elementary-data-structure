@@ -5,65 +5,115 @@
 #include<assert.h>
 #include<stdio.h>
 
-#include <stdio.h>
 
-typedef struct TreeNode {
-    char val;
-    struct TreeNode* left;
-    struct TreeNode* right;
-}TreeNode;
-
-
-
-int TreeSize(struct TreeNode* root)
-{
-
-
-    return root == NULL ? 0 : TreeSize(root->left) + TreeSize(root->right) + 1;
-}
-
-
-void PrevOrder(struct TreeNode* root, char* arr, int* pi)
-{
-    if (arr[*pi] == '#')
-    {
-        (*pi)++;
-        return;
-    }
-    if (arr[*pi] != '#')
-    {
-        root = (TreeNode*)malloc(sizeof(TreeNode));
-        root->val = arr[(*pi)++];
-    }
-
-    PrevOrder(root->left, arr, pi);
-    PrevOrder(root->right, arr, pi);
-
-
-}
-
-void InOrder(struct TreeNode* root, char* arr, int* pi)
-{
-    if (root == NULL)
-        return;
-
-    InOrder(root->left, arr, pi);
-
-    printf("%c", root->val);
-
-    InOrder(root->right, arr, pi);
-
-}
-
-int main() {
-    TreeNode* root = NULL;
-    int i = 0;
-    char arr[100] = { 0 };
-    scanf("%s", arr);
-    PrevOrder(root, arr, &i);
-    InOrder(root, arr, &i);
-    return 0;
-}
+//
+////翻转二叉树
+///**
+// * Definition for a binary tree node.
+// * struct TreeNode {
+// *     int val;
+// *     struct TreeNode *left;
+// *     struct TreeNode *right;
+// * };
+// */
+//struct TreeNode* invertTree(struct TreeNode* root) {
+//    if (NULL == root)
+//        return NULL;
+//
+//
+//    struct TreeNode* tmp = root->left;
+//    root->left = root->right;
+//    root->right = tmp;
+//
+//
+//    invertTree(root->left);
+//    invertTree(root->right);
+//
+//
+//    return root;
+//}
+//#include <stdio.h>
+//
+//
+//typedef char BTDataType;
+//
+//
+//typedef struct BinaryTreeNode
+//{
+//    BTDataType _data;
+//    struct BinaryTreeNode* _left;
+//    struct BinaryTreeNode* _right;
+//}BTNode;
+//
+//
+//BTNode* BuyNode(int x)
+//{
+//    BTNode* node = (BTNode*)malloc(sizeof(BTNode));
+//    if (node == NULL)
+//    {
+//        perror("malloc fail");
+//        return NULL;
+//    }
+//
+//
+//    node->_data = x;
+//    node->_left = NULL;
+//    node->_right = NULL;
+//
+//
+//    return node;
+//}
+//
+//
+//
+//BTNode* BinaryTreeCreate(BTDataType* a, int n, int* pi)
+//{
+//    BTNode* node = NULL;
+//
+//
+//    if (a[*pi] == '#')
+//    {
+//        (*pi)++;
+//        return NULL;
+//    }
+//
+//
+//    node = BuyNode(a[(*pi)++]);
+//
+//
+//    node->_left = BinaryTreeCreate(a, n, pi);
+//    node->_right = BinaryTreeCreate(a, n, pi);
+//
+//
+//    return node;
+//}
+//
+//
+//// 二叉树中序遍历
+//void BinaryTreeInOrder(BTNode* root)
+//{
+//    if (root == NULL)
+//    {
+//        return;
+//    }
+//
+//
+//    BinaryTreeInOrder(root->_left);
+//    printf("%c ", root->_data);
+//    BinaryTreeInOrder(root->_right);
+//}
+//
+//
+//int main()
+//{
+//    char arr[100];
+//    scanf("%s", arr);
+//    int i = 0;
+//    BTNode* root = BinaryTreeCreate(arr, sizeof(arr) / sizeof(arr[0]), &i);
+//    BinaryTreeInOrder(root);
+//
+//
+//}
 ///**另一个数的子树
 // * Definition for a binary tree node.
 // * struct TreeNode {
