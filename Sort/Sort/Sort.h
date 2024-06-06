@@ -21,6 +21,9 @@ void HeapSort(int* a, int n);
 // 冒泡排序
 void BubbleSort(int* a, int n);
 
+//三数取中
+int Gitmid(int* a, int left, int right);
+
 // 快速排序递归实现
 // 快速排序hoare版本
 int PartSort1(int* a, int left, int right);

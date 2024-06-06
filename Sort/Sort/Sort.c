@@ -174,28 +174,46 @@ void HeapSort(int* a, int n)
 void BubbleSort(int* a, int n)
 {
 
-	for(int j = n;j > 1;j--)
+	for(int j = n ;j > 1;j--)
 	{
-		int max = 0;
-		for (int i = 0; i < j; i++)
+		int flage = 0;
+		for (int i = 1; i < j; i++)
 		{
-			if (a[i] < a[max])
+			if (a[i -1 ] < a[i])
 			{
-				Swap(&a[i], &a[max]);
+				Swap(&a[i - 1], &a[i]);
+				flage = 1;
 			}
-
-				max = i;
-
+		}
+		if (flage == 0)
+		{
+			break;
 		}
 	}
 
 }
 
+//三数取中
+int Gitmid(int* a, int left, int right);
+{
+	int key = (right - left) / 2;
+	if()
+
+}
+
+
+
 // 快速排序递归实现
 // 快速排序hoare版本
 int PartSort1(int* a, int left, int right)
 {
+	int key = Gitmid(a,left,right);
+	int begin = left;
+	int end = right;
+	while(a[end] < )
+	{
 
+	}
 }
 
 // 快速排序挖坑法
