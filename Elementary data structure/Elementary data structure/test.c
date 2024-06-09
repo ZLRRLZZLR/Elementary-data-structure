@@ -6,6 +6,47 @@
 #include<stdio.h>
 
 
+//移除元素
+//int removeElement(int* nums, int numsSize, int val) {
+//    int* tmp = (int*)malloc(numsSize * sizeof(int));
+//    int j = 0;
+//    for (int i = 0; i < numsSize; i++)
+//    {
+//        if (nums[i] != val)
+//        {
+//            tmp[j++] = nums[i];
+//        }
+//    }
+//    memcpy(nums, tmp, j * sizeof(int));
+//    return j;
+//}
+//合并两个有序数组
+//void merge(int* nums1, int nums1Size, int m, int* nums2, int nums2Size, int n) {
+//    int* tmp = (int*)malloc((m + n) * sizeof(int));
+//    int i = 0;
+//    int j = 0;
+//    int k = 0;
+//    while (i < m && j < n)
+//    {
+//        if (nums1[i] <= nums2[j])
+//        {
+//            tmp[k++] = nums1[i++];
+//        }
+//        else
+//        {
+//            tmp[k++] = nums2[j++];
+//        }
+//    }
+//    while (i < m)
+//    {
+//        tmp[k++] = nums1[i++];
+//    }
+//    while (j < n)
+//    {
+//        tmp[k++] = nums2[j++];
+//    }
+//    memcpy(nums1, tmp, (m + n) * sizeof(int));
+//}
 //
 ////翻转二叉树
 ///**
