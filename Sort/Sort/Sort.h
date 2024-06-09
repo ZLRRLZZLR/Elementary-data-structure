@@ -1,6 +1,9 @@
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS 1
 #include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<time.h>
 
 //½»»»
 void Swap(int* a,int* b);
@@ -46,3 +49,5 @@ void MergeSortNonR(int* a, int n);
 
 // ¼ÆÊýÅÅÐò
 void CountSort(int* a, int n);
+
+void PrintArray(int* a, int n);
