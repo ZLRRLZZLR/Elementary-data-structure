@@ -5,8 +5,77 @@
 #include<assert.h>
 #include<stdio.h>
 
-
-
+///**相交链表
+// * Definition for singly-linked list.
+// * struct ListNode {
+// *     int val;
+// *     struct ListNode *next;
+// * };
+// */
+//struct ListNode* getIntersectionNode(struct ListNode* headA, struct ListNode* headB) {
+//    int len1 = 0;
+//    int len2 = 0;
+//    struct ListNode* shortline = headA;
+//    struct ListNode* longline = headB;
+//    struct ListNode* line1 = headA;
+//    struct ListNode* line2 = headB;
+//    while (line1)
+//    {
+//        line1 = line1->next;
+//        len1++;
+//    }
+//    while (line2)
+//    {
+//        line2 = line2->next;
+//        len2++;
+//    }
+//    if (len1 > len2)
+//    {
+//        shortline = headB;
+//        longline = headA;
+//    }
+//    int count = abs(len2 - len1);
+//    while (count--)
+//    {
+//        longline = longline->next;
+//    }
+//    while (shortline && longline)
+//    {
+//        if (shortline == longline)
+//        {
+//            return shortline;
+//        }
+//        shortline = shortline->next;
+//        longline = longline->next;
+//
+//    }
+//    return NULL;
+//
+//}
+///**返回倒数第K个节点
+// * Definition for singly-linked list.
+// * struct ListNode {
+// *     int val;
+// *     struct ListNode *next;
+// * };
+// */
+//
+//
+//int kthToLast(struct ListNode* head, int k) {
+//    struct ListNode* slow = head;
+//    struct ListNode* fast = head;
+//    while (k--)
+//    {
+//        fast = fast->next;
+//    }
+//
+//    while (fast)
+//    {
+//        fast = fast->next;
+//        slow = slow->next;
+//    }
+//    return slow->val;
+//}
 //消失的数字
 //int missingNumber(int* nums, int numsSize) {
 //    int n = 0;
