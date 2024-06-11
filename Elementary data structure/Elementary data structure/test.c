@@ -6,6 +6,112 @@
 #include<stdio.h>
 
 
+
+//消失的数字
+//int missingNumber(int* nums, int numsSize) {
+//    int n = 0;
+//    for (int i = 1; i <= numsSize; i++)
+//    {
+//        n ^= i;
+//    }
+//    for (int i = 0; i < numsSize; i++)
+//    {
+//        n ^= nums[i];
+//    }
+//    return n;
+//}
+//轮转数组
+//void Inverse(int* nums, int left, int right)
+//{
+//    while (left < right)
+//    {
+//        int tmp = nums[left];
+//        nums[left] = nums[right];
+//        nums[right] = tmp;
+//        left++;
+//        right--;
+//    }
+//
+//}
+//
+//void rotate(int* nums, int numsSize, int k) {
+//    k %= numsSize;
+//
+//    Inverse(nums, 0, numsSize - k - 1);
+//    Inverse(nums, numsSize - k, numsSize - 1);
+//    Inverse(nums, 0, numsSize - 1);
+//
+//}
+
+
+///**移除链表元素
+// * Definition for singly-linked list.
+// * struct ListNode {
+// *     int val;
+// *     struct ListNode *next;
+// * };
+// */
+//struct ListNode* removeElements(struct ListNode* head, int val) {
+//    struct ListNode* newhead = NULL;
+//    struct ListNode* cur = head;
+//    struct ListNode* newtail = newhead;
+//
+//    while (cur)
+//    {
+//        if (cur->val != val)
+//        {
+//            if (newhead == NULL)
+//            {
+//                newhead = newtail = cur;
+//            }
+//            else
+//            {
+//                newtail->next = cur;
+//                newtail = cur;
+//            }
+//        }
+//        cur = cur->next;
+//    }
+//
+//    if (newhead != NULL)
+//        newtail->next = NULL;
+//
+//    return newhead;
+//}
+
+
+//int main()
+//{
+//	int a = 8;
+//	a += a-=a * a;
+//	return 0;
+//}
+
+//反转链表
+///**
+// * Definition for singly-linked list.
+// * struct ListNode {
+// *     int val;
+// *     struct ListNode *next;
+// * };
+// */
+//struct ListNode* reverseList(struct ListNode* head) {
+//    struct ListNode* n2 = head;
+//    struct ListNode* n1 = NULL;
+//    if (head == NULL)
+//    {
+//        return NULL;
+//    }
+//    while (n2)
+//    {
+//        struct ListNode* n3 = n2->next;
+//        n2->next = n1;
+//        n1 = n2;
+//        n2 = n3;
+//    }
+//
+//    return n1;
+//}
 //移除元素
 //int removeElement(int* nums, int numsSize, int val) {
 //    int* tmp = (int*)malloc(numsSize * sizeof(int));
