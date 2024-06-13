@@ -5,6 +5,87 @@
 #include<assert.h>
 #include<stdio.h>
 
+///**合并两个有序链表
+// * Definition for singly-linked list.
+// * struct ListNode {
+// *     int val;
+// *     struct ListNode *next;
+// * };
+// */
+//struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2) {
+//    struct ListNode* line1 = list1;
+//    struct ListNode* line2 = list2;
+//    struct ListNode* newhead = NULL;
+//    struct ListNode* newtail = NULL;
+//    while (line1 && line2)
+//    {
+//        if (line1->val > line2->val)
+//        {
+//            if (newhead == NULL)
+//            {
+//                newhead = line2;
+//                newtail = line2;
+//                line2 = line2->next;
+//            }
+//            else
+//            {
+//                newtail->next = line2;
+//                newtail = line2;
+//                line2 = line2->next;
+//            }
+//
+//        }
+//        else
+//        {
+//            if (newhead == NULL)
+//            {
+//                newhead = line1;
+//                newtail = line1;
+//                line1 = line1->next;
+//            }
+//            else
+//            {
+//                newtail->next = line1;
+//                newtail = line1;
+//                line1 = line1->next;
+//            }
+//
+//        }
+//    }
+//    while (line1)
+//    {
+//        if (newhead == NULL)
+//        {
+//            newhead = line1;
+//            newtail = line1;
+//            line1 = line1->next;
+//        }
+//        else
+//        {
+//            newtail->next = line1;
+//            newtail = line1;
+//            line1 = line1->next;
+//        }
+//
+//    }
+//    while (line2)
+//    {
+//        if (newhead == NULL)
+//        {
+//            newhead = line2;
+//            newtail = line2;
+//            line2 = line2->next;
+//        }
+//        else
+//        {
+//            newtail->next = line2;
+//            newtail = line2;
+//            line2 = line2->next;
+//        }
+//    }
+//    return newhead;
+//}
+
 ///**相交链表
 // * Definition for singly-linked list.
 // * struct ListNode {
