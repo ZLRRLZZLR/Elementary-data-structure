@@ -5,7 +5,29 @@
 #include<assert.h>
 #include<stdio.h>
 
+// //明确树的度是N
+//#define N  4
+//struct TreeNode
+//{
+//	int val;
+//	struct TreeNode* subs[N];//开辟数组将孩子节点储存起来
+//};
 
+// 如果没有明确树的度
+//struct TreeNode
+//{
+//	int val;
+//	SeqList subs; // C：顺序表内部存struct TreeNode*
+//	//vector<struct TreeNode*> subs;//C++:
+//};
+
+//struct TreeNode
+//{
+//	int val;
+//
+//	struct TreeNode* leftchild;
+//	struct TreeNode* rightBrother;
+//};
 ///**环形链表二
 // * Definition for singly-linked list.
 // * struct ListNode {
