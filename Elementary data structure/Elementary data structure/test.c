@@ -5,6 +5,8 @@
 #include<assert.h>
 #include<stdio.h>
 
+
+
 // //明确树的度是N
 //#define N  4
 //struct TreeNode
