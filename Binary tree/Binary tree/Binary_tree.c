@@ -53,6 +53,45 @@ void BinaryTreeDestory(BTNode** root)
 	return;
 }
 
+// 错误示范
+//int TreeSize(BTNode* root)
+//{
+//	static int size = 0;
+//	if (root == NULL)
+//		return 0;
+//	else
+//		++size;
+//
+//	TreeSize(root->left);
+//	TreeSize(root->right);
+//
+//	return size;
+//}
+
+//int size = 0;
+//int TreeSize(BTNode* root)
+//{
+//	if (root == NULL)
+//		return 0;
+//	else
+//		++size;
+//
+//	TreeSize(root->left);
+//	TreeSize(root->right);
+//
+//	return size;
+//}
+
+//void TreeSize(BTNode* root, int* psize)
+//{
+//	if (root == NULL)
+//		return 0;
+//	else
+//		++(*psize);
+//
+//	TreeSize(root->left, psize);
+//	TreeSize(root->right, psize);
+//}
 // 二叉树节点个数
 int BinaryTreeSize(BTNode* root)
 {

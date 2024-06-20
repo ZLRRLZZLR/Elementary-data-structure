@@ -23,43 +23,68 @@ BTNode* CreatBinaryTree()
 	return node1;
 }
 
+//int main()
+//{
+//	BTNode* n = CreatBinaryTree();
+//	BTDataType* a = { "ABD##E#H##CF##G##" };
+//	BTNode* n1 = NULL;
+//
+//	//BinaryTreePrevOrder(n);
+//	//BinaryTreeInOrder(n);
+//
+//	//BinaryTreeDestory(&n);
+//
+//	//printf("%d\n",BinaryTreeSize(n));
+//
+//	printf("%d\n", BinaryTreeLeafSize(n));
+//	printf("%d\n", BinaryTreeLevelKSize(n, 4));
+//	BTNode* find = BinaryTreeFind(n, 10);
+//
+//	if(find)
+//	{
+//		printf("%d\n", find->_data);
+//
+//	}
+//	else
+//	{
+//		printf("%s\n","NULL");
+//	}
+//
+//	printf("%d\n", TreeHeight(n));
+//
+//	int ret = BinaryTreeComplete(n);
+//	printf("%d\n",ret);
+//
+//	BinaryTreeLevelOrder(n);
+//	int i = 0;
+//	BTNode* root = BinaryTreeCreate(a,sizeof(a)/sizeof(a[0]), &i);
+//		BinaryTreePrevOrder(n);
+//		printf("\n");
+//		BinaryTreePrevOrder(root);
+//	return 0;
+//}
 int main()
 {
-	BTNode* n = CreatBinaryTree();
-	BTDataType* a = { "ABD##E#H##CF##G##" };
-	BTNode* n1 = NULL;
+	BTNode* root = CreatBinaryTree();
+	PrevOrder(root);
+	printf("\n");
 
-	//BinaryTreePrevOrder(n);
-	//BinaryTreeInOrder(n);
+	InOrder(root);
+	printf("\n");
 
-	//BinaryTreeDestory(&n);
 
-	//printf("%d\n",BinaryTreeSize(n));
+	int size = 0;
+	TreeSize(root, &size);
+	printf("TreeSize:%d\n",size);
+	TreeSize(root, &size);
+	printf("TreeSize:%d\n", size);
+	TreeSize(root, &size);
+	printf("TreeSize:%d\n", size);
+	/*printf("TreeSize:%d\n", TreeSize(root));
+	printf("TreeLeafSize:%d\n", TreeLeafSize(root));
+	printf("TreeHeight:%d\n", TreeHeight(root));
+	printf("TreeLevelKSize:%d\n", TreeLevelKSize(root, 3));
+	printf("TreeLevelKSize:%d\n", TreeLevelKSize(root, 4));*/
 
-	printf("%d\n", BinaryTreeLeafSize(n));
-	printf("%d\n", BinaryTreeLevelKSize(n, 4));
-	BTNode* find = BinaryTreeFind(n, 10);
-
-	if(find)
-	{
-		printf("%d\n", find->_data);
-
-	}
-	else
-	{
-		printf("%s\n","NULL");
-	}
-
-	printf("%d\n", TreeHeight(n));
-
-	int ret = BinaryTreeComplete(n);
-	printf("%d\n",ret);
-
-	BinaryTreeLevelOrder(n);
-	int i = 0;
-	BTNode* root = BinaryTreeCreate(a,sizeof(a)/sizeof(a[0]), &i);
-		BinaryTreePrevOrder(n);
-		printf("\n");
-		BinaryTreePrevOrder(root);
 	return 0;
 }
