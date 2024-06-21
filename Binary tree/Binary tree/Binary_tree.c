@@ -279,6 +279,17 @@ int BinaryTreeComplete(BTNode* root)
 	return true;
 }
 
+
+// 有效率问题
+//int TreeHeight(BTNode* root)
+//{
+//	if (root == NULL)
+//		return 0;
+//
+//	return TreeHeight(root->left) > TreeHeight(root->right) ?
+//		TreeHeight(root->left) + 1 : TreeHeight(root->right) + 1;
+//}
+
 //树高
 int TreeHeight(BTNode* root)
 {

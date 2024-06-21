@@ -80,6 +80,7 @@ int main()
 	printf("TreeSize:%d\n", size);
 	TreeSize(root, &size);
 	printf("TreeSize:%d\n", size);
+
 	/*printf("TreeSize:%d\n", TreeSize(root));
 	printf("TreeLeafSize:%d\n", TreeLeafSize(root));
 	printf("TreeHeight:%d\n", TreeHeight(root));
