@@ -7,7 +7,7 @@
 
 
 // 支持动态增长的栈
-typedef int STDataType;
+typedef struct POS STDataType;
 
 typedef struct Stack
 {
