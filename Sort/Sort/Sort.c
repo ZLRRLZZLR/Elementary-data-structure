@@ -343,6 +343,62 @@ int PartSort3(int* a, int left, int right)
 	return prev;
 }
 
+//快速排序三路划分
+void QuickSort1(int* a, int left, int right)
+{
+	if (left >= right)
+		return;
+
+	if (right - left + 1 <= 10)
+	{
+		InsertSort(a + left, right - left + 1);
+	}
+
+	else
+	{
+		//随机数取key
+		int randi = left + (rand() % (right - left));
+		Swap(&a[left],&a[randi]);
+		int key = a[left];
+
+		// 三路划分
+		// left和right指向就是跟key相等的区间
+        // [begin, left-1] [left, right] right+1, end]
+
+		int begin = left;
+		int end = right;
+		int cur = left + 1;
+
+		while(cur <= right)
+		{
+			// 1、cur遇到比key小，小的换到左边，同时把key换到中间位置
+            // 2、cur遇到比key大，大的换到右边
+
+			if(a[cur] > key)
+			{
+				Swap(&a[cur],&a[right]);
+				right--;
+			}
+
+			else if(a[cur] < key)
+			{
+				Swap(&a[left], &a[cur]);
+				left++;
+				cur++;
+			}
+			else
+			{
+				cur++;
+			}
+		}
+
+
+		QuickSort(a, begin, left - 1);
+		QuickSort(a, right + 1, end);
+	}
+
+}
+
 void QuickSort(int* a, int left, int right)
 {
 	if (left >= right)

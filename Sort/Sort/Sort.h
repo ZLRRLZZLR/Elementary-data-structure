@@ -51,3 +51,6 @@ void MergeSortNonR(int* a, int n);
 void CountSort(int* a, int n);
 
 void PrintArray(int* a, int n);
+
+//快排应对大量重复数据的优化——三路划分
+void QuickSort1(int* a, int left, int right);
