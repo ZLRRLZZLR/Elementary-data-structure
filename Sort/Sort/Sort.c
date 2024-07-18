@@ -306,7 +306,7 @@ int PartSort2(int* a, int left, int right)
 	return begin;
 }
 
-// 快速排序前后指针法
+// 快速排序前后指针法lomuto
 int PartSort3(int* a, int left, int right)
 {
 	int prev = left;
@@ -399,6 +399,8 @@ void QuickSort1(int* a, int left, int right)
 
 }
 
+
+
 void QuickSort(int* a, int left, int right)
 {
 	if (left >= right)
@@ -422,6 +424,76 @@ void QuickSort(int* a, int left, int right)
 	}
 
 }
+
+//快排优化之introsort自省排序
+
+void Introsort(int* a, int left, int right,int depth,int defaultDepth)
+{
+	if (left >= right)
+		return;
+
+	if (right - left + 1 <= 10)
+	{
+		InsertSort(a + left, right - left + 1);
+		return;
+	}
+
+	if(depth > defaultDepth)
+	{
+		HeapSort(a,right - left + 1);
+		return;
+	}
+
+	depth++;
+
+	int prev = left;
+	int cur = left + 1;
+
+	int key = GetMid(a, left, right);
+	Swap(&a[key], &a[left]);
+
+	while (cur <= right)
+	{
+		while (cur <= right && a[cur] > a[left])
+		{
+			cur++;
+		}
+		prev++;
+		if (prev != cur)
+		{
+			Swap(&a[prev], &a[cur]);
+		}
+		cur++;
+	}
+
+	Swap(&a[prev], &a[left]);
+
+
+	Introsort(a, left, prev - 1, depth, defaultDepth);
+	Introsort(a, prev + 1, right, depth, defaultDepth);
+
+}
+
+
+
+//快排优化之introsort自省排序
+void QuickSort2(int* a, int left, int right)
+{
+	int depth = 0;
+	int logn = 0;
+
+	int N = right - left + 1;
+
+	for(int i = 1;i < N;i *= 2)
+	{
+		logn++;
+	}
+
+	Introsort(a, left, right, depth, logn * 2);
+}
+
+
+
 #include"Stack.h"
 
 // 快速排序 非递归实现

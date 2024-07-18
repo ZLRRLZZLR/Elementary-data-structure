@@ -198,6 +198,21 @@ void TestQuickSort1()
 	PrintArray(a, sizeof(a) / sizeof(int));
 }
 
+void TestQuickSort2()
+{
+	srand((unsigned int)time(NULL));
+	//int a[] = { 6,1,2,7,9,3,4,5,10,8 };
+
+	int a[] = { 6,1,6,7,6,6,4,9 };
+	/*int a[] = { 2,2,2,2,2,2,2,2 };
+	int a[] = { 3,2,3,3,2,3,2,3 };
+	int a[] = { 2,3,3,3,2,3,2,3 };*/
+
+	PrintArray(a, sizeof(a) / sizeof(int));
+	QuickSort2(a, 0, sizeof(a) / sizeof(int) - 1);
+	PrintArray(a, sizeof(a) / sizeof(int));
+}
+
 int main()
 {
 	//TestInsertSort();
@@ -206,9 +221,9 @@ int main()
 	//TestQuickSort();
 	//TestMergeSort();
 	//TestCountSort();
-	TestQuickSort1();
+	//TestQuickSort1();
 	//TestOP();
-
+	TestQuickSort2();
 
 	return 0;
 }
