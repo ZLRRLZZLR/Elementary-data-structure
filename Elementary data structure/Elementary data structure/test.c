@@ -7,6 +7,210 @@
 
 
 
+
+
+////OR86 返回小于 N 的质数个数
+//#include <stdio.h>
+//#include<math.h>
+//
+//int isZS(int n)
+//{
+//    int flag = 1;
+//    for (int i = 2; i <= sqrt(n); i++)
+//    {
+//        if (n % i == 0)
+//        {
+//            flag = 0;
+//            break;
+//        }
+//    }
+//    return flag;
+//}
+//
+//int main() {
+//    int N;
+//    while (scanf("%d", &N) != EOF) {
+//        int count = 0;
+//        for (int i = 2; i < N; i++)
+//        {
+//            count += isZS(i);
+//        }
+//        printf("%d\n", count);
+//    }
+//    return 0;
+//}
+////HJ99 自守数
+//#include <stdio.h>
+//int Number(int a, int b)
+//{
+//    for (; b > 0;)
+//    {
+//        if (a % 10 != b % 10)
+//        {
+//            return 0;
+//        }
+//        a /= 10;
+//        b /= 10;
+//    }
+//    return 1;
+//}
+//int main() {
+//    int n;
+//    while (scanf("%d", &n) != EOF) {
+//        int count = 0;
+//        for (int i = 0; i <= n; i++)
+//        {
+//            int num = i * i;
+//            if (i == num)
+//            {
+//                count += 1;
+//            }
+//            else
+//            {
+//                count += Number(num, i);
+//            }
+//        }
+//        printf("%d\n", count);
+//    }
+//    return 0;
+//}
+//#include <stdio.h>
+//#include<math.h>
+//
+//int Number(int n)
+//{
+//    int count = 0;
+//    if (n < 10)
+//    {
+//        count = 1;
+//    }
+//    else if (n < 100)
+//    {
+//        count = 2;
+//    }
+//    else if (n < 1000)
+//    {
+//        count = 3;
+//    }
+//    else if (n < 10000)
+//    {
+//        count = 4;
+//    }
+//    else
+//    {
+//        count = 5;
+//    }
+//    count = pow(10, count);
+//    return count;
+//}
+//int main() {
+//    int n;
+//    while (scanf("%d", &n) != EOF) {
+//        int count = 0;
+//        for (int i = 0; i <= n; i++)
+//        {
+//            int a = Number(i);
+//            int b = i * i;
+//            if (a == b)
+//            {
+//                count++;
+//            }
+//            else if (b % a == i)
+//            {
+//                count++;
+//            }
+//        }
+//        printf("%d\n", count);
+//    }
+//    return 0;
+//}
+//#include <stdio.h>
+//
+//int Number(int n)
+//{
+//    int count = 0;
+//    for (; n > 0;)
+//    {
+//        if (n != 0)
+//        {
+//            count++;
+//            n = n / 10;
+//        }
+//    }
+//    return count;
+//}
+//int main() {
+//    int n;
+//    while (scanf("%d", &n) != EOF) {
+//        int count = 0;
+//        for (int i = 0; i <= n; i++)
+//        {
+//            int a = Number(i);
+//            int b = i * i;
+//            if (a == b)
+//            {
+//                count++;
+//            }
+//            else if (b % (a * 10) == i )
+//            {
+//                count++;
+//            }
+//        }
+//        printf("%d", count);
+//    }
+//    return 0;
+//}
+//#include <stdio.h>
+//
+//int Number(int n)
+//{
+//    int count = 0;
+//    for (; n > 0;)
+//    {
+//        if (n != 0)
+//        {
+//            count++;
+//            n = n / 10;
+//        }
+//    }
+//    return count;
+//}
+//int main() {
+//    int n;
+//    while (scanf("%d", &n) != EOF) {
+//        int count = 0;
+//        for (int i = 0; i <= n; i++)
+//        {
+//            int a = Number(i);
+//            int b = i * i;
+//            if (b == i % (a * 10))
+//            {
+//                count++;
+//            }
+//        }
+//        printf("%d", count);
+//    }
+//    return 0;
+//}
+//#include <stdio.h>
+//
+//
+//int main() {
+//    int n;
+//    while (scanf("%d", &n) != EOF) {
+//        int count = 0;
+//        for (int i = 0; i <= n; i++)
+//        {
+//            int b = i * i;
+//            if (b % 10 == i % 10)
+//            {
+//                count++;
+//            }
+//        }
+//        printf("%d", count);
+//    }
+//    return 0;
+//}
 // //明确树的度是N
 //#define N  4
 //struct TreeNode
