@@ -4,11 +4,88 @@
 #include<stdbool.h>
 #include<assert.h>
 #include<stdio.h>
+#include<string.h>
 
 
 
-
-
+////面试题 01.02.判定是否互为字符重排
+//bool CheckPermutation(char* s1, char* s2) {
+//    int len1 = strlen(s1);
+//    int len2 = strlen(s2);
+//    if (len1 != len2)
+//    {
+//        return false;
+//    }
+//    int* S1 = calloc(26, sizeof(int));
+//    int* S2 = calloc(26, sizeof(int));
+//    for (int i = 0; i < len1; i++)
+//    {
+//        S1[s1[i] - 'a']++;
+//        S2[s2[i] - 'a']++;
+//    }
+//
+//    for (int i = 0; i < 26; i++)
+//    {
+//        if (S1[i] != S2[i])
+//        {
+//            return false;
+//        }
+//    }
+//
+//    return true;
+//}
+////面试题 01.01.判定字符是否唯一
+//bool isUnique(char* astr) {
+//    int len = strlen(astr);
+//    int* s = calloc(26, sizeof(int));
+//    for (int i = 0; i < len; i++)
+//    {
+//        s[astr[i] - 'a']++;
+//    }
+//    for (int i = 0; i < 26; i++)
+//    {
+//        if (s[i] > 1)
+//        {
+//            return false;
+//        }
+//    }
+//    return true;
+//}
+////NC31 第一个只出现一次的字符
+///**
+// * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+// *
+// *
+// * @param str string字符串
+// * @return int整型
+// */
+// //计数排序
+//int FirstNotRepeatingChar(char* str) {
+//    int len = strlen(str);
+//    int* S = calloc(26, sizeof(int));
+//    int* s = calloc(26, sizeof(int));
+//    for (int i = 0; i < len; i++)
+//    {
+//        if (isupper(str[i]))
+//            S[str[i] - 'A']++;
+//        else
+//            s[str[i] - 'a']++;
+//    }
+//    for (int i = 0; i < len; i++)
+//    {
+//        if (isupper(str[i]))
+//        {
+//            if (S[str[i] - 'A'] == 1)
+//                return i;
+//        }
+//        else
+//        {
+//            if (s[str[i] - 'a'] == 1)
+//                return i;
+//        }
+//    }
+//    return -1;
+//}
 ////OR86 返回小于 N 的质数个数
 //#include <stdio.h>
 //#include<math.h>
