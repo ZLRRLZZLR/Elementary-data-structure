@@ -4,7 +4,81 @@
 #include<stdio.h>
 #include"stdbool.h"
 
+//
+////OR135 单词缩写
+//#include <stdio.h>
+//#include<string.h>
+//
+//int main() {
+//    int n;
+//    while (scanf("%d", &n) != EOF) {
+//        char str[100];
+//        while (scanf("%s", str) != EOF)
+//        {
+//            int len = strlen(str);
+//            if (len < 10)
+//            {
+//                printf("%s", str);
+//            }
+//            else
+//            {
+//                printf("%c", str[0]);
+//                printf("%d", len - 2);
+//                printf("%c", str[len - 1]);
+//            }
+//            printf("%c", '\n');
+//        }
+//    }
+//    return 0;
+//}
 
+//#include <stdio.h>
+//#include<string.h>
+//
+//int main() {
+//    int n;
+//    while (scanf("%d", &n) != EOF) {
+//        char str[100];
+//        while (scanf("%s", str) != EOF)
+//        {
+//            int len = strlen(str);
+//            if (len < 10)
+//            {
+//                printf("%s", str);
+//            }
+//            else
+//            {
+//                printf("%c", str[0]);
+//                printf("%d", len - 2);
+//                printf("%d", str[len - 1]);
+//            }
+//            printf("%c", '\n');
+//        }
+//    }
+//    return 0;
+//}
+////面试题 01.04. 回文排列
+//bool canPermutePalindrome(char* s) {
+//    int len = strlen(s);
+//    int flag = 0;
+//    int* S = calloc(128, sizeof(int));
+//    for (int i = 0; i < len; i++)
+//    {
+//        S[s[i] - 0]++;
+//    }
+//    for (int i = 0; i < 128; i++)
+//    {
+//        if (S[i] % 2 != 0)
+//        {
+//            flag++;
+//        }
+//    }
+//    if (flag > 1)
+//    {
+//        return false;
+//    }
+//    return true;
+//}
 //面试题 01.02.判定是否互为字符重排
 //bool CheckPermutation(char* s1, char* s2) {
 //    int len1 = strlen(s1);
