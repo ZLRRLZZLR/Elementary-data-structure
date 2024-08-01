@@ -4,7 +4,67 @@
 #include<stdio.h>
 #include"stdbool.h"
 
+
+
+////面试题 01.03.URL化
+//char* replaceSpaces(char* S, int length) {
+//    char* str1 = S;
+//    char* str2 = (char*)malloc(10000000);
+//    char* begin = str2;
+//    int count = 0;
+//    while (count < length)
+//    {
+//        if (count < length && *str1 == ' ')
+//        {
+//            *str2++ = '%';
+//            *str2++ = '2';
+//            *str2++ = '0';
+//            str1++;
+//            count++;
+//        }
+//        while (count < length && *str1 != ' ')
+//        {
+//            *str2++ = *str1++;
+//            count++;
+//        }
+//    }
 //
+//    *str2 = '\0';
+//    return begin;
+//}
+//char* replaceSpaces(char* S, int length) {
+//    char* str1 = S;
+//    char* str2 = (char*)malloc(10000000);
+//    char* begin = str2;
+//    int count = 0;
+//    while (count < length)
+//    {
+//        if (*str1 == ' ')
+//        {
+//            *str2++ = '%';
+//            *str2++ = '2';
+//            *str2++ = '0';
+//            str1++;
+//            count++;
+//        }
+//        while (*str1 != ' ')
+//        {
+//            *str2++ = *str1++;
+//            count++;
+//        }
+//    }
+//
+//    *str2 = '\0';
+//    return begin;
+//}
+//
+//int main()
+//{
+//    char S[100] = { "LqyuIZCuyRyvllekBuYNUZDrCzHCXeeUmZAfgIvHxzFgLCkLLzDBdfJh" };
+//
+//    replaceSpaces(S, 56);
+//    return 0;
+//}
 ////OR135 单词缩写
 //#include <stdio.h>
 //#include<string.h>
