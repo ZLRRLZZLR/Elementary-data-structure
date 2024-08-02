@@ -6,6 +6,40 @@
 
 
 
+#include <stdio.h>
+
+int main() {
+    int n;
+    while (scanf("%d", &n) != EOF) {
+        int count = 0;
+        for (int i = 7; i < n; i++)
+        {
+            int m = i;
+            while (m)
+            {
+                if (i % 10 == 7 || i % 7 == 0)
+                {
+                    count++;
+                    break;
+                }
+                m /= 10;
+            }
+        }
+        printf("%d", count);
+    }
+    return 0;
+}
+
+////面试题 08.05.递归乘法
+//int multiply(int A, int B) {
+//    int num = A;
+//    for (int i = 1; i < B; i++)
+//    {
+//        A += num;
+//    }
+//    return A;
+//}
+
 ////面试题 01.03.URL化
 //char* replaceSpaces(char* S, int length) {
 //    char* str1 = S;
