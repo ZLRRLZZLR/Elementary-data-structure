@@ -7,6 +7,97 @@
 #include<string.h>
 
 
+
+
+////206. 反转链表
+///**
+// * Definition for singly-linked list.
+// * struct ListNode {
+// *     int val;
+// *     struct ListNode *next;
+// * };
+// */
+//typedef struct ListNode ListNode;
+//struct ListNode* reverseList(struct ListNode* head) {
+//    if (head == NULL)
+//    {
+//        return head;
+//    }
+//    ListNode* n1 = NULL;
+//    ListNode* n2 = head;
+//    ListNode* n3 = head->next;
+//    while (n2 != NULL)
+//    {
+//
+//        n2->next = n1;
+//        n1 = n2;
+//        n2 = n3;
+//        if (n2 != NULL)
+//        {
+//            n3 = n2->next;
+//        }
+//    }
+//    return n1;
+//
+//}
+///**
+// * Definition for singly-linked list.
+// * struct ListNode {
+// *     int val;
+// *     struct ListNode *next;
+// * };
+// */
+//typedef struct ListNode ListNode;
+//struct ListNode* removeElements(struct ListNode* head, int val) {
+//    ListNode* newhead = NULL;
+//    ListNode* newtail = NULL;
+//    ListNode* cur = head;
+//    if (head == NULL)
+//        return head;
+//    while (cur != NULL)
+//    {
+//        if (cur->val != val)
+//        {
+//            if (newtail == NULL)
+//            {
+//                newtail = newhead = cur;
+//            }
+//            else
+//            {
+//                newtail->next = cur;
+//                newtail = cur;
+//            }
+//
+//        }
+//        cur = cur->next;
+//    }
+//    if (newtail)
+//    {
+//        newtail->next = NULL;
+//    }
+//    return newhead;
+//}
+////876. 链表的中间结点
+///**
+// * Definition for singly-linked list.
+// * struct ListNode {
+// *     int val;
+// *     struct ListNode *next;
+// * };
+// */
+//typedef struct ListNode ListNode;
+//struct ListNode* middleNode(struct ListNode* head) {
+//    ListNode* fast = head;
+//    ListNode* slow = head;
+//    if (head == NULL)
+//        return head;
+//    while (fast && fast->next)
+//    {
+//        slow = slow->next;
+//        fast = fast->next->next;
+//    }
+//    return slow;
+//}
 ////88. 合并两个有序数组
 //void merge(int* nums1, int nums1Size, int m, int* nums2, int nums2Size, int n) {
 //    int l3 = m + n - 1;
