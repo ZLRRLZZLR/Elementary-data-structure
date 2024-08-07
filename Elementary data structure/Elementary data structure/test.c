@@ -8,7 +8,63 @@
 
 
 
-
+///**21. 合并两个有序链表
+// * Definition for singly-linked list.
+// * struct ListNode {
+// *     int val;
+// *     struct ListNode *next;
+// * };
+// */
+//typedef struct ListNode ListNode;
+//struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2) {
+//    ListNode* l1 = list1;
+//    ListNode* l2 = list2;
+//    ListNode* newhead = NULL;
+//    ListNode* newtail = NULL;
+//    if (l1 == NULL)
+//        return l2;
+//    if (l2 == NULL)
+//        return l1;
+//
+//    while (l1 && l2)
+//    {
+//        if (l1->val <= l2->val)
+//        {
+//            if (newtail == NULL)
+//            {
+//                newhead = newtail = l1;
+//                l1 = l1->next;
+//            }
+//            else
+//            {
+//                newtail->next = l1;
+//                newtail = newtail->next;
+//                l1 = l1->next;
+//            }
+//        }
+//        else
+//        {
+//            if (newtail == NULL)
+//            {
+//                newhead = newtail = l2;
+//                l2 = l2->next;
+//            }
+//            else
+//            {
+//                newtail->next = l2;
+//                newtail = newtail->next;
+//                l2 = l2->next;
+//            }
+//        }
+//    }
+//    if (l1)
+//        newtail->next = l1;
+//    else
+//        newtail->next = l2;
+//
+//    return newhead;
+//
+//}
 ////206. 反转链表
 ///**
 // * Definition for singly-linked list.
