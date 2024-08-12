@@ -7,6 +7,101 @@
 #include<string.h>
 
 
+////环形链表的约瑟夫问题
+///**
+// * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+// *
+// *
+// * @param n int整型
+// * @param m int整型
+// * @return int整型
+// */
+//typedef struct ListNode ListNode;
+//ListNode* CreateNode(int i)
+//{
+//    ListNode* node = (ListNode*)malloc(sizeof(ListNode));
+//    node->val = i;
+//    node->next = NULL;
+//    return node;
+//}
+//ListNode* CreateCircle(int n)
+//{
+//    ListNode* Head = CreateNode(1);
+//    ListNode* Tail = Head;
+//    for (int i = 2; i <= n; i++)
+//    {
+//        Tail->next = CreateNode(i);
+//        Tail = Tail->next;
+//    }
+//    Tail->next = Head;
+//    return Tail;
+//}
+//
+//int ysf(int n, int m) {
+//    ListNode* prev = CreateCircle(n);
+//    ListNode* pcur = prev->next;
+//    int count = 1;
+//    while (pcur->next != pcur)
+//    {
+//        if (count == m)
+//        {
+//            prev->next = pcur->next;
+//            free(pcur);
+//            pcur = prev->next;
+//            count = 1;
+//        }
+//        else
+//        {
+//            count++;
+//            prev = pcur;
+//            pcur = pcur->next;
+//        }
+//    }
+//    int val = pcur->val;
+//    free(pcur);
+//    pcur = prev = NULL;
+//    return val;
+//}
+//面试题 02.04. 分割链表
+///**
+// * Definition for singly-linked list.
+// * struct ListNode {
+// *     int val;
+// *     struct ListNode *next;
+// * };
+// */
+//
+//typedef struct ListNode ListNode;
+//struct ListNode* partition(struct ListNode* head, int x) {
+//    if (NULL == head)
+//    {
+//        return head;
+//    }
+//    ListNode* SmallHead, * BigHead, * SmallTail, * BigTail;
+//    SmallHead = SmallTail = (ListNode*)malloc(sizeof(ListNode));
+//    BigHead = BigTail = (ListNode*)malloc(sizeof(ListNode));
+//    ListNode* pcur = head;
+//    while (pcur != NULL)
+//    {
+//        if (pcur->val < x)
+//        {
+//            SmallTail->next = pcur;
+//            SmallTail = SmallTail->next;
+//        }
+//        else
+//        {
+//            BigTail->next = pcur;
+//            BigTail = BigTail->next;
+//        }
+//        pcur = pcur->next;
+//    }
+//    BigTail->next = NULL;
+//    SmallTail->next = BigHead->next;
+//    free(BigHead);
+//    BigHead = NULL;
+//
+//    return SmallHead->next;
+//}
 
 ///**21. 合并两个有序链表
 // * Definition for singly-linked list.
