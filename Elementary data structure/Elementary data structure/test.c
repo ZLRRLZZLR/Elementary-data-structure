@@ -7,6 +7,261 @@
 #include<string.h>
 
 
+void rotate(int* nums, int numsSize, int k) {
+    int* arr = (int*)malloc(sizeof(int) * numsSize);
+    k %= numsSize;
+    memcpy(arr, nums + numsSize - k, sizeof(int) * k);
+    memcpy(arr + k, nums, sizeof(int) * (numsSize - k));
+    memcpy(nums, arr, sizeof(int) * numsSize);
+
+}
+
+//void reverse(int* nums, int left, int right) {
+//    while (left <= right) {
+//        int tmp = nums[left];
+//        nums[left] = nums[right];
+//        nums[right] = tmp;
+//        left++;
+//        right--;
+//    }
+//}
+//void rotate(int* nums, int numsSize, int k) {
+//    k %= numsSize;
+//    reverse(nums, numsSize - k, numsSize - 1);
+//    reverse(nums, 0, numsSize - k - 1);
+//    reverse(nums, 0, numsSize - 1);
+//
+//}
+
+//int missingNumber(int* nums, int numsSize) {
+//    int num = 0;
+//    for (int i = 0; i <= numsSize; i++)
+//    {
+//        num ^= i;
+//    }
+//    for (int i = 0; i < numsSize; i++)
+//    {
+//        num ^= nums[i];
+//    }
+//    return num;
+//}
+//
+//
+//int missingNumber(int* nums, int numsSize) {
+//    int num = 0;
+//    for (int i = 0; i <= numsSize; i++)
+//    {
+//        num ^= i;
+//    }
+//    for (int i = 0; i < numsSize; i++)
+//    {
+//        num ^= nums[i];
+//    }
+//    return num;
+//}
+
+
+//int missingNumber(int* nums, int numsSize) {
+//    int sum = 0;
+//    for (int i = 0; i <= numsSize; i++)
+//    {
+//        sum += i;
+//    }
+//    for (int i = 0; i < numsSize; i++)
+//    {
+//        sum -= nums[i];
+//    }
+//    return sum;
+//}
+
+
+//// 计算阶乘递归Fac的空间复杂度？
+//long long Fac(size_t N)
+//{
+//	if (N == 0)
+//		return 1;
+//
+//	return Fac(N - 1) * N;
+//}
+
+//// 计算Fibonacci的空间复杂度？
+//// 返回斐波那契数列的前n项
+//long long* Fibonacci(size_t n)
+//{
+//	if (n == 0)
+//		return NULL;
+//
+//	long long* fibArray = (long long*)malloc((n + 1) * sizeof(long long));
+//	fibArray[0] = 0;
+//	fibArray[1] = 1;
+//	for (int i = 2; i <= n; ++i)
+//	{
+//		fibArray[i] = fibArray[i - 1] + fibArray[i - 2];
+//	}
+//
+//	return fibArray;
+//}
+
+//// 计算BubbleSort的空间复杂度？
+//void BubbleSort(int* a, int n)
+//{
+//	assert(a);
+//	for (size_t end = n; end > 0; --end)
+//	{
+//		int exchange = 0;
+//		for (size_t i = 1; i < end; ++i)
+//		{
+//			if (a[i - 1] > a[i])
+//			{
+//				Swap(&a[i - 1], &a[i]);
+//				exchange = 1;
+//			}
+//		}
+//
+//		if (exchange == 0)
+//			break;
+//	}
+//}
+// 计算Fibon
+//// 计算斐波那契递归Fib的时间复杂度？
+//long long Fib(size_t N)
+//{
+//	if (N < 3)
+//		return 1;
+//
+//	return Fib(N - 1) + Fib(N - 2);
+//}
+
+//// 计算阶乘递归Fac的时间复杂度？
+//long long Fac(size_t N)
+//{
+//	if (0 == N)
+//		return 1;
+//
+//	return Fac(N - 1) * N;
+//}
+
+//// 计算BinarySearch的时间复杂度？
+//int BinarySearch(int* a, int n, int x)
+//{
+//	assert(a);
+//
+//	int begin = 0;
+//	int end = n - 1;
+//	// [begin, end]：begin和end是左闭右闭区间，因此有=号
+//	while (begin <= end)
+//	{
+//		int mid = begin + ((end - begin) >> 1);
+//		if (a[mid] < x)
+//			begin = mid + 1;
+//		else if (a[mid] > x)
+//			end = mid - 1;
+//		else
+//			return mid;
+//	}
+//
+//	return -1;
+//}
+
+//// 计算BubbleSort的时间复杂度？
+//void BubbleSort(int* a, int n)
+//{
+//	assert(a);
+//	for (size_t end = n; end > 0; --end)
+//	{
+//		int exchange = 0;
+//		for (size_t i = 1; i < end; ++i)
+//		{
+//			if (a[i - 1] > a[i])
+//			{
+//				Swap(&a[i - 1], &a[i]);
+//				exchange = 1;
+//			}
+//		}
+//
+//		if (exchange == 0)
+//			break;
+//	}
+//}
+
+
+//// 计算Func4的时间复杂度？
+//void Func4(int N)
+//{
+//	int count = 0;
+//	for (int k = 0; k < 100; ++k)
+//	{
+//		++count;
+//	}
+//	printf("%d\n", count);
+//}
+
+//// 计算Func3的时间复杂度？
+//void Func3(int N, int M)
+//{
+//	int count = 0;
+//	for (int k = 0; k < M; ++k)
+//	{
+//		++count;
+//	}
+//
+//	for (int k = 0; k < N; ++k)
+//	{
+//		++count;
+//	}
+//	printf("%d\n", count);
+//}
+
+//long long Fib(int N)
+//{
+//	if (N < 3)
+//		return 1;
+//
+//	return Fib(N - 1) + Fib(N - 2);
+//}
+//// 计算Func2的时间复杂度？
+//void Func2(int N)
+//{
+//	int count = 0;
+//	for (int k = 0; k < 2 * N; ++k)
+//	{
+//		++count;
+//	}
+//
+//	int M = 10;
+//	while (M--)
+//	{
+//		++count;
+//	}
+//
+//	printf("%d\n", count);
+//}
+
+//// 请计算一下Func1中++count语句总共执行了多少次？
+//void Func1(int N)
+//{
+//	int count = 0;
+//	for (int i = 0; i < N; ++i)
+//	{
+//		for (int j = 0; j < N; ++j)
+//		{
+//			++count;
+//		}
+//	}
+//
+//	for (int k = 0; k < 2 * N; ++k)
+//	{
+//		++count;
+//	}
+//
+//	int M = 10;
+//	while (M--)
+//	{
+//		++count;
+//	}
+//	printf("%d\n", count);
+//}
+
 ////环形链表的约瑟夫问题
 ///**
 // * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
