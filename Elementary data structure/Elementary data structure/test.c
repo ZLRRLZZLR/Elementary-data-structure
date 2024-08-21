@@ -7,14 +7,179 @@
 #include<string.h>
 
 
-void rotate(int* nums, int numsSize, int k) {
-    int* arr = (int*)malloc(sizeof(int) * numsSize);
-    k %= numsSize;
-    memcpy(arr, nums + numsSize - k, sizeof(int) * k);
-    memcpy(arr + k, nums, sizeof(int) * (numsSize - k));
-    memcpy(nums, arr, sizeof(int) * numsSize);
 
-}
+///**
+// * Definition for singly-linked list.
+// * struct ListNode {
+// *     int val;
+// *     struct ListNode *next;
+// * };
+// */
+//typedef struct ListNode ListNode;
+//struct ListNode* detectCycle(struct ListNode* head) {
+//    ListNode* slow = head;
+//    ListNode* fast = head;
+//    while (fast && fast->next)
+//    {
+//        fast = fast->next->next;
+//        slow = slow->next;
+//        if (slow == fast) {
+//            ListNode* newhead = slow;
+//            while (head != newhead) {
+//                head = head->next;
+//                newhead = newhead->next;
+//            }
+//            return head;
+//        }
+//    }
+//    return NULL;
+//}
+///**
+// * Definition for singly-linked list.
+// * struct ListNode {
+// *     int val;
+// *     struct ListNode *next;
+// * };
+// */
+//typedef struct ListNode ListNode;
+//bool hasCycle(struct ListNode* head) {
+//    ListNode* slow = head;
+//    ListNode* fast = head;
+//    while (fast && fast->next) {
+//        fast = fast->next->next;
+//        slow = slow->next;
+//        if (fast == slow) {
+//            return true;
+//        }
+//    }
+//    return false;
+//
+//}
+///**
+// * Definition for singly-linked list.
+// * struct ListNode {
+// *     int val;
+// *     struct ListNode *next;
+// * };
+// */
+//typedef struct ListNode ListNode;
+//struct ListNode* getIntersectionNode(struct ListNode* headA, struct ListNode* headB) {
+//    ListNode* l1 = headA;
+//    ListNode* l2 = headB;
+//    int lenA = 0;
+//    int lenB = 0;
+//
+//    while (l1->next) {
+//        l1 = l1->next;
+//        lenA++;
+//    }
+//    while (l2->next) {
+//        l2 = l2->next;
+//        lenB++;
+//    }
+//    if (l1 != l2)
+//    {
+//        return false;
+//    }
+//    int gap = abs(lenA - lenB);
+//    ListNode* shortlist = headA;
+//    ListNode* longlist = headB;
+//    if (lenA > lenB) {
+//        longlist = headA;
+//        shortlist = headB;
+//    }
+//    while (gap--) {
+//        longlist = longlist->next;
+//    }
+//    while (longlist != shortlist) {
+//        if (shortlist == NULL) {
+//            return NULL;
+//        }
+//        shortlist = shortlist->next;
+//        longlist = longlist->next;
+//
+//    }
+//    return shortlist;
+//}
+///*
+//struct ListNode {
+//    int val;
+//    struct ListNode *next;
+//    ListNode(int x) : val(x), next(NULL) {}
+//};*/
+//
+//typedef struct ListNode ListNode;
+//ListNode* Mid(ListNode* A) {
+//    ListNode* fast = A;
+//    ListNode* slow = A;
+//    while (fast && fast->next) {
+//        fast = fast->next;
+//        slow = slow->next;
+//    }
+//    return slow;
+//}
+//
+//ListNode* Reverse(ListNode* A) {
+//
+//    ListNode* l2 = A;
+//    ListNode* l1 = NULL;
+//    while (l2) {
+//        ListNode* l3 = l2->next;
+//        l2->next = l1;
+//        l1 = l2;
+//        l2 = l3;
+//    }
+//
+//    return l1;
+//}
+//
+//class PalindromeList {
+//public:
+//    bool chkPalindrome(ListNode* A) {
+//        ListNode* newtail = Mid(A);
+//        ListNode* newhead = Reverse(newtail);
+//        ListNode* head = A;
+//        while (head && newhead) {
+//            if (head->val != newhead->val) {
+//                return false;
+//            }
+//            head = head->next;
+//            newhead = newhead->next;
+//        }
+//        return true;
+//    }
+//};
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+
+
+//int kthToLast(struct ListNode* head, int k) {
+//    struct ListNode* fast = head;
+//    struct ListNode* slow = head;
+//    while (k--) {
+//        fast = fast->next;
+//    }
+//    while (fast) {
+//        fast = fast->next;
+//        slow = slow->next;
+//    }
+//    return slow->val;
+//}
+
+//void rotate(int* nums, int numsSize, int k) {
+//    int* arr = (int*)malloc(sizeof(int) * numsSize);
+//    k %= numsSize;
+//    memcpy(arr, nums + numsSize - k, sizeof(int) * k);
+//    memcpy(arr + k, nums, sizeof(int) * (numsSize - k));
+//    memcpy(nums, arr, sizeof(int) * numsSize);
+//
+//}
 
 //void reverse(int* nums, int left, int right) {
 //    while (left <= right) {
