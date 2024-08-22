@@ -7,7 +7,56 @@
 #include<string.h>
 
 
-
+///**
+// * Definition for a Node.
+// * struct Node {
+// *     int val;
+// *     struct Node *next;
+// *     struct Node *random;
+// * };
+// */
+//typedef struct Node Node;
+//struct Node* copyRandomList(struct Node* head) {
+//    if (head == NULL)
+//        return head;
+//    Node* cur = head;
+//    while (cur) {
+//        Node* copy = (Node*)malloc(sizeof(Node));
+//        copy->val = cur->val;
+//        copy->next = cur->next;
+//        cur->next = copy;
+//        cur = copy->next;
+//    }
+//    cur = head;
+//    while (cur) {
+//        Node* copy = cur->next;
+//        if (cur->random == NULL) {
+//            copy->random = NULL;
+//        }
+//        else {
+//            copy->random = cur->random->next;
+//        }
+//
+//        cur = copy->next;
+//    }
+//    cur = head;
+//    Node* newhead = head->next;
+//    Node* newtail = head->next;
+//    while (cur) {
+//        Node* next = NULL;
+//        if (newtail->next) {
+//            next = newtail->next->next;
+//        }
+//        else {
+//            next = NULL;
+//        }
+//        cur->next = newtail->next;
+//        newtail->next = next;
+//        cur = cur->next;
+//        newtail = newtail->next;
+//    }
+//    return newhead;
+//}
 ///**
 // * Definition for singly-linked list.
 // * struct ListNode {
