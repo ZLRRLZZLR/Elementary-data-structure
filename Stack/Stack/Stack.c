@@ -22,7 +22,7 @@ void StackPush(Stack* ps, STDataType data)
 	assert(ps);
 
 	//扩容
-	if(ps->_capacity == ps->_top)
+	if (ps->_capacity == ps->_top)
 	{
 		int newcapacity = ps->_capacity == 0 ? 4 : 2 * ps->_capacity;
 		STDataType* newnode = (STDataType*)realloc(ps->_a, newcapacity * sizeof(STDataType));
@@ -70,7 +70,7 @@ int StackSize(Stack* ps)
 	return ps->_top;
 }
 
-// 检测队列是否为空，如果为空返回非零结果，如果非空返回0 
+// 检测栈是否为空，如果为空返回非零结果，如果非空返回0 
 bool StackEmpty(Stack* ps)
 {
 	assert(ps);

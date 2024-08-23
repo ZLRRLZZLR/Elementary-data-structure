@@ -7,6 +7,254 @@
 #include<string.h>
 
 
+
+
+//typedef struct {
+//    int head;
+//    int tail;
+//    int k;
+//    int* arr;
+//
+//} MyCircularQueue;
+//
+//
+//MyCircularQueue* myCircularQueueCreate(int k) {
+//    MyCircularQueue* m1 = (MyCircularQueue*)malloc(sizeof(MyCircularQueue));
+//    m1->arr = (int*)malloc(sizeof(int) * (k + 1));
+//    m1->k = k;
+//    m1->head = m1->tail = 0;
+//    return m1;
+//}
+//
+//bool myCircularQueueIsEmpty(MyCircularQueue* obj) {
+//    return obj->head == obj->tail;
+//}
+//
+//bool myCircularQueueIsFull(MyCircularQueue* obj) {
+//    return ((obj->tail + 1) % (obj->k + 1)) == obj->head;
+//}
+//
+//bool myCircularQueueEnQueue(MyCircularQueue* obj, int value) {
+//    if (!myCircularQueueIsFull(obj)) {
+//        obj->arr[obj->tail] = value;
+//        obj->tail = (obj->tail + 1) % (obj->k + 1);
+//        return true;
+//    }
+//    else {
+//        return false;
+//    }
+//
+//}
+//
+//bool myCircularQueueDeQueue(MyCircularQueue* obj) {
+//    if (!myCircularQueueIsEmpty(obj)) {
+//        obj->head = (obj->head + 1) % (obj->k + 1);
+//        return true;
+//    }
+//    else {
+//        return false;
+//    }
+//}
+//
+//int myCircularQueueFront(MyCircularQueue* obj) {
+//    if (myCircularQueueIsEmpty(obj)) {
+//        return -1;
+//    }
+//    else {
+//        return obj->arr[obj->head];
+//    }
+//}
+//
+//int myCircularQueueRear(MyCircularQueue* obj) {
+//    if (myCircularQueueIsEmpty(obj)) {
+//        return -1;
+//    }
+//    else {
+//        return obj->arr[(obj->tail + obj->k) % (obj->k + 1)];
+//    }
+//}
+//
+//
+//
+//void myCircularQueueFree(MyCircularQueue* obj) {
+//    free(obj->arr);
+//    free(obj);
+//}
+//
+///**
+// * Your MyCircularQueue struct will be instantiated and called as such:
+// * MyCircularQueue* obj = myCircularQueueCreate(k);
+// * bool param_1 = myCircularQueueEnQueue(obj, value);
+//
+// * bool param_2 = myCircularQueueDeQueue(obj);
+//
+// * int param_3 = myCircularQueueFront(obj);
+//
+// * int param_4 = myCircularQueueRear(obj);
+//
+// * bool param_5 = myCircularQueueIsEmpty(obj);
+//
+// * bool param_6 = myCircularQueueIsFull(obj);
+//
+// * myCircularQueueFree(obj);
+//*/
+//有效括号
+//// 支持动态增长的栈
+//typedef int STDataType;
+//
+//typedef struct Stack
+//{
+//	STDataType* _a;
+//	int _top;		// 栈顶
+//	int _capacity;  // 容量 
+//}Stack;
+//
+//
+//// 初始化栈 
+//void StackInit(Stack* ps);
+//
+//// 入栈 
+//void StackPush(Stack* ps, STDataType data);
+//
+//// 出栈 
+//void StackPop(Stack* ps);
+//
+//// 获取栈顶元素 
+//STDataType StackTop(Stack* ps);
+//
+//// 获取栈中有效元素个数 
+//int StackSize(Stack* ps);
+//
+//// 检测栈是否为空，如果为空返回非零结果，如果不为空返回0
+//bool StackEmpty(Stack* ps);
+//
+//// 销毁栈 
+//void StackDestroy(Stack* ps);
+//
+//
+//// 初始化栈 
+//void StackInit(Stack* ps)
+//{
+//	assert(ps);
+//
+//	ps->_a = NULL;
+//
+//	// top指向栈顶数据的下一个位置
+//	ps->_top = 0;
+//
+//	// top指向栈顶数据
+//	//ps->_top = -1;
+//
+//	ps->_capacity = 0;
+//}
+//
+//// 入栈 
+//void StackPush(Stack* ps, STDataType data)
+//{
+//	assert(ps);
+//
+//	//扩容
+//	if (ps->_capacity == ps->_top)
+//	{
+//		int newcapacity = ps->_capacity == 0 ? 4 : 2 * ps->_capacity;
+//		STDataType* newnode = (STDataType*)realloc(ps->_a, newcapacity * sizeof(STDataType));
+//
+//		if (NULL == newnode)
+//		{
+//			perror("StackInit:realloc");
+//			exit(1);
+//		}
+//
+//		ps->_a = newnode;
+//		ps->_capacity = newcapacity;
+//	}
+//
+//	ps->_a[ps->_top] = data;
+//	ps->_top++;
+//}
+//
+//// 出栈 
+//void StackPop(Stack* ps)
+//{
+//
+//	assert(ps);
+//	assert(ps->_top > 0);
+//
+//	ps->_top--;
+//
+//}
+//
+//// 获取栈顶元素 
+//STDataType StackTop(Stack* ps)
+//{
+//
+//	assert(ps);
+//	assert(ps->_top > 0);
+//
+//	return ps->_a[ps->_top - 1];
+//}
+//
+//// 获取栈中有效元素个数 
+//int StackSize(Stack* ps)
+//{
+//	assert(ps);
+//
+//	return ps->_top;
+//}
+//
+//// 检测栈是否为空，如果为空返回非零结果，如果非空返回0 
+//bool StackEmpty(Stack* ps)
+//{
+//	assert(ps);
+//
+//	return ps->_top == 0;
+//}
+//
+//// 销毁栈 
+//void StackDestroy(Stack* ps)
+//{
+//	assert(ps);
+//
+//	free(ps->_a);
+//	ps->_a = NULL;
+//	ps->_capacity = ps->_top = 0;
+//}
+//
+//bool isValid(char* s) {
+//	Stack st;
+//	StackInit(&st);
+//	while (*s != '\0')
+//	{
+//		if (*s == '{'
+//			|| *s == '['
+//			|| *s == '('
+//			)
+//		{
+//			StackPush(&st, *s);
+//			s++;
+//		}
+//		else
+//		{
+//			if ((StackEmpty(&st))
+//				|| (StackTop(&st) == '(' && *s != ')')
+//				|| (StackTop(&st) == '[' && *s != ']')
+//				|| (StackTop(&st) == '{' && *s != '}'))
+//			{
+//				StackDestroy(&st);
+//				return false;
+//			}
+//			else
+//			{
+//				StackPop(&st);
+//				s++;
+//			}
+//
+//		}
+//	}
+//	int ret = StackEmpty(&st);
+//	StackDestroy(&st);
+//	return ret;
+//}
 ///**
 // * Definition for a Node.
 // * struct Node {

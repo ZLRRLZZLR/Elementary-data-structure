@@ -16,6 +16,7 @@ typedef struct Stack
 	int _capacity;  // »›¡ø 
 }Stack;
 
+
 // ≥ı ºªØ’ª 
 void StackInit(Stack* ps);
 

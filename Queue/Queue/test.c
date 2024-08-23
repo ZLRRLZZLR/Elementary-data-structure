@@ -111,6 +111,82 @@ bool isValid(char* s)
     else
         return true;
 }
+
+typedef struct {
+    Queue q1;
+    Queue q2;
+
+} MyStack;
+
+
+MyStack* myStackCreate() {
+    MyStack* m1 = (MyStack*)malloc(sizeof(MyStack));
+    QueueInit(&m1->q1);
+    QueueInit(&m1->q2);
+
+    return m1;
+
+}
+
+void myStackPush(MyStack* obj, int x) {
+    if (!QueueEmpty(&obj->q1)) {
+        QueuePush(&obj->q1, x);
+    }
+    else {
+        QueuePush(&obj->q2, x);
+    }
+}
+
+int myStackPop(MyStack* obj) {
+    Queue* empty = &obj->q1;
+    Queue* nonempty = &obj->q2;
+    if (!QueueEmpty(&obj->q1)) {
+        nonempty = &obj->q1;
+        empty = &obj->q2;
+    }
+    while (QueueSize(nonempty) > 1) {
+        QueuePush(empty, QueueFront(nonempty));
+        QueuePop(nonempty);
+    }
+
+    int num = QueueFront(nonempty);
+    QueuePop(nonempty);
+
+    return num;
+}
+
+int myStackTop(MyStack* obj) {
+    if (!QueueEmpty(&obj->q1)) {
+        return QueueBack(&obj->q1);
+    }
+    else {
+        return QueueBack(&obj->q2);
+    }
+}
+
+bool myStackEmpty(MyStack* obj) {
+    return QueueEmpty(&obj->q1) && QueueEmpty(&obj->q2);
+}
+
+void myStackFree(MyStack* obj) {
+    QueueDestroy(&obj->q1);
+    QueueDestroy(&obj->q2);
+    free(obj);
+}
+
+/**
+ * Your MyStack struct will be instantiated and called as such:
+ * MyStack* obj = myStackCreate();
+ * myStackPush(obj, x);
+
+ * int param_2 = myStackPop(obj);
+
+ * int param_3 = myStackTop(obj);
+
+ * bool param_4 = myStackEmpty(obj);
+
+ * myStackFree(obj);
+*/
 int main()
 {
 	//Queue q;
@@ -129,7 +205,10 @@ int main()
 	//	QueuePop(&q);
 	//}
 	//printf("\n");
-    char s[] = {"(]"};
-    isValid(s);
+    //char s[] = {"(]"};
+    //isValid(s);
+    MyStack* m1 = myStackCreate();
+    myStackEmpty(m1);
+
 	return 0;
 }
