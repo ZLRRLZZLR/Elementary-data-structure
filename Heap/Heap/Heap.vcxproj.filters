@@ -24,10 +24,21 @@
     <ClCompile Include="teat2.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Hp.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Heap.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Hp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="data.txt">
+      <Filter>资源文件</Filter>
+    </Text>
   </ItemGroup>
 </Project>
