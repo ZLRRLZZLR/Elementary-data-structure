@@ -6,8 +6,966 @@
 #include<stdio.h>
 #include<string.h>
 
+#define _CRT_SECURE_NO_WARNINGS 1
+#include <stdio.h>
+#include <assert.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+void Swap(int* p1, int* p2)
+{
+	int tmp = *p1;
+	*p1 = *p2;
+	*p2 = tmp;
+}
+void AdjustDown(int* a, int n, int parent)
+{
+	int child = parent * 2 + 1;
+	while (child < n)
+	{
+		// 选出左右孩子中大的那一个
+		if (child + 1 < n && a[child + 1] > a[child])
+		{
+			++child;
+		}
+		if (a[child] > a[parent])
+		{
+			Swap(&a[child], &a[parent]);
+			parent = child;
+			child = parent * 2 + 1;
+		}
+		else
+		{
+			break;
+		}
+	}
+}
+void HeapSort(int* a, int n)
+{
+	// 建堆 -- 向下调整建堆 -- O(N)
+	for (int i = (n - 1 - 1) / 2; i >= 0; --i)
+	{
+		AdjustDown(a, n, i);
+	}
+	// O(N*logN)
+	int end = n - 1;
+	while (end > 0)
+	{
+		Swap(&a[end], &a[0]);
+		AdjustDown(a, end, 0);
+		--end;
+	}
+}
+// file1文件的数据和file2文件的数据归并到mfile文件中
+void MergeFile(const char* file1, const char* file2, const char* mfile)
+{
+	FILE* fout1 = fopen(file1, "r");
+	if (fout1 == NULL)
+	{
+		printf("打开文件失败\n");
+		exit(-1);
+	}
+	FILE* fout2 = fopen(file2, "r");
+	if (fout2 == NULL)
+	{
+		printf("打开文件失败\n");
+		exit(-1);
+	}
+	FILE* fin = fopen(mfile, "w");
+	if (fin == NULL)
+	{
+		printf("打开文件失败\n");
+		exit(-1);
+	}
+	// 这里跟内存中数组归并的思想完全类似，只是数据在硬盘文件中而已
+	// 依次读取file1和file2的数据，谁的数据小，谁就往mfile文件中去写
+	// file1和file2其中一个文件结束后，再把另一个文件未结束文件数据，
+	// 依次写到mfile的后面
+	int num1, num2;
+	int ret1 = fscanf(fout1, "%d\n", &num1);
+	int ret2 = fscanf(fout2, "%d\n", &num2);
+	while (ret1 != EOF && ret2 != EOF)
+	{
+		if (num1 < num2)
+		{
+			fprintf(fin, "%d\n", num1);
+			ret1 = fscanf(fout1, "%d\n", &num1);
+		}
+		else
+		{
+			fprintf(fin, "%d\n", num2);
+			ret2 = fscanf(fout2, "%d\n", &num2);
+		}
+	}
+	while (ret1 != EOF)
+	{
+		fprintf(fin, "%d\n", num1);
+		ret1 = fscanf(fout1, "%d\n", &num1);
+	}
+	while (ret2 != EOF)
+	{
+		fprintf(fin, "%d\n", num2);
+		ret2 = fscanf(fout2, "%d\n", &num2);
+	}
+	fclose(fout1);
+	fclose(fout2);
+	fclose(fin);
+}
+// 返回读取到的数据个数
+int ReadNNumSortToFile(FILE* fout, int* a, int n, const char* file)
+{
+	int x = 0;
+	// 读取n个数据放到file
+	int i = 0;
+	while (i < n && fscanf(fout, "%d", &x) != EOF)
+	{
+		a[i++] = x;
+	}
+	// 一个数据都没有读到，则说明文件已经读到结尾了
+	if (i == 0)
+		return i;
+	// 排序
+	HeapSort(a, i);
+	FILE* fin = fopen(file, "w");
+	if (fout == NULL)
+	{
+		printf("打开文件%s失败\n", file);
+		exit(-1);
+	}
+	for (int j = 0; j < i; j++)
+	{
+		fprintf(fin, "%d\n", a[j]);
+	}
+	fclose(fin);
+	return i;
+}
+// MergeSortFile的第二个是每次取多少个数据到内存中排序，然后写到一个小文件进行归并
+// 这个n给多少取决于我们有多少合理的内存可以利用，相对而言n越大，更多数据到内存中排序后，
+// 再走文件归并排序，整体程序会越快一些。
+void MergeSortFile(const char* file, int n)
+{
+	FILE* fout = fopen(file, "r");
+	if (fout == NULL)
+	{
+		printf("打开文件%s失败\n", file);
+		exit(-1);
+	}
+	int i = 0;
+	int x = 0;
+	const char* file1 = "file1";
+	const char* file2 = "file2";
+	const char* mfile = "mfile";
+	// 分割成一段一段数据，内存排序后写到，小文件，
+	int* a = (int*)malloc(sizeof(int) * n);
+	if (a == NULL)
+	{
+		perror("malloc fail");
+		return;
+	}
+	// 分别读取前n个数据排序后，写到file1和file2文件
+	ReadNNumSortToFile(fout, a, n, file1);
+	ReadNNumSortToFile(fout, a, n, file2);
+	while (1)
+	{
+		// file1和file2文件归并到mfile文件中
+		MergeFile(file1, file2, mfile);
+		// 删除file1和file2
+		if (remove(file1) != 0 || remove(file2) != 0)
+		{
+			perror("Error deleting file");
+			return;
+		}
+		// 将mfile重命名为file1
+		if (rename(mfile, file1) != 0)
+		{
+			perror("Error renaming file");
+			return;
+		}
+		// 读取N个数据到file2，继续走归并
+		// 如果一个数据都没读到，则归并结束了
+		if (ReadNNumSortToFile(fout, a, n, file2) == 0)
+		{
+			break;
+		}
+	}
+	printf("%s文件成功排序到%s\n", file, file1);
+	fclose(fout);
+	free(a);
+}
+// 创建N个随机数，写到文件中
+void CreateNDate()
+{
+	// 造数据
+	int n = 1000000;
+	srand(time(0));
+	const char* file = "data.txt";
+	FILE* fin = fopen(file, "w");
+	if (fin == NULL)
+	{
+		perror("fopen error");
+		return;
+	}
+	for (int i = 0; i < n; ++i)
+	{
+		int x = rand() + i;
+		fprintf(fin, "%d\n", x);
+	}
+	fclose(fin);
+}
+int main()
+{
+	//CreateNDate();
+	MergeSortFile("data.txt", 100000);
+	return 0;
+}
+//// 创建N个随机数，写到文件中
+//void CreateNDate()
+//{
+//	// 造数据
+//	int n = 1000000;
+//	srand(time(0));
+//	const char* file = "data.txt";
+//	FILE* fin = fopen(file, "w");
+//	if (fin == NULL)
+//	{
+//		perror("fopen error");
+//		return;
+//	}
+//	for (int i = 0; i < n; ++i)
+//	{
+//		int x = rand() + i;
+//		fprintf(fin, "%d\n", x);
+//	}
+//	fclose(fin);
+//}
+///**
+//* Note: The returned array must be malloced, assume caller calls free().
+//*/
+//void Swap(int* x, int* y)
+//{
+//	int tmp = *x;
+//	*x = *y;
+//	*y = tmp;
+//}
+//void AdjustDown(int* a, int n, int parent)
+//{
+//	int child = parent * 2 + 1;
+//	while (child < n)
+//	{
+//		// 选出左右孩子中大的那一个
+//		if (child + 1 < n && a[child + 1] > a[child])
+//		{
+//			++child;
+//		}
+//		if (a[child] > a[parent])
+//		{
+//			Swap(&a[child], &a[parent]);
+//			parent = child;
+//			child = parent * 2 + 1;
+//		}
+//		else
+//		{
+//			break;
+//		}
+//	}
+//}
+//void HeapSort(int* a, int n)
+//{
+//	// 建堆 -- 向下调整建堆 -- O(N)
+//	for (int i = (n - 1 - 1) / 2; i >= 0; --i)
+//	{
+//		AdjustDown(a, n, i);
+//	}
+//	// 自己先实现 -- O(N*logN)
+//	int end = n - 1;
+//	while (end > 0)
+//	{
+//		Swap(&a[end], &a[0]);
+//		AdjustDown(a, end, 0);
+//		--end;
+//	}
+//}
+//void InsertSort(int* a, int n)
+//{
+//	for (int i = 1; i < n; i++)
+//	{
+//		int end = i - 1;
+//		int tmp = a[i];
+//		// 将tmp插入到[0,end]区间中，保持有序
+//		while (end >= 0)
+//		{
+//			if (tmp < a[end])
+//			{
+//				a[end + 1] = a[end];
+//				--end;
+//			}
+//			else
+//			{
+//				break;
+//			}
+//		}
+//		a[end + 1] = tmp;
+//	}
+//}
+//void IntroSort(int* a, int left, int right, int depth, int defaultDepth)
+//{
+//	if (left >= right)
+//		return;
+//	// 数组长度小于16的小数组，换为插入排序，简单递归次数
+//	if (right - left + 1 < 16)
+//	{
+//		InsertSort(a + left, right - left + 1);
+//		return;
+//	}
+//	// 当深度超过2*logN时改用堆排序
+//	if (depth > defaultDepth)
+//	{
+//		HeapSort(a + left, right - left + 1);
+//		return;
+//	}
+//	depth++;
+//	int begin = left;
+//	int end = right;
+//	// 随机选key
+//	int randi = left + (rand() % (right - left));
+//	Swap(&a[left], &a[randi]);
+//	int prev = left;
+//	int cur = prev + 1;
+//	int keyi = left;
+//	while (cur <= right)
+//	{
+//		if (a[cur] < a[keyi] && ++prev != cur)
+//		{
+//			Swap(&a[prev], &a[cur]);
+//		}
+//		++cur;
+//	}
+//	Swap(&a[prev], &a[keyi]);
+//	keyi = prev;
+//	// [begin, keyi-1] keyi [keyi+1, end]
+//	IntroSort(a, begin, keyi - 1, depth, defaultDepth);
+//	IntroSort(a, keyi + 1, end, depth, defaultDepth);
+//}
+//void QuickSort(int* a, int left, int right)
+//{
+//	int depth = 0;
+//	int logn = 0;
+//	int N = right - left + 1;
+//	for (int i = 1; i < N; i *= 2)
+//	{
+//		logn++;
+//	}
+//	// introspective sort -- 自省排序
+//	IntroSort(a, left, right, depth, logn * 2);
+//}
+//int* sortArray(int* nums, int numsSize, int* returnSize) {
+//	srand(time(0));
+//	QuickSort(nums, 0, numsSize - 1);
+//	*returnSize = numsSize;
+//	return nums;
+//}
 
+//void Swap(int* x, int* y)
+//{
+//	int tmp = *x;
+//	*x = *y;
+//	*y = tmp;
+//}
+//void QuickSort(int* a, int left, int right)
+//{
+//	if (left >= right)
+//		return;
+//	int begin = left;
+//	int end = right;
+//	// 随机选key
+//	int randi = left + (rand() % (right - left));
+//	Swap(&a[left], &a[randi]);
+//	// 三路划分
+//	// left和right指向就是跟key相等的区间
+//// [begin, left-1] [left, right] right+1, end]
+//	int key = a[left];
+//	int cur = left + 1;
+//	while (cur <= right)
+//	{
+//		// 1、cur遇到比key小，小的换到左边，同时把key换到中间位置
+//		// 2、cur遇到比key大，大的换到右边
+//		if (a[cur] < key)
+//		{
+//			Swap(&a[cur], &a[left]);
+//			++left;
+//			++cur;
+//		}
+//		else if (a[cur] > key)
+//		{
+//			Swap(&a[cur], &a[right]);
+//			--right;
+//		}
+//		else
+//		{
+//			++cur;
+//		}
+//	}
+//	// [begin, left-1] [left, right] right+1, end]
+//	QuickSort(a, begin, left - 1);
+//	QuickSort(a, right + 1, end);
+//}
+//int* sortArray(int* nums, int numsSize, int* returnSize) {
+//	srand(time(0));
+//	QuickSort(nums, 0, numsSize - 1);
+//	*returnSize = numsSize;
+//	return nums;
+//}
+//
+//void Swap(int* x, int* y)
+//{
+//	int tmp = *x;
+//	*x = *y;
+//	*y = tmp;
+//}
+//void QuickSort(int* a, int left, int right)
+//{
+//	if (left >= right)
+//		return;
+//	int begin = left;
+//	int end = right;
+//	// 随机选key
+//	int randi = left + (rand() % (right - left));
+//	// printf("%d\n", randi);
+//	Swap(&a[left], &a[randi]);
+//	int prev = left;
+//	int cur = prev + 1;
+//	int keyi = left;
+//	while (cur <= right)
+//	{
+//		if (a[cur] < a[keyi] && ++prev != cur)
+//		{
+//			Swap(&a[prev], &a[cur]);
+//		}
+//		++cur;
+//	}
+//	Swap(&a[prev], &a[keyi]);
+//	keyi = prev;
+//	// [begin, keyi-1] keyi [keyi+1, end]
+//	QuickSort(a, begin, keyi - 1);
+//	QuickSort(a, keyi + 1, end);
+//}
+//int* sortArray(int* nums, int numsSize, int* returnSize) {
+//	srand(time(0));
+//	QuickSort(nums, 0, numsSize - 1);
+//	*returnSize = numsSize;
+//	return nums;
+//}
+//// 三路划分
+//KeyWayIndex PartSort3Way(int* a, int left, int right)
+//{
+//	int key = a[left];
+//	// left和right指向就是跟key相等的区间
+//	// [开始, left-1][left, right][right+1, 结束]
+//	int cur = left + 1;
+//	while (cur <= right)
+//	{
+//		// 1、cur遇到比key小，小的换到左边，同时把key换到中间位置
+//		// 2、cur遇到比key大，大的换到右边
+//		if (a[cur] < key)
+//		{
+//			Swap(&a[cur], &a[left]);
+//			++cur;
+//			++left;
+//		}
+//		else if (a[cur] > key)
+//		{
+//			Swap(&a[cur], &a[right]);
+//			--right;
+//		}
+//		else
+//		{
+//			++cur;
+//		}
+//	}
+//	KeyWayIndex kwi;
+//	kwi.leftKeyi = left;
+//	kwi.rightKeyi = right;
+//	return kwi;
+//}
+//#include<stdio.h>
+//#include<stdlib.h>
+//#include<time.h>
+//#include<string.h>
+//void PrintArray(int* a, int n)
+//{
+//	for (int i = 0; i < n; ++i)
+//	{
+//		printf("%d ", a[i]);
+//	}
+//	printf("\n");
+//}
+//void Swap(int* p1, int* p2)
+//{
+//	int tmp = *p1;
+//	*p1 = *p2;
+//	*p2 = tmp;
+//}
+//// hoare
+//// [left, right]
+//int PartSort1(int* a, int left, int right)
+//{
+//	int keyi = left;
+//	while (left < right)
+//	{
+//		// 右边找小
+//		while (left < right && a[right] >= a[keyi])
+//		{
+//			--right;
+//		}
+//		// 左边找大
+//		while (left < right && a[left] <= a[keyi])
+//		{
+//			++left;
+//		}
+//		Swap(&a[left], &a[right]);
+//	}
+//	Swap(&a[keyi], &a[left]);
+//	return left;
+//}
+/// 前后指针
+//int PartSort2(int* a, int left, int right)
+//{
+//	int prev = left;
+//	int cur = left + 1;
+//	int keyi = left;
+//	while (cur <= right)
+//	{
+//		if (a[cur] < a[keyi] && ++prev != cur)
+//		{
+//			Swap(&a[prev], &a[cur]);
+//		}
+//		++cur;
+//	}
+//	Swap(&a[prev], &a[keyi]);
+//	keyi = prev;
+//	return keyi;
+//}
+//typedef struct
+//{
+//	int leftKeyi;
+//	int rightKeyi;
+//}KeyWayIndex;
+//// 三路划分
+//KeyWayIndex PartSort3Way(int* a, int left, int right)
+//{
+//	int key = a[left];
+//	// left和right指向就是跟key相等的区间
+//	// [开始, left-1][left, right][right+1, 结束]
+//	int cur = left + 1;
+//	while (cur <= right)
+//	{
+//		// 1、cur遇到比key小，小的换到左边，同时把key换到中间位置
+//		// 2、cur遇到比key大，大的换到右边
+//		if (a[cur] < key)
+//		{
+//			Swap(&a[cur], &a[left]);
+//			++cur;
+//			++left;
+//		}
+//		else if (a[cur] > key)
+//		{
+//			Swap(&a[cur], &a[right]);
+//			--right;
+//		}
+//		else
+//		{
+//			++cur;
+//		}
+//	}
+//	KeyWayIndex kwi;
+//	kwi.leftKeyi = left;
+//	kwi.rightKeyi = right;
+//	return kwi;
+//}
+//void TestPartSort1()
+//{
+//	int a1[] = { 6,1,7,6,6,6,4,9 };
+//	int a2[] = { 3,2,3,3,3,3,2,3 };
+//	int a3[] = { 2,2,2,2,2,2,2,2 };
+//	PrintArray(a1, sizeof(a1) / sizeof(int));
+//	int keyi1 = PartSort1(a1, 0, sizeof(a1) / sizeof(int) - 1);
+//	PrintArray(a1, sizeof(a1) / sizeof(int));
+//	printf("hoare keyi:%d\n\n", keyi1);
+//	PrintArray(a2, sizeof(a2) / sizeof(int));
+//	int keyi2 = PartSort1(a2, 0, sizeof(a2) / sizeof(int) - 1);
+//	PrintArray(a2, sizeof(a2) / sizeof(int));
+//	printf("hoare keyi:%d\n\n", keyi2);
+//	PrintArray(a3, sizeof(a3) / sizeof(int));
+//	int keyi3 = PartSort1(a3, 0, sizeof(a3) / sizeof(int) - 1);
+//	PrintArray(a3, sizeof(a3) / sizeof(int));
+//	printf("hoare keyi:%d\n\n", keyi3);
+//}
+//void TestPartSort2()
+//{
+//	int a1[] = { 6,1,7,6,6,6,4,9 };
+//	int a2[] = { 3,2,3,3,3,3,2,3 };
+//	int a3[] = { 2,2,2,2,2,2,2,2 };
+//	PrintArray(a1, sizeof(a1) / sizeof(int));
+//	int keyi1 = PartSort2(a1, 0, sizeof(a1) / sizeof(int) - 1);
+//	PrintArray(a1, sizeof(a1) / sizeof(int));
+//	printf("前后指针 keyi:%d\n\n", keyi1);
+//	PrintArray(a2, sizeof(a2) / sizeof(int));
+//	int keyi2 = PartSort2(a2, 0, sizeof(a2) / sizeof(int) - 1);
+//	PrintArray(a2, sizeof(a2) / sizeof(int));
+//	printf("前后指针 keyi:%d\n\n", keyi2);
+//	PrintArray(a3, sizeof(a3) / sizeof(int));
+//	int keyi3 = PartSort2(a3, 0, sizeof(a3) / sizeof(int) - 1);
+//	PrintArray(a3, sizeof(a3) / sizeof(int));
+//	printf("前后指针 keyi:%d\n\n", keyi3);
+//}
+//void TestPartSort3()
+//{
+//	//int a0[] = { 6,1,2,7,9,3,4,5,10,4 };
+//	int a1[] = { 6,1,7,6,6,6,4,9 };
+//	int a2[] = { 3,2,3,3,3,3,2,3 };
+//	int a3[] = { 2,2,2,2,2,2,2,2 };
+//	PrintArray(a1, sizeof(a1) / sizeof(int));
+//	KeyWayIndex kwi1 = PartSort3Way(a1, 0, sizeof(a1) / sizeof(int) - 1);
+//	PrintArray(a1, sizeof(a1) / sizeof(int));
+//	printf("3Way keyi:%d,%d\n\n", kwi1.leftKeyi, kwi1.rightKeyi);
+//	PrintArray(a2, sizeof(a2) / sizeof(int));
+//	KeyWayIndex kwi2 = PartSort3Way(a2, 0, sizeof(a2) / sizeof(int) - 1);
+//	PrintArray(a2, sizeof(a2) / sizeof(int));
+//	printf("3Way keyi:%d,%d\n\n", kwi2.leftKeyi, kwi2.rightKeyi);
+//	PrintArray(a3, sizeof(a3) / sizeof(int));
+//	KeyWayIndex kwi3 = PartSort3Way(a3, 0, sizeof(a3) / sizeof(int) - 1);
+//	PrintArray(a3, sizeof(a3) / sizeof(int));
+//	printf("3Way keyi:%d,%d\n\n", kwi3.leftKeyi, kwi3.rightKeyi);
+//}
+//int main()
+//{
+//	TestPartSort1();
+//	TestPartSort2();
+//	TestPartSort3();
+//	return 0;
+//}
 
+//// 三路划分
+//KeyWayIndex PartSort3Way(int* a, int left, int right)
+//{
+//	int key = a[left];
+//	// left和right指向就是跟key相等的区间
+//	// [开始, left-1][left, right][right+1, 结束]
+//	int cur = left + 1;
+//	while (cur <= right)
+//	{
+//		// 1、cur遇到?key?，?的换到左边，同时把key换到中间位置
+//		// 2、cur遇到?key?，?的换到右边
+//		if (a[cur] < key)
+//		{
+//			Swap(&a[cur], &a[left]);
+//			++cur;
+//			++left;
+//		}
+//		else if (a[cur] > key)
+//		{
+//			Swap(&a[cur], &a[right]);
+//			--right;
+//		}
+//		else
+//		{
+//			++cur;
+//		}
+//	}
+//	KeyWayIndex kwi;
+//	kwi.leftKeyi = left;
+//	kwi.rightKeyi = right;
+//	return kwi;
+//}
+
+//#include<stdio.h>
+//#include<stdlib.h>
+//#include<time.h>
+//#include<string.h>
+//void PrintArray(int* a, int n)
+//{
+//	for (int i = 0; i < n; ++i)
+//	{
+//		printf("%d ", a[i]);
+//	}
+//	printf("\n");
+//}
+//void Swap(int* p1, int* p2)
+//{
+//	int tmp = *p1;
+//	*p1 = *p2;
+//	*p2 = tmp;
+//}
+//// hoare
+//// [left, right]
+//int PartSort1(int* a, int left, int right)
+//{
+//	int keyi = left;
+//	while (left < right)
+//	{
+//		// 右边找小
+//		while (left < right && a[right] >= a[keyi])
+//		{
+//			--right;
+//		}
+//		// 左边找大
+//		while (left < right && a[left] <= a[keyi])
+//		{
+//			++left;
+//		}
+//		Swap(&a[left], &a[right]);
+//	}
+//	Swap(&a[keyi], &a[left]);
+//	return left;
+//}
+//// 前后指针
+//int PartSort2(int* a, int left, int right)
+//{
+//	int prev = left;
+//	int cur = left + 1;
+//	int keyi = left;
+//	while (cur <= right)
+//	{
+//		if (a[cur] < a[keyi] && ++prev != cur)
+//		{
+//			Swap(&a[prev], &a[cur]);
+//		}
+//		++cur;
+//	}
+//	Swap(&a[prev], &a[keyi]);
+//	keyi = prev;
+//	return keyi;
+//}
+//typedef struct
+//{
+//	int leftKeyi;
+//	int rightKeyi;
+//}KeyWayIndex;
+//// 三路划分
+//KeyWayIndex PartSort3Way(int* a, int left, int right)
+//{
+//	int key = a[left];
+//	// left和right指向就是跟key相等的区间
+//	// [开始, left-1][left, right][right+1, 结束]
+//	int cur = left + 1;
+//	while (cur <= right)
+//	{
+//		// 1、cur遇到比key小，小的换到左边，同时把key换到中间位置
+//		// 2、cur遇到比key大，大的换到右边
+//		if (a[cur] < key)
+//		{
+//			Swap(&a[cur], &a[left]);
+//			++cur;
+//			++left;
+//		}
+//		else if (a[cur] > key)
+//		{
+//			Swap(&a[cur], &a[right]);
+//			--right;
+//		}
+//		else
+//		{
+//			++cur;
+//		}
+//	}
+//	KeyWayIndex kwi;
+//	kwi.leftKeyi = left;
+//	kwi.rightKeyi = right;
+//	return kwi;
+//}
+//void TestPartSort1()
+//{
+//	int a1[] = { 6,1,7,6,6,6,4,9 };
+//	int a2[] = { 3,2,3,3,3,3,2,3 };
+//	int a3[] = { 2,2,2,2,2,2,2,2 };
+//	PrintArray(a1, sizeof(a1) / sizeof(int));
+//	int keyi1 = PartSort1(a1, 0, sizeof(a1) / sizeof(int) - 1);
+//	PrintArray(a1, sizeof(a1) / sizeof(int));
+//	printf("hoare keyi:%d\n\n", keyi1);
+//	PrintArray(a2, sizeof(a2) / sizeof(int));
+//	int keyi2 = PartSort1(a2, 0, sizeof(a2) / sizeof(int) - 1);
+//	PrintArray(a2, sizeof(a2) / sizeof(int));
+//	printf("hoare keyi:%d\n\n", keyi2);
+//	PrintArray(a3, sizeof(a3) / sizeof(int));
+//	int keyi3 = PartSort1(a3, 0, sizeof(a3) / sizeof(int) - 1);
+//	PrintArray(a3, sizeof(a3) / sizeof(int));
+//	printf("hoare keyi:%d\n\n", keyi3);
+//}
+//void TestPartSort2()
+//{
+//	int a1[] = { 6,1,7,6,6,6,4,9 };
+//	int a2[] = { 3,2,3,3,3,3,2,3 };
+//	int a3[] = { 2,2,2,2,2,2,2,2 };
+//	PrintArray(a1, sizeof(a1) / sizeof(int));
+//	int keyi1 = PartSort2(a1, 0, sizeof(a1) / sizeof(int) - 1);
+//	PrintArray(a1, sizeof(a1) / sizeof(int));
+//	printf("前后指针 keyi:%d\n\n", keyi1);
+//	PrintArray(a2, sizeof(a2) / sizeof(int));
+//	int keyi2 = PartSort2(a2, 0, sizeof(a2) / sizeof(int) - 1);
+//	PrintArray(a2, sizeof(a2) / sizeof(int));
+//	printf("前后指针 keyi:%d\n\n", keyi2);
+//	PrintArray(a3, sizeof(a3) / sizeof(int));
+//	int keyi3 = PartSort2(a3, 0, sizeof(a3) / sizeof(int) - 1);
+//	PrintArray(a3, sizeof(a3) / sizeof(int));
+//	printf("前后指针 keyi:%d\n\n", keyi3);
+//}
+//void TestPartSort3()
+//{
+//	//int a0[] = { 6,1,2,7,9,3,4,5,10,4 };
+//	int a1[] = { 6,1,7,6,6,6,4,9 };
+//	int a2[] = { 3,2,3,3,3,3,2,3 };
+//	int a3[] = { 2,2,2,2,2,2,2,2 };
+//	PrintArray(a1, sizeof(a1) / sizeof(int));
+//	KeyWayIndex kwi1 = PartSort3Way(a1, 0, sizeof(a1) / sizeof(int) - 1);
+//	PrintArray(a1, sizeof(a1) / sizeof(int));
+//	printf("3Way keyi:%d,%d\n\n", kwi1.leftKeyi, kwi1.rightKeyi);
+//	PrintArray(a2, sizeof(a2) / sizeof(int));
+//	KeyWayIndex kwi2 = PartSort3Way(a2, 0, sizeof(a2) / sizeof(int) - 1);
+//	PrintArray(a2, sizeof(a2) / sizeof(int));
+//	printf("3Way keyi:%d,%d\n\n", kwi2.leftKeyi, kwi2.rightKeyi);
+//	PrintArray(a3, sizeof(a3) / sizeof(int));
+//	KeyWayIndex kwi3 = PartSort3Way(a3, 0, sizeof(a3) / sizeof(int) - 1);
+//	PrintArray(a3, sizeof(a3) / sizeof(int));
+//	printf("3Way keyi:%d,%d\n\n", kwi3.leftKeyi, kwi3.rightKeyi);
+//}
+//int main()
+//{
+//	TestPartSort1();
+//	TestPartSort2();
+//	TestPartSort3();
+//	return 0;
+//}
+
+//// 数组中有多个跟key相等的值
+//int a[] = { 6,1,7,6,6,6,4,9 };
+//int a[] = { 3,2,3,3,3,3,2,3 };
+//// 数组中全是相同的值
+//int a[] = { 2,2,2,2,2,2,2,2 };
+//void QuickSortNonR(int* a, int left, int right)
+//{
+//	Stack st;
+//	StackInit(&st);
+//	StackPush(&st, left);
+//	StackPush(&st, right);
+//
+//	while (StackEmpty(&st) != 0)
+//	{
+//		right = StackTop(&st);
+//		StackPop(&st);
+//		left = StackTop(&st);
+//		StackPop(&st);
+//
+//		if (right - left <= 1)
+//			continue;
+//
+//		int div = PartSort1(a, left, right);
+//		// 以基准值为分割点，形成左右两部分：[left, div) 和 [div+1, right)
+//		StackPush(&st, div + 1);
+//		StackPush(&st, right);
+//
+//		StackPush(&st, left);
+//		StackPush(&st, div);
+//	}
+//
+//	StackDestroy(&s);
+//}
+
+//// 假设按照升序对array数组中[left, right)区间中的元素进行排序
+//void QuickSort(int array[], int left, int right)
+//{
+//	if (right - left <= 1)
+//		return;
+//
+//	// 按照基准值对array数组的 [left, right)区间中的元素进行划分
+//	int div = partion(array, left, right);
+//
+//	// 划分成功后以div为边界形成了左右两部分 [left, div) 和 [div+1, right)
+//	// 递归排[left, div)
+//	QuickSort(array, left, div);
+//
+//	// 递归排[div+1, right)
+//	QuickSort(array, div + 1, right);
+//}
+
+//// 排序实现的接口
+//// 插入排序
+//void InsertSort(int* a, int n);
+//// 希尔排序
+//void ShellSort(int* a, int n);
+//// 选择排序
+//void SelectSort(int* a, int n);
+//// 堆排序
+//void AdjustDwon(int* a, int n, int root);
+//void HeapSort(int* a, int n);
+//// 冒泡排序
+//void BubbleSort(int* a, int n)
+//// 快速排序递归实现
+//// 快速排序hoare版本
+//int PartSort1(int* a, int left, int right);
+//// 快速排序挖坑法
+//int PartSort2(int* a, int left, int right);
+//// 快速排序前后指针法
+//int PartSort3(int* a, int left, int right);
+//void QuickSort(int* a, int left, int right);
+//// 快速排序 非递归实现
+//void QuickSortNonR(int* a, int left, int right)
+//// 归并排序递归实现
+//void MergeSort(int* a, int n)
+//// 归并排序非递归实现
+//void MergeSortNonR(int* a, int n)
+//// 计数排序
+//void CountSort(int* a, int n)
+//// 测试排序的性能对比
+//void TestOP()
+//{
+//	srand(time(0));
+//	const int N = 100000;
+//	int* a1 = (int*)malloc(sizeof(int) * N);
+//	int* a2 = (int*)malloc(sizeof(int) * N);
+//	int* a3 = (int*)malloc(sizeof(int) * N);
+//	int* a4 = (int*)malloc(sizeof(int) * N);
+//	int* a5 = (int*)malloc(sizeof(int) * N);
+//	int* a6 = (int*)malloc(sizeof(int) * N);
+//	for (int i = 0; i < N; ++i)
+//	{
+//		a1[i] = rand();
+//		a2[i] = a1[i];
+//		a3[i] = a1[i];
+//		a4[i] = a1[i];
+//		a5[i] = a1[i]; 
+//		a6[i] = a1[i];
+//	}
+//	int begin1 = clock();
+//	InsertSort(a1, N);
+//	int end1 = clock();
+//	int begin2 = clock();
+//	ShellSort(a2, N);
+//	int end2 = clock();
+//	int begin3 = clock();
+//	SelectSort(a3, N);
+//	int end3 = clock();
+//	int begin4 = clock();
+//	HeapSort(a4, N);
+//	int end4 = clock();
+//	int begin5 = clock();
+//	QuickSort(a5, 0, N - 1);
+//	int end5 = clock();
+//	int begin6 = clock();
+//	MergeSort(a6, N);
+//	int end6 = clock();
+//	printf("InsertSort:%d\n", end1 - begin1);
+//	printf("ShellSort:%d\n", end2 - begin2);
+//	printf("SelectSort:%d\n", end3 - begin3);
+//	printf("HeapSort:%d\n", end4 - begin4);
+//	printf("QuickSort:%d\n", end5 - begin5);
+//	printf("MergeSort:%d\n", end6 - begin6);
+//	free(a1);
+//	free(a2);
+//	free(a3);
+//	free(a4);
+//	free(a5);
+//	free(a6);
+//}
 
 //typedef struct {
 //    int head;
