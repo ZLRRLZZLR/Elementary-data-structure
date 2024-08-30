@@ -6,218 +6,533 @@
 #include<stdio.h>
 #include<string.h>
 
-#define _CRT_SECURE_NO_WARNINGS 1
-#include <stdio.h>
-#include <assert.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-void Swap(int* p1, int* p2)
-{
-	int tmp = *p1;
-	*p1 = *p2;
-	*p2 = tmp;
-}
-void AdjustDown(int* a, int n, int parent)
-{
-	int child = parent * 2 + 1;
-	while (child < n)
-	{
-		// 选出左右孩子中大的那一个
-		if (child + 1 < n && a[child + 1] > a[child])
-		{
-			++child;
-		}
-		if (a[child] > a[parent])
-		{
-			Swap(&a[child], &a[parent]);
-			parent = child;
-			child = parent * 2 + 1;
-		}
-		else
-		{
-			break;
-		}
-	}
-}
-void HeapSort(int* a, int n)
-{
-	// 建堆 -- 向下调整建堆 -- O(N)
-	for (int i = (n - 1 - 1) / 2; i >= 0; --i)
-	{
-		AdjustDown(a, n, i);
-	}
-	// O(N*logN)
-	int end = n - 1;
-	while (end > 0)
-	{
-		Swap(&a[end], &a[0]);
-		AdjustDown(a, end, 0);
-		--end;
-	}
-}
-// file1文件的数据和file2文件的数据归并到mfile文件中
-void MergeFile(const char* file1, const char* file2, const char* mfile)
-{
-	FILE* fout1 = fopen(file1, "r");
-	if (fout1 == NULL)
-	{
-		printf("打开文件失败\n");
-		exit(-1);
-	}
-	FILE* fout2 = fopen(file2, "r");
-	if (fout2 == NULL)
-	{
-		printf("打开文件失败\n");
-		exit(-1);
-	}
-	FILE* fin = fopen(mfile, "w");
-	if (fin == NULL)
-	{
-		printf("打开文件失败\n");
-		exit(-1);
-	}
-	// 这里跟内存中数组归并的思想完全类似，只是数据在硬盘文件中而已
-	// 依次读取file1和file2的数据，谁的数据小，谁就往mfile文件中去写
-	// file1和file2其中一个文件结束后，再把另一个文件未结束文件数据，
-	// 依次写到mfile的后面
-	int num1, num2;
-	int ret1 = fscanf(fout1, "%d\n", &num1);
-	int ret2 = fscanf(fout2, "%d\n", &num2);
-	while (ret1 != EOF && ret2 != EOF)
-	{
-		if (num1 < num2)
-		{
-			fprintf(fin, "%d\n", num1);
-			ret1 = fscanf(fout1, "%d\n", &num1);
-		}
-		else
-		{
-			fprintf(fin, "%d\n", num2);
-			ret2 = fscanf(fout2, "%d\n", &num2);
-		}
-	}
-	while (ret1 != EOF)
-	{
-		fprintf(fin, "%d\n", num1);
-		ret1 = fscanf(fout1, "%d\n", &num1);
-	}
-	while (ret2 != EOF)
-	{
-		fprintf(fin, "%d\n", num2);
-		ret2 = fscanf(fout2, "%d\n", &num2);
-	}
-	fclose(fout1);
-	fclose(fout2);
-	fclose(fin);
-}
-// 返回读取到的数据个数
-int ReadNNumSortToFile(FILE* fout, int* a, int n, const char* file)
-{
-	int x = 0;
-	// 读取n个数据放到file
-	int i = 0;
-	while (i < n && fscanf(fout, "%d", &x) != EOF)
-	{
-		a[i++] = x;
-	}
-	// 一个数据都没有读到，则说明文件已经读到结尾了
-	if (i == 0)
-		return i;
-	// 排序
-	HeapSort(a, i);
-	FILE* fin = fopen(file, "w");
-	if (fout == NULL)
-	{
-		printf("打开文件%s失败\n", file);
-		exit(-1);
-	}
-	for (int j = 0; j < i; j++)
-	{
-		fprintf(fin, "%d\n", a[j]);
-	}
-	fclose(fin);
-	return i;
-}
-// MergeSortFile的第二个是每次取多少个数据到内存中排序，然后写到一个小文件进行归并
-// 这个n给多少取决于我们有多少合理的内存可以利用，相对而言n越大，更多数据到内存中排序后，
-// 再走文件归并排序，整体程序会越快一些。
-void MergeSortFile(const char* file, int n)
-{
-	FILE* fout = fopen(file, "r");
-	if (fout == NULL)
-	{
-		printf("打开文件%s失败\n", file);
-		exit(-1);
-	}
-	int i = 0;
-	int x = 0;
-	const char* file1 = "file1";
-	const char* file2 = "file2";
-	const char* mfile = "mfile";
-	// 分割成一段一段数据，内存排序后写到，小文件，
-	int* a = (int*)malloc(sizeof(int) * n);
-	if (a == NULL)
-	{
-		perror("malloc fail");
-		return;
-	}
-	// 分别读取前n个数据排序后，写到file1和file2文件
-	ReadNNumSortToFile(fout, a, n, file1);
-	ReadNNumSortToFile(fout, a, n, file2);
-	while (1)
-	{
-		// file1和file2文件归并到mfile文件中
-		MergeFile(file1, file2, mfile);
-		// 删除file1和file2
-		if (remove(file1) != 0 || remove(file2) != 0)
-		{
-			perror("Error deleting file");
-			return;
-		}
-		// 将mfile重命名为file1
-		if (rename(mfile, file1) != 0)
-		{
-			perror("Error renaming file");
-			return;
-		}
-		// 读取N个数据到file2，继续走归并
-		// 如果一个数据都没读到，则归并结束了
-		if (ReadNNumSortToFile(fout, a, n, file2) == 0)
-		{
-			break;
-		}
-	}
-	printf("%s文件成功排序到%s\n", file, file1);
-	fclose(fout);
-	free(a);
-}
-// 创建N个随机数，写到文件中
-void CreateNDate()
-{
-	// 造数据
-	int n = 1000000;
-	srand(time(0));
-	const char* file = "data.txt";
-	FILE* fin = fopen(file, "w");
-	if (fin == NULL)
-	{
-		perror("fopen error");
-		return;
-	}
-	for (int i = 0; i < n; ++i)
-	{
-		int x = rand() + i;
-		fprintf(fin, "%d\n", x);
-	}
-	fclose(fin);
-}
-int main()
-{
-	//CreateNDate();
-	MergeSortFile("data.txt", 100000);
-	return 0;
-}
+//#include<stdio.h>
+//#include<assert.h>
+//#include<stdlib.h>
+//
+//
+//typedef char BTDataType;
+//
+//typedef struct BinaryTreeNode
+//{
+//	BTDataType _data;
+//	struct BinaryTreeNode* _left;
+//	struct BinaryTreeNode* _right;
+//}BTNode;
+//
+//BTNode* BuyNode(int x) {
+//	BTNode* node = (BTNode*)malloc(sizeof(BTNode));
+//	node->_data = x;
+//	node->_left = NULL;
+//	node->_right = NULL;
+//
+//	return node;
+//}
+//
+//BTNode* CreateTree(BTNode* root, char* arr, int* pi) {
+//	if (arr[(*pi)] == '#') {
+//		(*pi)++;
+//		return NULL;
+//	}
+//	root = BuyNode(arr[(*pi)++]);
+//	root->_left = CreateTree(root->_left, arr, pi);
+//	root->_right = CreateTree(root->_right, arr, pi);
+//	return root;
+//}
+//
+//// 二叉树中序遍历
+//void BinaryTreeInOrder(BTNode* root) {
+//	if (NULL == root)
+//		return;
+//	BinaryTreeInOrder(root->_left);
+//	printf("%c ", root->_data);
+//	BinaryTreeInOrder(root->_right);
+//}
+//int main() {
+//	char arr[100];
+//	scanf("%s", arr);
+//	int i = 0;
+//	BTNode* root = NULL;
+//	root = CreateTree(root, arr, &i);
+//	BinaryTreeInOrder(root);
+//	return 0;
+//}
+
+//#include<stdio.h>
+//#include<assert.h>
+//#include<stdlib.h>
+//
+//
+//#include<stdio.h>
+//#include<assert.h>
+//#include<stdlib.h>
+//
+//
+//typedef char BTDataType;
+//
+//typedef struct BinaryTreeNode
+//{
+//	BTDataType _data;
+//	struct BinaryTreeNode* _left;
+//	struct BinaryTreeNode* _right;
+//}BTNode;
+//
+//BTNode* BuyNode(int x) {
+//	BTNode* node = (BTNode*)malloc(sizeof(BTNode));
+//	node->_data = x;
+//	node->_left = NULL;
+//	node->_right = NULL;
+//
+//	return node;
+//}
+//
+//BTNode* CreateTree(BTNode* root, char* arr, int* pi) {
+//	while (arr[(*pi)] == '#') {
+//		(*pi)++;
+//	}
+//	root = BuyNode(arr[(*pi)++]);
+//	root->_left = CreateTree(root->_left, arr, pi);
+//	root->_right = CreateTree(root->_right, arr, pi);
+//	return root;
+//}
+//
+//// 二叉树中序遍历
+//void BinaryTreeInOrder(BTNode* root) {
+//	if (NULL == root) {
+//		printf(" ");
+//		return;
+//	}
+//	BinaryTreeInOrder(root->_left);
+//	printf("%c", root->_data);
+//	BinaryTreeInOrder(root->_right);
+//}
+//int main() {
+//	char arr[100];
+//	scanf("%s", arr);
+//	int i = 0;
+//	BTNode* root = NULL;
+//	root = CreateTree(root, arr, &i);
+//	BinaryTreeInOrder(root);
+//	return 0;
+//}
+///**
+// * Definition for a binary tree node.
+// * struct TreeNode {
+// *     int val;
+// *     struct TreeNode *left;
+// *     struct TreeNode *right;
+// * };
+// */
+//int maxDepth(struct TreeNode* root) {
+//    if (NULL == root)
+//        return 0;
+//
+//    int left = maxDepth(root->left);
+//    int right = maxDepth(root->right);
+//
+//    return left > right ? left + 1 : right + 1;
+//}
+//
+//bool isBalanced(struct TreeNode* root) {
+//    if (NULL == root)
+//        return true;
+//    int left = maxDepth(root->left);
+//    int right = maxDepth(root->right);
+//    if (abs(left - right) > 1)
+//        return false;
+//
+//    return isBalanced(root->left) && isBalanced(root->right);
+//}
+///**
+// * Definition for a binary tree node.
+// * struct TreeNode {
+// *     int val;
+// *     struct TreeNode *left;
+// *     struct TreeNode *right;
+// * };
+// */
+//void _invertTree(struct TreeNode* root) {
+//    if (NULL == root)
+//        return;
+//    _invertTree(root->left);
+//    _invertTree(root->right);
+//    struct TreeNode* node = root->left;
+//    root->left = root->right;
+//    root->right = node;
+//}
+//
+//struct TreeNode* invertTree(struct TreeNode* root) {
+//    _invertTree(root);
+//    return root;
+//}
+///**
+// * Definition for a binary tree node.
+// * struct TreeNode {
+// *     int val;
+// *     struct TreeNode *left;
+// *     struct TreeNode *right;
+// * };
+// */
+// /**
+//  * Note: The returned array must be malloced, assume caller calls free().
+//  */
+//int BinaryTreeSize(struct TreeNode* root) {
+//    if (NULL == root)
+//        return 0;
+//
+//    return BinaryTreeSize(root->left) + BinaryTreeSize(root->right) + 1;
+//}
+//void PreOrder(struct TreeNode* root, int* arr, int* pi) {
+//    if (NULL == root)
+//        return;
+//    arr[(*pi)++] = root->val;
+//
+//    PreOrder(root->left, arr, pi);
+//    PreOrder(root->right, arr, pi);
+//
+//}
+//
+//int* preorderTraversal(struct TreeNode* root, int* returnSize) {
+//    *returnSize = BinaryTreeSize(root);
+//    int* arr = (int*)malloc(sizeof(int) * (*returnSize));
+//    int i = 0;
+//    PreOrder(root, arr, &i);
+//
+//    return arr;
+//}
+///**
+// * Definition for a binary tree node.
+// * struct TreeNode {
+// *     int val;
+// *     struct TreeNode *left;
+// *     struct TreeNode *right;
+// * };
+// */
+//bool isSameTree(struct TreeNode* p, struct TreeNode* q) {
+//    if (p == NULL && q == NULL)
+//        return true;
+//
+//    if (p == NULL || q == NULL)
+//        return false;
+//
+//    if (p->val != q->val)
+//        return false;
+//
+//    return isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
+//
+//}
+//
+//bool isSubtree(struct TreeNode* root, struct TreeNode* subRoot) {
+//    if (NULL == root)
+//        return false;
+//    if (root->val == subRoot->val && isSameTree(root, subRoot))
+//        return true;
+//
+//    return isSubtree(root->left, subRoot) || isSubtree(root->right, subRoot);
+//}
+///**
+// * Definition for a binary tree node.
+// * struct TreeNode {
+// *     int val;
+// *     struct TreeNode *left;
+// *     struct TreeNode *right;
+// * };
+// */
+//bool _isSymmetric(struct TreeNode* q, struct TreeNode* p) {
+//    if (NULL == q && NULL == p)
+//        return true;
+//
+//    if (NULL == q || NULL == p)
+//        return false;
+//
+//    if (p->val != q->val)
+//        return false;
+//
+//    return _isSymmetric(p->left, q->right) && _isSymmetric(p->right, q->left);
+//
+//}
+//
+//bool isSymmetric(struct TreeNode* root) {
+//    if (NULL == root)
+//        return true;
+//
+//    return _isSymmetric(root->left, root->right);
+//}
+
+///**
+// * Definition for a binary tree node.
+// * struct TreeNode {
+// *     int val;
+// *     struct TreeNode *left;
+// *     struct TreeNode *right;
+// * };
+// */
+//bool isUnivalTree(struct TreeNode* root) {
+//    if (NULL == root)
+//        return true;
+//
+//    if (root->left)
+//        if (root->left->val != root->val)
+//            return false;
+//
+//    if (root->right)
+//        if (root->right->val != root->val)
+//            return false;
+//
+//    return isUnivalTree(root->left) && isUnivalTree(root->right);
+//}
+
+///**
+// * Definition for a binary tree node.
+// * struct TreeNode {
+// *     int val;
+// *     struct TreeNode *left;
+// *     struct TreeNode *right;
+// * };
+// */
+//int maxDepth(struct TreeNode* root) {
+//    if (NULL == root)
+//        return 0;
+//
+//    int left = maxDepth(root->left);
+//    int right = maxDepth(root->right);
+//
+//    return left > right ? left + 1 : right + 1;
+//}
+///**
+// * Definition for a binary tree node.
+// * struct TreeNode {
+// *     int val;
+// *     struct TreeNode *left;
+// *     struct TreeNode *right;
+// * };
+// */
+//bool isSameTree(struct TreeNode* p, struct TreeNode* q) {
+//    if (p == NULL && q == NULL)
+//        return true;
+//
+//    if (p == NULL || q == NULL)
+//        return false;
+//
+//    if (p->val != q->val)
+//        return false;
+//
+//    return isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
+//
+//
+//}
+//#define _CRT_SECURE_NO_WARNINGS 1
+//#include <stdio.h>
+//#include <assert.h>
+//#include <stdlib.h>
+//#include <string.h>
+//#include <time.h>
+//void Swap(int* p1, int* p2)
+//{
+//	int tmp = *p1;
+//	*p1 = *p2;
+//	*p2 = tmp;
+//}
+//void AdjustDown(int* a, int n, int parent)
+//{
+//	int child = parent * 2 + 1;
+//	while (child < n)
+//	{
+//		// 选出左右孩子中大的那一个
+//		if (child + 1 < n && a[child + 1] > a[child])
+//		{
+//			++child;
+//		}
+//		if (a[child] > a[parent])
+//		{
+//			Swap(&a[child], &a[parent]);
+//			parent = child;
+//			child = parent * 2 + 1;
+//		}
+//		else
+//		{
+//			break;
+//		}
+//	}
+//}
+//void HeapSort(int* a, int n)
+//{
+//	// 建堆 -- 向下调整建堆 -- O(N)
+//	for (int i = (n - 1 - 1) / 2; i >= 0; --i)
+//	{
+//		AdjustDown(a, n, i);
+//	}
+//	// O(N*logN)
+//	int end = n - 1;
+//	while (end > 0)
+//	{
+//		Swap(&a[end], &a[0]);
+//		AdjustDown(a, end, 0);
+//		--end;
+//	}
+//}
+//// file1文件的数据和file2文件的数据归并到mfile文件中
+//void MergeFile(const char* file1, const char* file2, const char* mfile)
+//{
+//	FILE* fout1 = fopen(file1, "r");
+//	if (fout1 == NULL)
+//	{
+//		printf("打开文件失败\n");
+//		exit(-1);
+//	}
+//	FILE* fout2 = fopen(file2, "r");
+//	if (fout2 == NULL)
+//	{
+//		printf("打开文件失败\n");
+//		exit(-1);
+//	}
+//	FILE* fin = fopen(mfile, "w");
+//	if (fin == NULL)
+//	{
+//		printf("打开文件失败\n");
+//		exit(-1);
+//	}
+//	// 这里跟内存中数组归并的思想完全类似，只是数据在硬盘文件中而已
+//	// 依次读取file1和file2的数据，谁的数据小，谁就往mfile文件中去写
+//	// file1和file2其中一个文件结束后，再把另一个文件未结束文件数据，
+//	// 依次写到mfile的后面
+//	int num1, num2;
+//	int ret1 = fscanf(fout1, "%d\n", &num1);
+//	int ret2 = fscanf(fout2, "%d\n", &num2);
+//	while (ret1 != EOF && ret2 != EOF)
+//	{
+//		if (num1 < num2)
+//		{
+//			fprintf(fin, "%d\n", num1);
+//			ret1 = fscanf(fout1, "%d\n", &num1);
+//		}
+//		else
+//		{
+//			fprintf(fin, "%d\n", num2);
+//			ret2 = fscanf(fout2, "%d\n", &num2);
+//		}
+//	}
+//	while (ret1 != EOF)
+//	{
+//		fprintf(fin, "%d\n", num1);
+//		ret1 = fscanf(fout1, "%d\n", &num1);
+//	}
+//	while (ret2 != EOF)
+//	{
+//		fprintf(fin, "%d\n", num2);
+//		ret2 = fscanf(fout2, "%d\n", &num2);
+//	}
+//	fclose(fout1);
+//	fclose(fout2);
+//	fclose(fin);
+//}
+//// 返回读取到的数据个数
+//int ReadNNumSortToFile(FILE* fout, int* a, int n, const char* file)
+//{
+//	int x = 0;
+//	// 读取n个数据放到file
+//	int i = 0;
+//	while (i < n && fscanf(fout, "%d", &x) != EOF)
+//	{
+//		a[i++] = x;
+//	}
+//	// 一个数据都没有读到，则说明文件已经读到结尾了
+//	if (i == 0)
+//		return i;
+//	// 排序
+//	HeapSort(a, i);
+//	FILE* fin = fopen(file, "w");
+//	if (fout == NULL)
+//	{
+//		printf("打开文件%s失败\n", file);
+//		exit(-1);
+//	}
+//	for (int j = 0; j < i; j++)
+//	{
+//		fprintf(fin, "%d\n", a[j]);
+//	}
+//	fclose(fin);
+//	return i;
+//}
+//// MergeSortFile的第二个是每次取多少个数据到内存中排序，然后写到一个小文件进行归并
+//// 这个n给多少取决于我们有多少合理的内存可以利用，相对而言n越大，更多数据到内存中排序后，
+//// 再走文件归并排序，整体程序会越快一些。
+//void MergeSortFile(const char* file, int n)
+//{
+//	FILE* fout = fopen(file, "r");
+//	if (fout == NULL)
+//	{
+//		printf("打开文件%s失败\n", file);
+//		exit(-1);
+//	}
+//	int i = 0;
+//	int x = 0;
+//	const char* file1 = "file1";
+//	const char* file2 = "file2";
+//	const char* mfile = "mfile";
+//	// 分割成一段一段数据，内存排序后写到，小文件，
+//	int* a = (int*)malloc(sizeof(int) * n);
+//	if (a == NULL)
+//	{
+//		perror("malloc fail");
+//		return;
+//	}
+//	// 分别读取前n个数据排序后，写到file1和file2文件
+//	ReadNNumSortToFile(fout, a, n, file1);
+//	ReadNNumSortToFile(fout, a, n, file2);
+//	while (1)
+//	{
+//		// file1和file2文件归并到mfile文件中
+//		MergeFile(file1, file2, mfile);
+//		// 删除file1和file2
+//		if (remove(file1) != 0 || remove(file2) != 0)
+//		{
+//			perror("Error deleting file");
+//			return;
+//		}
+//		// 将mfile重命名为file1
+//		if (rename(mfile, file1) != 0)
+//		{
+//			perror("Error renaming file");
+//			return;
+//		}
+//		// 读取N个数据到file2，继续走归并
+//		// 如果一个数据都没读到，则归并结束了
+//		if (ReadNNumSortToFile(fout, a, n, file2) == 0)
+//		{
+//			break;
+//		}
+//	}
+//	printf("%s文件成功排序到%s\n", file, file1);
+//	fclose(fout);
+//	free(a);
+//}
+//// 创建N个随机数，写到文件中
+//void CreateNDate()
+//{
+//	// 造数据
+//	int n = 1000000;
+//	srand(time(0));
+//	const char* file = "data.txt";
+//	FILE* fin = fopen(file, "w");
+//	if (fin == NULL)
+//	{
+//		perror("fopen error");
+//		return;
+//	}
+//	for (int i = 0; i < n; ++i)
+//	{
+//		int x = rand() + i;
+//		fprintf(fin, "%d\n", x);
+//	}
+//	fclose(fin);
+//}
+//int main()
+//{
+//	//CreateNDate();
+//	MergeSortFile("data.txt", 100000);
+//	return 0;
+//}
 //// 创建N个随机数，写到文件中
 //void CreateNDate()
 //{

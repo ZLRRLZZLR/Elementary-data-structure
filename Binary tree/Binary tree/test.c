@@ -17,10 +17,23 @@ void test1(){
 	//BinaryTreeDestory(node1);
 	//int ret = BinaryTreeLeafSize(node1);
 	//printf("%d", ret);
-	int ret = BinaryTreeLevelKSize(node1, 2);
-	printf("%d", ret);
+	//int ret = BinaryTreeLevelKSize(node1, 4);
+	//printf("%d", ret);
+	//BTNode*  node = BinaryTreeFind(node1, 13);
+	//if (node)
+	//	printf("%d\n", node->_data);
+	//else
+	//	printf("NULL");
 
+	//BinaryTreePrevOrder(node1);
+	//BinaryTreeInOrder(node1);
+	//BinaryTreePostOrder(node1)£»
 
+	//int ret = TreeHeight(node1);
+	//printf("%d", ret);
+
+	/*BinaryTreeLevelOrder(node1);*/
+	printf("%d", BinaryTreeComplete(node1));
 }
 
 

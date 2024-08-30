@@ -17,8 +17,8 @@ BTNode* BinaryTreeCreate(BTDataType* a, int n, int* pi);
 void BinaryTreeDestory(BTNode* root) {
 	if (NULL == root)
 		return;
-	free(root->_left);
-	free(root->_right);
+	BinaryTreeDestory(root->_left);
+	BinaryTreeDestory(root->_right);
 
 	free(root);
 
@@ -54,25 +54,124 @@ int BinaryTreeLevelKSize(BTNode* root, int k) {
 }
 
 // 二叉树查找值为x的节点
-BTNode* BinaryTreeFind(BTNode* root, BTDataType x);
+BTNode* BinaryTreeFind(BTNode* root, BTDataType x) {
+	if (NULL == root)
+		return NULL;
+
+	if (x == root->_data)
+		return root;
+
+	BTNode* node = BinaryTreeFind(root->_left,x);
+	if (node)
+		return node;
+
+	return BinaryTreeFind(root->_right,x);
+}
 
 // 二叉树前序遍历 
-void BinaryTreePrevOrder(BTNode* root);
+void BinaryTreePrevOrder(BTNode* root) {
+	if (NULL == root) {
+		printf("N");
+		return;
+	}
+
+	printf("%d",root->_data);
+
+	BinaryTreePrevOrder(root->_left);
+	BinaryTreePrevOrder(root->_right);
+
+}
 
 // 二叉树中序遍历
-void BinaryTreeInOrder(BTNode* root);
+void BinaryTreeInOrder(BTNode* root) {
+	if (NULL == root) {
+		printf("N");
+		return;
+	}
+
+	BinaryTreePrevOrder(root->_left);
+	printf("%d", root->_data);
+	BinaryTreePrevOrder(root->_right);
+}
 
 // 二叉树后序遍历
-void BinaryTreePostOrder(BTNode* root);
+void BinaryTreePostOrder(BTNode* root) {
+	if (NULL == root) {
+		printf("N");
+		return;
+	}
+
+	BinaryTreePrevOrder(root->_left);
+	BinaryTreePrevOrder(root->_right);
+	printf("%d", root->_data);
+}
 
 // 层序遍历
-void BinaryTreeLevelOrder(BTNode* root);
+void BinaryTreeLevelOrder(BTNode* root) {
+	Queue q1;
+	QueueInit(&q1);
+	if(root)
+	QueuePush(&q1, root);
+
+	while (!QueueEmpty(&q1)) {
+		BTNode* node = QueueFront(&q1);
+		QueuePop(&q1);
+
+		printf("%d",node->_data);
+
+		if(node->_left)
+		QueuePush(&q1, node->_left);
+
+		if (node->_right)
+		QueuePush(&q1, node->_right);
+
+	}
+
+	QueueDestroy(&q1);
+
+}
 
 // 判断二叉树是否是完全二叉树
-int BinaryTreeComplete(BTNode* root);
+int BinaryTreeComplete(BTNode* root) {
+	Queue q1;
+	QueueInit(&q1);
+	if (root)
+	QueuePush(&q1, root);
+
+	while (!QueueEmpty(&q1)) {
+		BTNode* node = QueueFront(&q1);
+		QueuePop(&q1);
+
+		if (NULL == node)
+			break;
+
+			QueuePush(&q1, node->_left);
+			QueuePush(&q1, node->_right);
+
+	}
+	while (!QueueEmpty(&q1)) {
+		BTNode* node = QueueFront(&q1);
+		QueuePop(&q1);
+
+		if (!node) {
+			QueueDestroy(&q1);
+			return false;
+		}
+	}
+	QueueDestroy(&q1);
+	return true;
+}
 
 //树高
-int TreeHeight(BTNode* root);
+int TreeHeight(BTNode* root) {
+	if (NULL == root)
+		return 0;
+
+	int left = TreeHeight(root->_left);
+	int right = TreeHeight(root->_right);
+
+	return left > right ? left + 1 : right + 1;
+}
 
 
 
