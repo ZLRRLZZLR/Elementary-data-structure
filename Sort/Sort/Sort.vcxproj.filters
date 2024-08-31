@@ -24,12 +24,18 @@
     <ClCompile Include="Stack.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="sort1.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sort.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Stack.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="sort1.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
