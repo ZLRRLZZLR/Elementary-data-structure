@@ -43,8 +43,8 @@ void PrintArray(int* a , int n)
 //
 //	return 0;
 //}
-
-#include"Sort.h"
+//
+//#include"Sort.h"
 
 //void TestInsertSort()
 //{
@@ -55,21 +55,46 @@ void PrintArray(int* a , int n)
 
 //void TestShellSort()
 //{
-//	int a[] = { 9,1,2,5,7,4,6,3,5,9,1,2,5,7,4,6,3,5,9,1,2,5,7,4,6,3,5,9,1,2,5,7,4,6,3,5,9,1,2,5,7,4,6,3,5 };
-//	//InsertSort(a, sizeof(a) / sizeof(int));
+//		int a1[] = { 9,1,2,5,7,4,6,3,5,9,1,2,5,7,4,6,3,5,9,1,2,5,7,4,6,3,5,9,1,2,5,7,4,6,3,5,9,1,2,5,7,4,6,3,5 };
+//		ShellSort(a1, sizeof(a1) / sizeof(int));
+//		PrintArray(a1, sizeof(a1) / sizeof(int));
+//		printf("\n");
+//	
+//		int a2[] = { 2,4,1,7,8,3,9,2 };
+//		ShellSort(a2, sizeof(a2) / sizeof(int));
+//		PrintArray(a2, sizeof(a2) / sizeof(int));
+//		printf("\n");
+//	
+//		int a3[] = { 9,1,2,5,7,4,6,3 };
+//		ShellSort(a3, sizeof(a3) / sizeof(int));
+//		PrintArray(a3, sizeof(a3) / sizeof(int));
+//		printf("\n");
+//}
 //
-//	PrintArray(a, sizeof(a) / sizeof(int));
+//void TestBubbleSort() {
+//	int a1[] = { 9,1,2,5,7,4,6,3,5,9,1,2,5,7,4,6,3,5,9,1,2,5,7,4,6,3,5,9,1,2,5,7,4,6,3,5,9,1,2,5,7,4,6,3,5 };
+//	BubbleSort(a1, sizeof(a1) / sizeof(int));
+//	PrintArray(a1, sizeof(a1) / sizeof(int));
+//	printf("\n");
 //
-//	ShellSort(a, sizeof(a) / sizeof(int));
-//	PrintArray(a, sizeof(a) / sizeof(int));
+//	int a2[] = { 2,4,1,7,8,3,9,2 };
+//	BubbleSort(a2, sizeof(a2) / sizeof(int));
+//	PrintArray(a2, sizeof(a2) / sizeof(int));
+//	printf("\n");
+//
+//	int a3[] = { 9,1,2,5,7,4,6,3 };
+//	BubbleSort(a3, sizeof(a3) / sizeof(int));
+//	PrintArray(a3, sizeof(a3) / sizeof(int));
+//	printf("\n");
 //}
 //
 //void TestSelectSort()
 //{
-//	//int a1[] = { 9,1,2,5,7,4,6,3,5,9,1,2,5,7,4,6,3,5,9,1,2,5,7,4,6,3,5,9,1,2,5,7,4,6,3,5,9,1,2,5,7,4,6,3,5 };
-//	//InsertSort(a1, sizeof(a1) / sizeof(int));
-//	//PrintArray(a1, sizeof(a1) / sizeof(int));
-//	//printf("\n");
+//	int a1[] = { 9,1,2,5,7,4,6,3,5,9,1,2,5,7,4,6,3,5,9,1,2,5,7,4,6,3,5,9,1,2,5,7,4,6,3,5,9,1,2,5,7,4,6,3,5 };
+//	SelectSort(a1, sizeof(a1) / sizeof(int));
+//	PrintArray(a1, sizeof(a1) / sizeof(int));
+//	printf("\n");
+//
 //	int a2[] = { 2,4,1,7,8,3,9,2 };
 //	SelectSort(a2, sizeof(a2) / sizeof(int));
 //	PrintArray(a2, sizeof(a2) / sizeof(int));
@@ -80,6 +105,21 @@ void PrintArray(int* a , int n)
 //	PrintArray(a3, sizeof(a3) / sizeof(int));
 //	printf("\n");
 //
+//}
+//void  TestHeapSort() {
+//	int a1[] = { 9,1,2,5,7,4,6,3,5,9,1,2,5,7,4,6,3,5,9,1,2,5,7,4,6,3,5,9,1,2,5,7,4,6,3,5,9,1,2,5,7,4,6,3,5 };
+//	HeapSort(a1, sizeof(a1) / sizeof(int));
+//	PrintArray(a1, sizeof(a1) / sizeof(int));
+//	printf("\n");
+//	int a2[] = { 2,4,1,7,8,3,9,2 };
+//	HeapSort(a2, sizeof(a2) / sizeof(int));
+//	PrintArray(a2, sizeof(a2) / sizeof(int));
+//	printf("\n");
+//
+//	int a3[] = { 9,1,2,5,7,4,6,3 };
+//	HeapSort(a3, sizeof(a3) / sizeof(int));
+//	PrintArray(a3, sizeof(a3) / sizeof(int));
+//	printf("\n");
 //}
 //
 //void TestQuickSort()
@@ -222,8 +262,10 @@ void PrintArray(int* a , int n)
 int main()
 {
 	//TestInsertSort();
-	//TestShellSort();
+	/*TestShellSort();*/
 	//TestSelectSort();
+	 //TestHeapSort();
+	 TestBubbleSort();
 	//TestQuickSort();
 	//TestMergeSort();
 	//TestCountSort();
