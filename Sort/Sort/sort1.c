@@ -8,17 +8,25 @@ void Swap(int* a, int* b) {
 // 插入排序
 void InsertSort(int* a, int n) {
 	for (int i = 0; i < n - 1; i++) {
+
 		int end = i;
 		int tmp = a[end + 1];
+
 		while (end >= 0) {
+
 			if (a[end] > tmp) {
 				a[end + 1] = a[end];
 				end--;
 			}
+
 			else {
+
 				break;
+
 			}
+
 			a[end + 1] = tmp;
+
 		}
 	}
 
@@ -60,8 +68,10 @@ void SelectSort(int* a, int n) {
 				min = i;
 		}
 		Swap(&a[min], &a[begin]);
+
 		if (a[max] < a[min])
 			max = min;
+
 		Swap(&a[max], &a[end]);
 		begin++;
 		end--;
@@ -72,6 +82,7 @@ void SelectSort(int* a, int n) {
 // 堆排序
 void AdjustDwon(int* a, int n, int root) {
 	int child = root * 2 + 1;
+
 	while(child < n){
 
 		if (child + 1 < n && a[child + 1] > a[child]) {
@@ -108,27 +119,196 @@ void HeapSort(int* a, int n) {
 
 // 冒泡排序
 void BubbleSort(int* a, int n) {
+	int flag = 1;
 	for (int j = 1; j < n; j++) {
 		for (int i = 0; i < n - j; i++) {
 			if (a[i] > a[i + 1]) {
 				Swap(&a[i], &a[i + 1]);
+				flag = 0;
 			}
+		}
+		if (flag) {
+			break;
 		}
 	}
 
 }
 
 // 快速排序递归实现
+//优化：三数取中
+int GetMid(int* a, int left, int right) {
+	int mid = (left + right) / 2;
+	if (a[left] > a[mid]) {
+		if (a[mid] > a[right]) {
+			return mid;
+		}
+		else if (a[right] > a[left]) {
+			return left;
+		}
+		else {
+			return right;
+		}
+	}
+	else {
+		if (a[mid] < a[right]) {
+			return mid;
+		}
+		else if (a[right] > a[left]) {
+			return right;
+		}
+		else {
+			return left;
+		}
+	}
+}
 // 快速排序hoare版本
-int PartSort1(int* a, int left, int right);
+void QuickSort1(int* a, int left, int right) {
+	if (left >= right)
+		return;
+	//小区间优化
+	if (right - left + 1 <= 10) {
+		InsertSort(a + left, right - left + 1);
+		return;
+	}
+
+	//三数取中
+	int tmp = GetMid(a,left,right);
+	Swap(&a[left],&a[tmp]);
+
+	int key = left;
+	int begin = left;
+	int end = right;
+	while (begin < end) {
+		while (begin < end && a[end] >= a[key]) {
+			end--;
+		}
+		while (begin < end && a[begin] <= a[key]) {
+			begin++;
+		}
+		Swap(&a[begin],&a[end]);
+	}
+	Swap(&a[key],&a[begin]);
+
+	QuickSort1(a, left, begin - 1);
+	QuickSort1(a, begin + 1, right);
+
+}
 
 // 快速排序挖坑法
-int PartSort2(int* a, int left, int right);
+void QuickSort2(int* a, int left, int right) {
+	if (left >= right)
+		return;
+	//小区间优化
+	if (right - left + 1 <= 10) {
+		InsertSort(a + left, right - left + 1);
+		return;
+	}
+
+	//三数取中
+	int tmp = GetMid(a, left, right);
+	Swap(&a[left], &a[tmp]);
+
+	int key = a[left];
+	int begin = left;
+	int end = right;
+	while (begin < end) {
+		while (begin < end && a[end] >= a[key]) {
+			end--;
+		}
+
+		a[begin] = a[end];
+
+		while (begin < end && a[begin] <= a[key]) {
+			begin++;
+		}
+
+		a[end] = a[begin];
+	}
+	a[begin] = key;
+
+	QuickSort2(a, left, begin - 1);
+	QuickSort2(a, begin + 1, right);
+
+}
 
 // 快速排序前后指针法
-int PartSort3(int* a, int left, int right);
+void QuickSort3(int* a, int left, int right) {
+	if (left >= right)
+		return;
 
-void QuickSort(int* a, int left, int right);
+	//小区间优化
+	if (right - left + 1 <= 10) {
+		InsertSort(a + left, right - left + 1);
+		return;
+	}
+
+	//三数取中
+	int tmp = GetMid(a, left, right);
+	Swap(&a[left], &a[tmp]);
+
+	int key = left;
+	int prev = left;
+	int cur = prev + 1;
+
+ 	while (cur <= right) {
+		if (a[key] > a[cur] && ++prev != cur) {
+			Swap(&a[prev], &a[cur]);
+		}
+		++cur;
+	}
+	Swap(&a[prev], &a[key]);
+
+	QuickSort3(a, left, prev - 1);
+	QuickSort3(a, prev + 1, right);
+}
+
 
 // 快速排序 非递归实现
-void QuickSortNonR(int* a, int left, int right);
+void QuickSortNonR(int* a, int left, int right) {
+	Stack s1;
+	StackInit(&s1);
+	StackPush(&s1, right);
+	StackPush(&s1, left);
+
+	while (!StackEmpty(&s1)) {
+		int left = StackTop(&s1);
+		StackPop(&s1);
+		int right = StackTop(&s1);
+		StackPop(&s1);
+
+		//小区间优化
+		if (right - left + 1 <= 10) {
+			InsertSort(a + left, right - left + 1);
+			return;
+		}
+
+		//三数取中
+		int tmp = GetMid(a, left, right);
+		Swap(&a[left], &a[tmp]);
+
+		int key = left;
+		int begin = left;
+		int end = right;
+		while (begin < end) {
+			while (begin < end && a[end] >= a[key]) {
+				end--;
+			}
+			while (begin < end && a[begin] <= a[key]) {
+				begin++;
+			}
+			Swap(&a[begin], &a[end]);
+		}
+		Swap(&a[key], &a[begin]);
+		if (right > key + 1) {
+			StackPush(&s1, end);
+			StackPush(&s1, key + 1);
+		}
+		if (left < key - 1) {
+			StackPush(&s1, key - 1);
+			StackPush(&s1, left);
+		}
+
+	}
+	StackDestroy(&s1);
+
+}
