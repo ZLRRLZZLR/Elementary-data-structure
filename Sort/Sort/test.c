@@ -246,7 +246,7 @@ void TestQuickSort()
 //}
 
 //
-void TestMergeSort()
+void TestMergeSortNonR()
  {
  		int a1[] = { 6,1,2,7,9,3,4,5,10,8 };
 		MergeSort(a1, sizeof(a1) / sizeof(int) );
@@ -391,36 +391,37 @@ void TestOP()
 //	PrintArray(a, sizeof(a) / sizeof(int));
 //}
 
-void TestMergeSortNonR() {
-	int a1[] = { 6,1,2,7,9,3,4,5,10,8 };
-	MergeSortNonR(a1, sizeof(a1) / sizeof(int));
-	PrintArray(a1, sizeof(a1) / sizeof(int));
-	printf("%c", '\n');
-
-
-	int a2[] = { 6,1,6,7,6,6,4,9 };
-	MergeSortNonR(a2, sizeof(a2) / sizeof(int));
-	PrintArray(a2, sizeof(a2) / sizeof(int));
-	printf("%c", '\n');
-
-
-	int a3[] = { 2,2,2,2,2,2,2,2 };
-	MergeSortNonR(a3, sizeof(a3) / sizeof(int));
-	PrintArray(a3, sizeof(a3) / sizeof(int));
-	printf("%c", '\n');
-
-
-	int a4[] = { 3,2,3,3,2,3,2,3 };
-	MergeSortNonR(a4, sizeof(a4) / sizeof(int));
-	PrintArray(a4, sizeof(a4) / sizeof(int));
-	printf("%c", '\n');
-
-
-	int a5[] = { 2,3,3,3,2,3,2,3 };
-	MergeSortNonR(a5, sizeof(a5) / sizeof(int));
-	PrintArray(a5, sizeof(a5) / sizeof(int));
-	printf("%c", '\n');
-}
+//void TestMergeSortNonR() {
+//	int a1[] = { 6,1,2,7,9,3,4,5,10,8 };
+//	MergeSortNonR(a1, sizeof(a1) / sizeof(int));
+//	PrintArray(a1, sizeof(a1) / sizeof(int));
+//	printf("%c", '\n');
+//
+//
+//	int a2[] = { 6,1,6,7,6,6,4,9 };
+//	MergeSortNonR(a2, sizeof(a2) / sizeof(int));
+//	PrintArray(a2, sizeof(a2) / sizeof(int));
+//	printf("%c", '\n');
+//
+//
+//	int a3[] = { 2,2,2,2,2,2,2,2 };
+//	MergeSortNonR(a3, sizeof(a3) / sizeof(int));
+//	PrintArray(a3, sizeof(a3) / sizeof(int));
+//	printf("%c", '\n');
+//
+//
+//	int a4[] = { 3,2,3,3,2,3,2,3 };
+//	MergeSortNonR(a4, sizeof(a4) / sizeof(int));
+//	PrintArray(a4, sizeof(a4) / sizeof(int));
+//	printf("%c", '\n');
+//
+//
+//	int a5[] = { 2,3,3,3,2,3,2,3 };
+//	MergeSortNonR(a5, sizeof(a5) / sizeof(int));
+//	PrintArray(a5, sizeof(a5) / sizeof(int));
+//	printf("%c", '\n');
+//
+//}
 
 int main()
 {

@@ -349,6 +349,11 @@ void _MergeSort(int* a, int* tmp, int left, int right) {
 void MergeSort(int* a, int n) {
 	int* tmp = (int*)malloc(sizeof(int) * n);
 
+	if (NULL == tmp) {
+		perror("MergeSortNonR:malloc");
+		exit(1);
+	}
+
 	_MergeSort(a, tmp, 0, n - 1);
 
 	free(tmp);
@@ -358,37 +363,51 @@ void MergeSort(int* a, int n) {
 
 // 归并排序非递归实现
 void MergeSortNonR(int* a, int n) {
+
 	int* tmp = (int*)malloc(sizeof(int) * n);
+	if (NULL == tmp) {
+		perror("MergeSortNonR:malloc");
+		exit(1);
+	}
 
 	int gap = 1;
+
 	while (gap < n) {
-		int i = 0 ;
-		for (; i < n; i += 2 * gap) {
+		
+		for (int i = 0; i < n; i += 2 * gap) {
 			int begin1 = i, end1 = i + gap - 1;
 			int begin2 = i + gap, end2 = i + 2 * gap - 1;
-			if (end1 >= n) {
+
+			if (begin2 >= n) {
 				break;
 
 			}
+
 			if (end2 >= n) {
 				end2 = n - 1;
 			}
+
+			int j = i;
+
 			while (begin1 <= end1 && begin2 <= end2) {
 				if (a[begin1] < a[begin2]) {
-					tmp[i++] = a[begin1++];
+					tmp[j++] = a[begin1++];
 				}
 				else {
-					tmp[i++] = a[begin2++];
+					tmp[j++] = a[begin2++];
 				}
 			}
 			while (begin1 <= end1) {
-				tmp[i++] = a[begin1++];
+				tmp[j++] = a[begin1++];
 			}
+
 			while (begin2 <= end2) {
-				tmp[i++] = a[begin2++];
+				tmp[j++] = a[begin2++];
 			}
+
+			memcpy(a + i, tmp + i, sizeof(int) * (2 * gap));
+
 		}
-		memcpy(a + i, tmp + i, sizeof(int) * (2 * gap));
 		gap *= 2;
 		}
 
