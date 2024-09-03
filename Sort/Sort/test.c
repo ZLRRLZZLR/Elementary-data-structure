@@ -246,16 +246,38 @@ void TestQuickSort()
 //}
 
 //
-//void TestMergeSort()
-//{
-//	int a[] = { 6,1,2,7,9,3,4,5,10,8,11 };
-//	//int a[] = { 10,6,7,1,3,9,4,2 };
-//
-//	PrintArray(a, sizeof(a) / sizeof(int));
-//	MergeSortNonR(a, sizeof(a) / sizeof(int));
-//	PrintArray(a, sizeof(a) / sizeof(int));
-//
-//}
+void TestMergeSort()
+ {
+ 		int a1[] = { 6,1,2,7,9,3,4,5,10,8 };
+		MergeSort(a1, sizeof(a1) / sizeof(int) );
+		PrintArray(a1, sizeof(a1) / sizeof(int));
+		printf("%c", '\n');
+	
+	
+		int a2[] = { 6,1,6,7,6,6,4,9 };
+		MergeSort(a2, sizeof(a2) / sizeof(int) );
+		PrintArray(a2, sizeof(a2) / sizeof(int));
+		printf("%c", '\n');
+	
+	
+		int a3[] = { 2,2,2,2,2,2,2,2 };
+		MergeSort(a3, sizeof(a3) / sizeof(int) );
+		PrintArray(a3, sizeof(a3) / sizeof(int));
+		printf("%c", '\n');
+	
+	
+		int a4[] = { 3,2,3,3,2,3,2,3 };
+		MergeSort(a4,sizeof(a4) / sizeof(int) );
+		PrintArray(a4, sizeof(a4) / sizeof(int));
+		printf("%c", '\n');
+	
+	
+		int a5[] = { 2,3,3,3,2,3,2,3 };
+		MergeSort(a5,sizeof(a5) / sizeof(int) );
+		PrintArray(a5, sizeof(a5) / sizeof(int));
+		printf("%c", '\n');
+
+}
 //
 //void TestCountSort()
 //{
@@ -369,6 +391,37 @@ void TestOP()
 //	PrintArray(a, sizeof(a) / sizeof(int));
 //}
 
+void TestMergeSortNonR() {
+	int a1[] = { 6,1,2,7,9,3,4,5,10,8 };
+	MergeSortNonR(a1, sizeof(a1) / sizeof(int));
+	PrintArray(a1, sizeof(a1) / sizeof(int));
+	printf("%c", '\n');
+
+
+	int a2[] = { 6,1,6,7,6,6,4,9 };
+	MergeSortNonR(a2, sizeof(a2) / sizeof(int));
+	PrintArray(a2, sizeof(a2) / sizeof(int));
+	printf("%c", '\n');
+
+
+	int a3[] = { 2,2,2,2,2,2,2,2 };
+	MergeSortNonR(a3, sizeof(a3) / sizeof(int));
+	PrintArray(a3, sizeof(a3) / sizeof(int));
+	printf("%c", '\n');
+
+
+	int a4[] = { 3,2,3,3,2,3,2,3 };
+	MergeSortNonR(a4, sizeof(a4) / sizeof(int));
+	PrintArray(a4, sizeof(a4) / sizeof(int));
+	printf("%c", '\n');
+
+
+	int a5[] = { 2,3,3,3,2,3,2,3 };
+	MergeSortNonR(a5, sizeof(a5) / sizeof(int));
+	PrintArray(a5, sizeof(a5) / sizeof(int));
+	printf("%c", '\n');
+}
+
 int main()
 {
 	//TestInsertSort();
@@ -376,12 +429,13 @@ int main()
 	//TestSelectSort();
 	 //TestHeapSort();
 	/* TestBubbleSort();*/
- 	TestQuickSort();
+ 	//TestQuickSort();
 	 /*TestQuickSortNonR();*/
-	//TestMergeSort();
+	/*TestMergeSort();*/
+	TestMergeSortNonR();
 	//TestCountSort();
 	//TestQuickSort1();
-	TestOP();
+	//TestOP();
 	/*TestQuickSort2();*/
 
 	return 0;

@@ -101,6 +101,7 @@ void AdjustDwon(int* a, int n, int root) {
 	}
 
 }
+
 void HeapSort(int* a, int n) {
 	int parent = (n - 1 - 1) / 2;
 	while (parent >= 0) {
@@ -312,3 +313,88 @@ void QuickSortNonR(int* a, int left, int right) {
 	StackDestroy(&s1);
 
 }
+
+void _MergeSort(int* a, int* tmp, int left, int right) {
+	if (left >= right)
+		return ;
+	int mid = (left + right) / 2;
+
+	_MergeSort(a, tmp, left, mid);
+	_MergeSort(a, tmp, mid + 1, right);
+
+	int begin1 = left, end1 = mid;
+	int begin2 = mid + 1, end2 = right;
+	int i = left;
+
+	while (begin1 <= end1 && begin2 <= end2) {
+		if (a[begin1] < a[begin2]) {
+			tmp[i++] = a[begin1++];
+		}
+		else {
+			tmp[i++] = a[begin2++];
+		}
+	}
+	while (begin1 <= end1) {
+		tmp[i++] = a[begin1++];
+	}
+	while (begin2 <= end2) {
+		tmp[i++] = a[begin2++];
+	}
+
+	memcpy(a + left,tmp +left,sizeof(int) * (end2 - left + 1));
+
+}
+
+// 归并排序递归实现
+void MergeSort(int* a, int n) {
+	int* tmp = (int*)malloc(sizeof(int) * n);
+
+	_MergeSort(a, tmp, 0, n - 1);
+
+	free(tmp);
+	tmp = NULL;
+
+}
+
+// 归并排序非递归实现
+void MergeSortNonR(int* a, int n) {
+	int* tmp = (int*)malloc(sizeof(int) * n);
+
+	int gap = 1;
+	while (gap < n) {
+		int i = 0 ;
+		for (; i < n; i += 2 * gap) {
+			int begin1 = i, end1 = i + gap - 1;
+			int begin2 = i + gap, end2 = i + 2 * gap - 1;
+			if (end1 >= n) {
+				break;
+
+			}
+			if (end2 >= n) {
+				end2 = n - 1;
+			}
+			while (begin1 <= end1 && begin2 <= end2) {
+				if (a[begin1] < a[begin2]) {
+					tmp[i++] = a[begin1++];
+				}
+				else {
+					tmp[i++] = a[begin2++];
+				}
+			}
+			while (begin1 <= end1) {
+				tmp[i++] = a[begin1++];
+			}
+			while (begin2 <= end2) {
+				tmp[i++] = a[begin2++];
+			}
+		}
+		memcpy(a + i, tmp + i, sizeof(int) * (2 * gap));
+		gap *= 2;
+		}
+
+	free(tmp);
+	tmp = NULL;
+}
+
+// 计数排序
+void CountSort(int* a, int n);
