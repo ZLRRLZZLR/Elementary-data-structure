@@ -6,6 +6,115 @@
 #include<stdio.h>
 #include<string.h>
 
+
+#include <stdio.h>
+#include<string.h>
+#include<stdlib.h>
+
+struct ListNode {
+    int val;
+    struct ListNode* next;
+};
+ 
+struct ListNode* Mid(struct ListNode* A) {
+    struct ListNode* slow = A;
+    struct ListNode* fast = A;
+
+    while (fast && fast->next) {
+
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    return slow;
+}
+struct ListNode* Reverse(struct ListNode* A) {
+    struct ListNode* l1 = NULL;
+    struct ListNode* l2 = A;
+    struct ListNode* l3 = A->next;
+    while (l1->next) {
+        l2->next = l1;
+        l1 = l2;
+        l2 = l3;
+        if (l2)
+            l3 = l2->next;
+    }
+
+    return l1;
+}
+
+bool chkPalindrome(struct ListNode* A) {
+    struct ListNode* mid = Mid(A);
+    struct ListNode* newhead = Reverse(mid);
+    struct ListNode* head = A;
+
+    while (head->next || newhead->next) {
+
+        if (newhead != head)
+            return false;
+
+        head = head->next;
+        newhead = newhead->next;
+
+    }
+
+    return true;
+
+}
+
+//void _Merge(int* a, int* tmp, int left, int right) {
+//    if (left >= right)
+//        return;
+//
+//    int mid = (left + right) / 2;
+//
+//    _Merge(a, tmp, 0, mid);
+//    _Merge(a, tmp, mid + 1, right);
+//
+//    int begin1 = left, end1 = mid;
+//    int begin2 = mid + 1, end2 = right;
+//
+//    int j = left;
+//
+//    while (begin1 <= end1 && begin2 <= end2) {
+//        if (a[begin1] <= a[begin2])
+//            tmp[j++] = a[begin1++];
+//
+//        if (a[begin2] <= a[begin1])
+//            tmp[j++] = a[begin2++];
+//    }
+//
+//    while (begin1 <= end1) {
+//        tmp[j++] = a[begin1++];
+//    }
+//    while (begin2 <= end2) {
+//        tmp[j++] = a[begin2++];
+//    }
+//
+//    memcpy(a + left, tmp + left, (right - left + 1) * sizeof(int));
+//
+//}
+//void Merge(int* a, int n) {
+//    int* tmp = (int*)malloc(sizeof(int) * n);
+//    if (tmp == NULL) {
+//        perror("malloc");
+//        exit(1);
+//    }
+//
+//    _Merge(a, tmp, 0, n - 1);
+//
+//    free(tmp);
+//    tmp = NULL;
+//}
+//
+//
+//int main() {
+//    int arr[6] = { 1,4 ,2 ,7 ,5 ,2 };
+//    Merge(arr, 5);
+//
+//    return 0;
+//}
+
 //#include<stdio.h>
 //#include<assert.h>
 //#include<stdlib.h>
