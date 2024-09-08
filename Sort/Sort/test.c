@@ -475,21 +475,29 @@ void TestOP()
 //
 //}
 
+//int main()
+//{
+//	//TestInsertSort();
+//	/*TestShellSort();*/
+//	//TestSelectSort();
+//	 //TestHeapSort();
+//	/* TestBubbleSort();*/
+// 	TestQuickSort();
+//	 /*TestQuickSortNonR();*/
+//	/*TestMergeSort();*/
+//	/*TestMergeSortNonR();*/
+//	//TestCountSort();
+//	//TestQuickSort1();
+//	//TestOP();
+//	/*TestQuickSort2();*/
+//
+//	return 0;
+//}
+
+
 int main()
 {
-	//TestInsertSort();
-	/*TestShellSort();*/
-	//TestSelectSort();
-	 //TestHeapSort();
-	/* TestBubbleSort();*/
- 	TestQuickSort();
-	 /*TestQuickSortNonR();*/
-	/*TestMergeSort();*/
-	/*TestMergeSortNonR();*/
-	//TestCountSort();
-	//TestQuickSort1();
-	//TestOP();
-	/*TestQuickSort2();*/
-
+	CreateData();
+	MergeSortFile("data.txt", 100000);
 	return 0;
 }

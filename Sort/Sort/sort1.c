@@ -546,3 +546,152 @@ void CountSort(int* a, int n) {
 	tmp = NULL;
 
 }
+
+
+void CreateData() {
+	const char* File = "data.txt";
+	FILE* fin = fopen(File, "w");
+	if (NULL == fin) {
+		perror("open file fail");
+		exit(1);
+	}
+
+	srand((unsigned int)time(0));
+	int n = 1000000;
+
+	for (int i = 0; i < n; i++) {
+		int num = rand() + i;
+		fprintf(fin,"%d\n",num);
+	}
+
+	fclose(fin);
+}
+
+int ReadNNumSortToFile(FILE* fout, int* a, int num, const char* file) {
+
+	int x = 0;
+
+	int i = 0;
+	while(i < num && fscanf(fout, "%d", &x) != EOF) {
+		a[i++] = x;
+	}
+
+	if (i == 0)
+		return i;
+
+	HeapSort(a, i);
+
+	FILE* fin = fopen(file,"w");
+	if (NULL == fin) {
+		perror("Fopen");
+		exit(1);
+	}
+
+	for (int j = 0; j < i; j++) {
+		fprintf(fin, "%d\n", a[j]);
+	}
+
+	fclose(fin);
+
+	return i;
+}
+
+void MergeFile(const char* file1, const char* file2, const char* mfile) {
+	FILE* File1 = fopen(file1,"r");
+	if (NULL == File1) {
+		perror("fopen fail");
+		exit(1);
+	}
+
+	FILE* File2 = fopen(file2, "r");
+	if (NULL == File2) {
+		perror("fopen fail");
+		exit(1);
+	}
+
+	FILE* Mfile = fopen(mfile,"w");
+	if (NULL == Mfile) {
+		perror("fopen fail");
+		exit(1);
+	}
+
+	int num1 = 0;
+	int num2 = 0;
+
+	int ret1 = fscanf(File1,"%d\n",&num1);
+	int ret2 = fscanf(File2, "%d\n", &num2);
+
+	while (ret1 != EOF && ret2 != EOF) {
+		if (num1 < num2) {
+			fprintf(Mfile ,"%d\n", num1);
+			ret1 = fscanf(File1, "%d\n", &num1);
+		}
+		else {
+			fprintf(Mfile, "%d\n", num2);
+			ret2 = fscanf(File2, "%d\n", &num2);
+		}
+	}
+	while (ret1 != EOF) {
+		fprintf(Mfile, "%d\n", num1);
+		ret1 = fscanf(File1, "%d\n", &num1);
+	}
+	while (ret2 != EOF) {
+		fprintf(Mfile, "%d\n", num2);
+		ret2 = fscanf(File2, "%d\n", &num2);
+	}
+
+
+	fclose(File1);
+	fclose(File2);
+	fclose(Mfile);
+
+}
+
+//ÍâÅÅÐò
+void MergeSortFile(const char* file, int num) {
+	FILE* fout = fopen(file,"r");
+	if (NULL == fout) {
+		perror("fopen fail");
+		exit(1);
+	}
+
+	int m = 100000;
+	int j = 0;
+	int i = 0;
+
+	const char* file1 = "file1.txt";
+	const char* file2 = "file2.txt";
+	const char* mfile = "mfile.txt";
+
+	int* a = (int*)malloc(sizeof(int) * m);
+	if (NULL == a) {
+		perror("a malloc");
+		exit(1);
+	}
+
+	ReadNNumSortToFile(fout, a, m, file1);
+	ReadNNumSortToFile(fout, a, m, file2);
+
+	while (1) {
+		MergeFile(file1,file2,mfile);
+
+		if (remove(file1) != 0 || remove(file2) != 0) {
+			perror("Error deleting file");
+			return;
+		}
+
+
+		if (rename(mfile, file1) != 0) {
+			perror("Error deleting file");
+			return;
+		}
+
+		if (ReadNNumSortToFile(fout, a, m, file2) == 0) {
+			break;
+		 }
+
+	}
+	rename(file1, mfile);
+	fclose(fout);
+	free(a);
+}

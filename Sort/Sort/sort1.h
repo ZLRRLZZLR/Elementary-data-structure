@@ -54,7 +54,18 @@ void MergeSort(int* a, int n);
 // 归并排序非递归实现
 void MergeSortNonR(int* a, int n);
 
+void CreateData();
+
 // 计数排序
 void CountSort(int* a, int n);
+
+//读数据到小文件
+int ReadNNumSortToFile(FILE* fout, int* a, int num, const char* file);
+
+//归并两个文件
+void MergeFile(const char* file1, const char* file2, const char* mfile);
+
+//外排序
+void MergeSortFile(const char* file, int num);
 
 
