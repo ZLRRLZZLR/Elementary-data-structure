@@ -127,33 +127,62 @@ void PrintArray(int* a , int n)
 void TestQuickSort()
 {
 	int a1[] = { 6,1,2,7,9,3,4,5,10,8 };
-	QuickSort1(a1, 0, sizeof(a1) / sizeof(int) - 1);
+	introsort(a1, 0, sizeof(a1) / sizeof(int) - 1);
 	PrintArray(a1, sizeof(a1) / sizeof(int));
 	printf("%c", '\n');
 
 
 	int a2[] = { 6,1,6,7,6,6,4,9 };
-	QuickSort1(a2, 0, sizeof(a2) / sizeof(int) - 1);
+	introsort(a2, 0, sizeof(a2) / sizeof(int) - 1);
 	PrintArray(a2, sizeof(a2) / sizeof(int));
 	printf("%c", '\n');
 
 
 	int a3[] = { 2,2,2,2,2,2,2,2 };
-	QuickSort1(a3, 0, sizeof(a3) / sizeof(int) - 1);
+	introsort(a3, 0, sizeof(a3) / sizeof(int) - 1);
 	PrintArray(a3, sizeof(a3) / sizeof(int));
 	printf("%c", '\n');
 
 
 	int a4[] = { 3,2,3,3,2,3,2,3 };
-	QuickSort1(a4, 0, sizeof(a4) / sizeof(int) - 1);
+	introsort(a4, 0, sizeof(a4) / sizeof(int) - 1);
 	PrintArray(a4, sizeof(a4) / sizeof(int));
 	printf("%c", '\n');
 
 
 	int a5[] = { 2,3,3,3,2,3,2,3 };
-	QuickSort1(a5, 0, sizeof(a5) / sizeof(int) - 1);
+	introsort(a5, 0, sizeof(a5) / sizeof(int) - 1);
 	PrintArray(a5, sizeof(a5) / sizeof(int));
-	printf("%c",'\n');
+	printf("%c", '\n');
+
+	//int a1[] = { 6,1,2,7,9,3,4,5,10,8 };
+	//QuickSort4(a1, 0, sizeof(a1) / sizeof(int) - 1);
+	//PrintArray(a1, sizeof(a1) / sizeof(int));
+	//printf("%c", '\n');
+
+
+	//int a2[] = { 6,1,6,7,6,6,4,9 };
+	//QuickSort4(a2, 0, sizeof(a2) / sizeof(int) - 1);
+	//PrintArray(a2, sizeof(a2) / sizeof(int));
+	//printf("%c", '\n');
+
+
+	//int a3[] = { 2,2,2,2,2,2,2,2 };
+	//QuickSort4(a3, 0, sizeof(a3) / sizeof(int) - 1);
+	//PrintArray(a3, sizeof(a3) / sizeof(int));
+	//printf("%c", '\n');
+
+
+	//int a4[] = { 3,2,3,3,2,3,2,3 };
+	//QuickSort4(a4, 0, sizeof(a4) / sizeof(int) - 1);
+	//PrintArray(a4, sizeof(a4) / sizeof(int));
+	//printf("%c", '\n');
+
+
+	//int a5[] = { 2,3,3,3,2,3,2,3 };
+	//QuickSort4(a5, 0, sizeof(a5) / sizeof(int) - 1);
+	//PrintArray(a5, sizeof(a5) / sizeof(int));
+	//printf("%c",'\n');
 
 	//int a1[] = { 6,1,2,7,9,3,4,5,10,8 };
 	//QuickSort2(a1, 0, sizeof(a1) / sizeof(int) - 1);
@@ -279,37 +308,37 @@ void TestQuickSort()
 //
 //}
 //
-void TestCountSort()
-{
-	int a1[] = { 6,1,2,7,9,3,4,5,10,8 };
-	CountSort(a1, sizeof(a1) / sizeof(int));
-	PrintArray(a1, sizeof(a1) / sizeof(int));
-	printf("%c", '\n');
-
-
-	int a2[] = { 6,1,6,7,6,6,4,9 };
-	CountSort(a2, sizeof(a2) / sizeof(int));
-	PrintArray(a2, sizeof(a2) / sizeof(int));
-	printf("%c", '\n');
-
-
-	int a3[] = { 2,2,2,2,2,2,2,2 };
-	CountSort(a3, sizeof(a3) / sizeof(int));
-	PrintArray(a3, sizeof(a3) / sizeof(int));
-	printf("%c", '\n');
-
-
-	int a4[] = { 3,2,3,3,2,3,2,3 };
-	CountSort(a4, sizeof(a4) / sizeof(int));
-	PrintArray(a4, sizeof(a4) / sizeof(int));
-	printf("%c", '\n');
-
-
-	int a5[] = { 2,3,3,3,2,3,2,3 };
-	CountSort(a5, sizeof(a5) / sizeof(int));
-	PrintArray(a5, sizeof(a5) / sizeof(int));
-	printf("%c", '\n');
-}
+//void TestCountSort()
+//{
+//	int a1[] = { 6,1,2,7,9,3,4,5,10,8 };
+//	CountSort(a1, sizeof(a1) / sizeof(int));
+//	PrintArray(a1, sizeof(a1) / sizeof(int));
+//	printf("%c", '\n');
+//
+//
+//	int a2[] = { 6,1,6,7,6,6,4,9 };
+//	CountSort(a2, sizeof(a2) / sizeof(int));
+//	PrintArray(a2, sizeof(a2) / sizeof(int));
+//	printf("%c", '\n');
+//
+//
+//	int a3[] = { 2,2,2,2,2,2,2,2 };
+//	CountSort(a3, sizeof(a3) / sizeof(int));
+//	PrintArray(a3, sizeof(a3) / sizeof(int));
+//	printf("%c", '\n');
+//
+//
+//	int a4[] = { 3,2,3,3,2,3,2,3 };
+//	CountSort(a4, sizeof(a4) / sizeof(int));
+//	PrintArray(a4, sizeof(a4) / sizeof(int));
+//	printf("%c", '\n');
+//
+//
+//	int a5[] = { 2,3,3,3,2,3,2,3 };
+//	CountSort(a5, sizeof(a5) / sizeof(int));
+//	PrintArray(a5, sizeof(a5) / sizeof(int));
+//	printf("%c", '\n');
+//}
 //
 void TestOP()
 {
@@ -453,11 +482,11 @@ int main()
 	//TestSelectSort();
 	 //TestHeapSort();
 	/* TestBubbleSort();*/
- 	//TestQuickSort();
+ 	TestQuickSort();
 	 /*TestQuickSortNonR();*/
 	/*TestMergeSort();*/
 	/*TestMergeSortNonR();*/
-	TestCountSort();
+	//TestCountSort();
 	//TestQuickSort1();
 	//TestOP();
 	/*TestQuickSort2();*/

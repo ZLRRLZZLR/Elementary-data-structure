@@ -18,6 +18,7 @@ void ShellSort(int* a, int n);
 // 选择排序
 void SelectSort(int* a, int n);
 
+int GetMid(int* a, int left, int right);
 
 // 堆排序
 void AdjustDwon(int* a, int n, int root);
@@ -36,6 +37,12 @@ void QuickSort2(int* a, int left, int right);
 // 快速排序前后指针法
 void QuickSort3(int* a, int left, int right);
 
+// 快速排序优化之三路划分
+void QuickSort4(int* a, int left, int right);
+
+void introsort(int* a, int left, int right);
+
+void QuickSort5(int* a, int left, int right, int* depth, int defaultdepth);
 
 // 快速排序 非递归实现
 void QuickSortNonR(int* a, int left, int right);

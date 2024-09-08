@@ -162,6 +162,8 @@ int GetMid(int* a, int left, int right) {
 		}
 	}
 }
+
+
 // 快速排序hoare版本
 void QuickSort1(int* a, int left, int right) {
 	if (left >= right)
@@ -263,6 +265,99 @@ void QuickSort3(int* a, int left, int right) {
 	QuickSort3(a, prev + 1, right);
 }
 
+// 快速排序优化之三路划分
+void QuickSort4(int* a, int left, int right) {
+	if (left >= right)
+		return;
+	//小区间优化
+	if (right - left + 1 <= 10) {
+		InsertSort(a + left, right - left + 1);
+		return;
+	}
+
+	//三数取中
+	int tmp = GetMid(a, left, right);
+	Swap(&a[left], &a[tmp]);
+
+
+	int key = a[left];
+	int begin = left;
+	int end = right;
+	int cur = left + 1;
+
+	while (cur <= end) {
+		if (a[cur] > key) {
+			Swap(&a[cur], &a[right]);
+		}
+		else if (a[cur] < key) {
+			Swap(&a[cur], &a[left]);
+			left--;
+			cur++;
+		}
+		else {
+			cur++;
+		}
+	}
+
+	QuickSort4(a, left, begin - 1);
+	QuickSort4(a, end + 1, right);
+
+}
+
+// 快速排序优化之三路划分
+void QuickSort5(int* a, int left, int right, int* depth, int defaultdepth) {
+	if (left >= right)
+		return;
+
+	//小区间优化
+	if (right - left + 1 <= 10) {
+		InsertSort(a + left, right - left + 1);
+		return;
+	}
+
+	//自省
+	if (*depth > defaultdepth) {
+		HeapSort(a + left, right - left + 1);
+		return;
+	}
+
+	(*depth)++;
+
+	//三数取中
+	int tmp = GetMid(a, left, right);
+	Swap(&a[left], &a[tmp]);
+
+	int key = left;
+	int begin = left;
+	int end = right;
+	while (begin < end) {
+		while (begin < end && a[end] >= a[key]) {
+			end--;
+		}
+		while (begin < end && a[begin] <= a[key]) {
+			begin++;
+		}
+		Swap(&a[begin], &a[end]);
+	}
+
+	Swap(&a[key], &a[begin]);
+
+
+	QuickSort5(a, left, begin - 1,  depth,  defaultdepth);
+	QuickSort5(a, begin + 1, right, depth,  defaultdepth);
+
+}
+
+// 快速排序优化之自省排序
+void introsort(int* a, int left, int right) {
+	int log = 0;
+
+	for (int i = 1; i < right - left + 1;i *= 2 ) {
+		log++;
+	}
+
+	QuickSort5(a, left, right, 0 , log * 2);
+}
 
 // 快速排序 非递归实现
 void QuickSortNonR(int* a, int left, int right) {
