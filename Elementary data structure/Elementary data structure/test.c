@@ -6,61 +6,75 @@
 #include<stdio.h>
 #include<string.h>
 
-
-#include <stdio.h>
-#include<string.h>
-#include<stdlib.h>
-
-struct ListNode {
-    int val;
-    struct ListNode* next;
-};
- 
-struct ListNode* Mid(struct ListNode* A) {
-    struct ListNode* slow = A;
-    struct ListNode* fast = A;
-
-    while (fast && fast->next) {
-
-        slow = slow->next;
-        fast = fast->next->next;
-    }
-
-    return slow;
-}
-struct ListNode* Reverse(struct ListNode* A) {
-    struct ListNode* l1 = NULL;
-    struct ListNode* l2 = A;
-    struct ListNode* l3 = A->next;
-    while (l1->next) {
-        l2->next = l1;
-        l1 = l2;
-        l2 = l3;
-        if (l2)
-            l3 = l2->next;
-    }
-
-    return l1;
-}
-
-bool chkPalindrome(struct ListNode* A) {
-    struct ListNode* mid = Mid(A);
-    struct ListNode* newhead = Reverse(mid);
-    struct ListNode* head = A;
-
-    while (head->next || newhead->next) {
-
-        if (newhead != head)
-            return false;
-
-        head = head->next;
-        newhead = newhead->next;
-
-    }
-
-    return true;
-
-}
+//HJ7 È¡½üËÆÖµ
+//#include <stdio.h>
+//
+//int main() {
+//    float num;
+//    while (scanf("%f", &num) != EOF) {
+//        int a = num * 10;
+//        a = a % 10;
+//        if (a >= 5)
+//            printf("%d", (int)(num + 1));
+//        else
+//            printf("%d", (int)num);
+//    }
+//    return 0;
+//}
+//#include <stdio.h>
+//#include<string.h>
+//#include<stdlib.h>
+//
+//struct ListNode {
+//    int val;
+//    struct ListNode* next;
+//};
+// 
+//struct ListNode* Mid(struct ListNode* A) {
+//    struct ListNode* slow = A;
+//    struct ListNode* fast = A;
+//
+//    while (fast && fast->next) {
+//
+//        slow = slow->next;
+//        fast = fast->next->next;
+//    }
+//
+//    return slow;
+//}
+//struct ListNode* Reverse(struct ListNode* A) {
+//    struct ListNode* l1 = NULL;
+//    struct ListNode* l2 = A;
+//    struct ListNode* l3 = A->next;
+//    while (l1->next) {
+//        l2->next = l1;
+//        l1 = l2;
+//        l2 = l3;
+//        if (l2)
+//            l3 = l2->next;
+//    }
+//
+//    return l1;
+//}
+//
+//bool chkPalindrome(struct ListNode* A) {
+//    struct ListNode* mid = Mid(A);
+//    struct ListNode* newhead = Reverse(mid);
+//    struct ListNode* head = A;
+//
+//    while (head->next || newhead->next) {
+//
+//        if (newhead != head)
+//            return false;
+//
+//        head = head->next;
+//        newhead = newhead->next;
+//
+//    }
+//
+//    return true;
+//
+//}
 
 //void _Merge(int* a, int* tmp, int left, int right) {
 //    if (left >= right)
