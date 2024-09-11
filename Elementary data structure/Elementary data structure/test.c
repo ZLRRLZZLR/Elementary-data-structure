@@ -6,6 +6,25 @@
 #include<stdio.h>
 #include<string.h>
 
+////35. 搜索插入位置
+//int searchInsert(int* nums, int numsSize, int target) {
+//    int begin = 0;
+//    int end = numsSize - 1;
+//    while (begin >= end && begin < numsSize && end >= 0) {
+//        int mid = (begin + end) / 2;
+//        if (nums[mid] == target)
+//            return mid;
+//        else
+//            end = mid - 1;
+//    }
+//    int i = 0;
+//    for (; i < numsSize; i++) {
+//        if (nums[i] >= target)
+//            break;
+//    }
+//    return i;
+//}
+
 //HJ7 取近似值
 //#include <stdio.h>
 //
