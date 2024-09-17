@@ -6,6 +6,169 @@
 #include<stdio.h>
 #include<string.h>
 
+
+//1122. 数组的相对排序
+///**
+// * Note: The returned array must be malloced, assume caller calls free().
+// */
+//int* relativeSortArray(int* arr1, int arr1Size, int* arr2, int arr2Size, int* returnSize) {
+//    int min = arr1[0];
+//    int max = arr1[0];
+//
+//    for (int i = 0; i < arr1Size; i++) {
+//        if (arr1[i] > max) {
+//            max = arr1[i];
+//        }
+//        if (arr1[i] < min) {
+//            min = arr1[i];
+//        }
+//    }
+//    int* tmp = (int*)calloc(max - min + 1, sizeof(int));
+//    if (NULL == tmp) {
+//        perror("calloc");
+//        exit(1);
+//    }
+//    for (int i = 0; i < arr1Size; i++) {
+//        tmp[arr1[i] - min]++;
+//    }
+//    int j = 0;
+//    for (int i = 0; i < arr2Size; ) {
+//        if (tmp[arr2[i] - min]) {
+//            while (tmp[arr2[i] - min]--) {
+//                arr1[j++] = arr2[i];
+//            }
+//        }
+//        i++;
+//    }
+//
+//    for (int i = 0; i < max - min + 1; i++) {
+//        while (tmp[i] > 0) {
+//            arr1[j++] = i + min;
+//            tmp[i]--;
+//        }
+//    }
+//    *returnSize = arr1Size;
+//    return arr1;
+//
+//}
+///**
+// * Note: The returned array must be malloced, assume caller calls free().
+// */
+//int* relativeSortArray(int* arr1, int arr1Size, int* arr2, int arr2Size) {
+//    int min = arr1[0];
+//    int max = arr1[0];
+//
+//    for (int i = 0; i < arr1Size; i++) {
+//        if (arr1[i] > max) {
+//            max = arr1[i];
+//        }
+//        if (arr1[i] < min) {
+//            min = arr1[i];
+//        }
+//    }
+//    int* tmp = (int*)calloc(max - min + 1, sizeof(int));
+//    if (NULL == tmp) {
+//        perror("calloc");
+//        exit(1);
+//    }
+//    for (int i = 0; i < arr1Size; i++) {
+//        tmp[arr1[i] - min]++;
+//    }
+//    int j = 0;
+//    for (int i = 0; i < arr2Size; ) {
+//        if (tmp[arr2[i] - min]) {
+//            while (tmp[arr2[i] - min]--) {
+//                arr1[j++] = arr2[i];
+//            }
+//        }
+//        i++;
+//        }
+//
+//    for (int i = 0; i < max - min + 1; i++) {
+//        while (tmp[i] > 0) {
+//            arr1[j++] = i + min;
+//            tmp[i]--;
+//        }
+//    }
+//    return arr1;
+//
+//}
+
+///**
+// * Note: The returned array must be malloced, assume caller calls free().
+// */
+//void Sort(int* arr, int numsSize) {
+//    for (int i = 0; i < numsSize - 1; i++) {
+//        int end = i;
+//        int tmp = arr[end + 1];
+//        while (end >= 0) {
+//            if (arr[end] > tmp) {
+//                arr[end + 1] = arr[end];
+//                end--;
+//            }
+//            else {
+//                break;
+//            }
+//        }
+//        arr[end + 1] = tmp;
+//    }
+//}
+//
+//bool Find(int* arr, int left, int right, int find) {
+//    int begin = left;
+//    int end = right;
+//    while (begin <= end) {
+//        int mid = (begin + end) / 2;
+//        if (find > arr[mid]) {
+//            begin = mid + 1;
+//        }
+//        else if (find < arr[mid]) {
+//            end = mid - 1;
+//        }
+//        else {
+//            return true;
+//        }
+//    }
+//    return false;
+//}
+//int* relativeSortArray(int* arr1, int arr1Size, int* arr2, int arr2Size) {
+//    int* tmp1 = (int*)malloc(sizeof(int) * arr1Size);
+//    if (NULL == tmp1) {
+//        perror("malloc");
+//        exit(1);
+//    }
+//    int* tmp2 = (int*)malloc(sizeof(int) * arr1Size);
+//    if (NULL == tmp2) {
+//        perror("malloc");
+//        exit(1);
+//    }
+//    Sort(arr1, arr1Size);
+//    int i = arr1Size;
+//    int j = 0;
+//    int k = 0;
+//    while (i--) {
+//        if ((arr2, 0, arr2Size - 1, arr1[i])) {
+//            tmp1[j++] = arr1[i];
+//        }
+//        else {
+//            tmp2[k++] = arr1[i];
+//        }
+//    }
+//    Sort(tmp2, k);
+//    memcpy(arr1, tmp1, j * sizeof(int));
+//    memcpy(arr1 + j, tmp2, k * sizeof(int));
+//    
+//    return arr1;
+//}
+//
+//
+int main() {
+    int arr1[] = { 2,3,1,3,2,4,6,7,9,2,19 };
+    int arr2[] = { 2,1,4,3,9,6};
+    relativeSortArray(arr1,sizeof(arr1) / sizeof(int),arr2,sizeof(arr2) / sizeof(int));
+
+    return 0;
+}
 ////35. 搜索插入位置
 //int searchInsert(int* nums, int numsSize, int target) {
 //    int begin = 0;
