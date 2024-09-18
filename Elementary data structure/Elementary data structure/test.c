@@ -6,7 +6,33 @@
 #include<stdio.h>
 #include<string.h>
 
-
+///**LCP.开幕式烟火
+// * Definition for a binary tree node.
+// * struct TreeNode {
+// *     int val;
+// *     struct TreeNode *left;
+// *     struct TreeNode *right;
+// * };
+// */
+//void _numColor(struct TreeNode* root, int* tmp) {
+//    if (NULL == root) {
+//        return;
+//    }
+//    tmp[root->val]++;
+//    _numColor(root->left, tmp);
+//    _numColor(root->right, tmp);
+//}
+//int numColor(struct TreeNode* root) {
+//    int* tmp = (int*)calloc(2000, sizeof(int));
+//    _numColor(root, tmp);
+//    int count = 0;
+//    for (int i = 0; i < 2000; i++) {
+//        if (tmp[i] != 0) {
+//            count++;
+//        }
+//    }
+//    return count;
+//}
 //1122. 数组的相对排序
 ///**
 // * Note: The returned array must be malloced, assume caller calls free().
