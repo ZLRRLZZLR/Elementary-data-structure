@@ -6,6 +6,133 @@
 #include<stdio.h>
 #include<string.h>
 
+////Å£¿ÍÍøÌâºÅ£º HJ40 Í³¼Æ×Ö·û
+//#include <stdio.h>
+//#include<ctype.h>
+//
+//int main() {
+//    char arr[1050];
+//    int num = 0;
+//    int other = 0;
+//    int alpha = 0;
+//    int space = 0;
+//    gets(arr);
+//    int i = 0;
+//    while (arr[i] != '\0') {
+//        if (isalpha(arr[i])) {
+//            alpha++;
+//        }
+//        else if (isdigit(arr[i])) {
+//            num++;
+//        }
+//        else if (isspace(arr[i])) {
+//            space++;
+//        }
+//        else {
+//            other++;
+//        }
+//        i++;
+//    }
+//    printf("%d\n", alpha);
+//    printf("%d\n", space);
+//    printf("%d\n", num);
+//    printf("%d\n", other);
+//
+//    return 0;
+//}
+//
+//#include <stdio.h>
+//
+//int main() {
+//    char arr[8];
+//    int num;
+//    while (scanf("%d", &num) != EOF) {
+//        int count = 0;
+//        for (int j = 1; j <= num; j++) {
+//            int flag = 1;
+//            sprintf(arr, "%d", j);
+//            for (int i = 0; arr[i] != '\0'; i++) {
+//                if (arr[i] == '7') {
+//                    count++;
+//                    flag = 0;
+//                    break;
+//                }
+//            }
+//            if (flag) {
+//                if (j % 7 == 0)
+//                    count++;
+//            }
+//        }
+//        printf("%d", count);
+//    }
+//    return 0;
+//}
+////ÃæÊÔÌâ 08.05.µÝ¹é³Ë·¨
+//int _multiply(int A, int B) {
+//    if (!B)
+//        return 0;
+//
+//    return A + _multiply(A, B - 1);
+//}
+//
+//int multiply(int A, int B) {
+//    return _multiply(A, B);
+//}
+
+////ÃæÊÔ01.06.×Ö·û´®Ñ¹Ëõ
+//char* compressString(char* S) {
+//    char flag = *S;
+//    int count = 0;
+//    char* s = S;
+//    static char arr[60000];
+//    int i = 0, j = 0;
+//    while (s[i] != '\0') {
+//        while (s[i] == flag) {
+//            count++;
+//            i++;
+//        }
+//        arr[j++] = flag;
+//        sprintf(arr + j, "%d", count);
+//        j = strlen(arr);
+//        flag = s[i];
+//        count = 0;
+//    }
+//    arr[j] = '\0';
+//    if (j >= i) {
+//        return S;
+//    }
+//    return arr;
+//}
+
+//char* compressString(char* S) {
+//    char flag = *S;
+//    int count = 0;
+//    char* s = S;
+//    char arr[5000];
+//    int i = 0, j = 0;
+//    while (s[i] != '\0') {
+//        while (s[i] == flag) {
+//            count++;
+//            i++;
+//        }
+//        arr[j++] = flag;
+//        arr[j++] = count + '0';
+//        flag = s[i];
+//        count = 0;
+//    }
+//    arr[j] = '\0';
+//    if (j >= i) {
+//        return S;
+//    }
+//    return arr;
+//}
+//
+//int main() {
+//    char* S = "aabcccccaa";
+//    compressString(S);
+//
+//    return 0;
+//}
 
 ///**LCP.¿ªÄ»Ê½ÑÌ»ð
 // * Definition for a binary tree node.
@@ -189,13 +316,13 @@
 //}
 //
 //
-int main() {
-    int arr1[] = { 2,3,1,3,2,4,6,7,9,2,19 };
-    int arr2[] = { 2,1,4,3,9,6};
-    relativeSortArray(arr1,sizeof(arr1) / sizeof(int),arr2,sizeof(arr2) / sizeof(int));
-
-    return 0;
-}
+//int main() {
+//    int arr1[] = { 2,3,1,3,2,4,6,7,9,2,19 };
+//    int arr2[] = { 2,1,4,3,9,6};
+//    relativeSortArray(arr1,sizeof(arr1) / sizeof(int),arr2,sizeof(arr2) / sizeof(int));
+//
+//    return 0;
+//}
 ////35. ËÑË÷²åÈëÎ»ÖÃ
 //int searchInsert(int* nums, int numsSize, int target) {
 //    int begin = 0;
