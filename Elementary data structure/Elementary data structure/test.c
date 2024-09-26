@@ -1,11 +1,61 @@
 #define _CRT_SECURE_NO_WARNINGS 1
-
 #include<stdlib.h>
 #include<stdbool.h>
 #include<assert.h>
 #include<stdio.h>
 #include<string.h>
+#include<math.h>
 
+
+
+
+
+
+
+//【LeetCode 题号 : 1290. 二进制链表转整数】【简单】
+//typedef struct ListNode {
+//    int val;
+//    struct ListNode* next;
+//    
+//}ListNode;
+//
+//int getDecimalValue(struct ListNode* head) {
+//    char arr[35];
+//    int i = 0;
+//    struct ListNode* cur = head;
+//    int sum = 0;
+//    int count = 0;
+//    while (cur) {
+//        arr[i++] = cur->val + '0';
+//        cur = cur->next;
+//    }
+//    for (i--; i >= 0; i--) {
+//        if (arr[i] == '1') {
+//            sum += pow(2, count);
+//        }
+//        count++;
+//    }
+//    return sum;
+//}
+//
+//
+//
+//int main() {
+//
+//    ListNode* n1 = (ListNode*)malloc(sizeof(ListNode));
+//    ListNode* n2 = (ListNode*)malloc(sizeof(ListNode));
+//    ListNode* n3 = (ListNode*)malloc(sizeof(ListNode));
+//    n1->val = 1;
+//    n2->val = 0;
+//    n3->val = 1;
+//    n1->next = n2;
+//    n2->next = n3;
+//    n3->next = NULL;
+//    getDecimalValue(n1);
+//
+//
+//    return 0;
+//}
 ////牛客网题号： HJ40 统计字符
 //#include <stdio.h>
 //#include<ctype.h>
