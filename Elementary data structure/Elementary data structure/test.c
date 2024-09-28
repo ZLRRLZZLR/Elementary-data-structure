@@ -7,81 +7,224 @@
 #include<math.h>
 
 
-
-
-
-
-
-
- typedef struct ListNode {
-     int val;
-     struct ListNode *next;
- }ListNode;
- 
-typedef struct ListNode ListNode;
-ListNode* CreateNode(int x) {
-    ListNode* node = (ListNode*)malloc(sizeof(ListNode));
-    node->val = x;
-    node->next = NULL;
-    return node;
-}
-
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     struct ListNode *next;
- * };
- */
-typedef struct ListNode ListNode;
-ListNode* CreateNode(int x) {
-    ListNode* node = (ListNode*)malloc(sizeof(ListNode));
-    node->val = x;
-    node->next = NULL;
-    return node;
-}
-
-struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
-    ListNode* head = CreateNode(-1);
-    ListNode* tail = head;
-    int count = 0;
-    while (l1 && l2) {
-        int x = (l1->val + l2->val) % 10;
-        count = (l1->val + l2->val) / 10;
-        tail->next = CreateNode(x);
-        tail = tail->next;
-        l1 = l1->next;
-        l2 = l2->next;
-
-    }
-    if (count != 0) {
-        tail->next = CreateNode(count);
-        tail = tail->next;
-    }
-    if (l1)
-        tail->next = l1;
-    if (l2)
-        tail->next = l2;
-    return head->next;
-
-}
-
-int main() {
-    ListNode* n1 = CreateNode(2);
-    ListNode* n2 = CreateNode(4);
-    ListNode* n3 = CreateNode(3);
-    ListNode* n4 = CreateNode(5);
-    ListNode* n5 = CreateNode(6);
-    ListNode* n6 = CreateNode(4);
-    n1->next = n2;
-    n2->next = n3;
-    n4->next = n5;
-    n5->next = n6;
-    addTwoNumbers(n1, n4);
-
-
-    return 0;
-}
+////【LeetCode 题号: 02.05. 链表求和】【中等】
+///**
+// * Definition for singly-linked list.
+// * struct ListNode {
+// *     int val;
+// *     struct ListNode *next;
+// * };
+// */
+//typedef struct ListNode ListNode;
+//ListNode* CreateNode(int x) {
+//    ListNode* node = (ListNode*)malloc(sizeof(ListNode));
+//    node->val = x;
+//    node->next = NULL;
+//    return node;
+//}
+//
+//struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
+//    ListNode* head = CreateNode(-1);
+//    ListNode* tail = head;
+//    int count = 0;
+//    while (l1 && l2) {
+//        int x = (l1->val + l2->val + count) % 10;
+//        tail->next = CreateNode(x);
+//        count = (l1->val + l2->val + count) / 10;
+//        tail = tail->next;
+//        l1 = l1->next;
+//        l2 = l2->next;
+//
+//    }
+//    while (l1) {
+//        int x = (l1->val + count) % 10;
+//        tail->next = CreateNode(x);
+//        count = (l1->val + count) / 10;
+//        tail = tail->next;
+//        l1 = l1->next;
+//    }
+//    while (l2) {
+//        int x = (l2->val + count) % 10;
+//        tail->next = CreateNode(x);
+//        count = (l2->val + count) / 10;
+//        tail = tail->next;
+//        l2 = l2->next;
+//    }
+//
+//    if (count != 0) {
+//        tail->next = CreateNode(count);
+//        tail = tail->next;
+//    }
+//
+//    return head->next;
+//
+//}
+//// typedef struct ListNode {
+////     int val;
+////     struct ListNode *next;
+//// }ListNode;
+//// 
+////typedef struct ListNode ListNode;
+////ListNode* CreateNode(int x) {
+////    ListNode* node = (ListNode*)malloc(sizeof(ListNode));
+////    node->val = x;
+////    node->next = NULL;
+////    return node;
+////}
+////
+/////**
+//// * Definition for singly-linked list.
+//// * struct ListNode {
+//// *     int val;
+//// *     struct ListNode *next;
+//// * };
+//// */
+//////typedef struct ListNode ListNode;
+//////ListNode* CreateNode(int x) {
+//////    ListNode* node = (ListNode*)malloc(sizeof(ListNode));
+//////    node->val = x;
+//////    node->next = NULL;
+//////    return node;
+//////}
+////
+//////struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
+//////    ListNode* head = CreateNode(-1);
+//////    ListNode* tail = head;
+//////    int count = 0;
+//////    while (l1 && l2) {
+//////        int x = (l1->val + l2->val) % 10;
+//////        count = (l1->val + l2->val) / 10;
+//////        tail->next = CreateNode(x);
+//////        tail = tail->next;
+//////        l1 = l1->next;
+//////        l2 = l2->next;
+//////
+//////    }
+//////    if (count != 0) {
+//////        tail->next = CreateNode(count);
+//////        tail = tail->next;
+//////    }
+//////    if (l1)
+//////        tail->next = l1;
+//////    if (l2)
+//////        tail->next = l2;
+//////    return head->next;
+//////
+//////}
+/////**
+//// * Definition for singly-linked list.
+//// * struct ListNode {
+//// *     int val;
+//// *     struct ListNode *next;
+//// * };
+//// */
+////
+////
+////struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
+////    ListNode* head = CreateNode(-1);
+////    ListNode* tail = head;
+////    int count = 0;
+////    while(l1 && l2) {
+////        int x = (l1->val + l2->val) % 10;
+////        tail->next = CreateNode(x + count);
+////        count = (l1->val + l2->val) / 10;
+////        tail = tail->next;
+////        l1 = l1->next;
+////        l2 = l2->next;
+////
+////    }
+////    while(l1){
+////        int x = (l1->val + count) % 10;
+////        tail->next = CreateNode(x + count);
+////        count = (l1->val + count) / 10;
+////        tail = tail->next;
+////        l1 = l1->next;
+////    }
+////    while(l2){
+////        int x = (l2->val + count) % 10;
+////        tail->next = CreateNode(x + count);
+////        count = (l2->val + count) / 10;
+////        tail = tail->next;
+////        l2 = l2->next;
+////    }
+////
+////    if (count != 0) {
+////        tail->next = CreateNode(count);
+////        tail = tail->next;
+////    }
+////
+////    return head->next;
+////
+////}
+//
+// struct ListNode {
+//     int val;
+//     struct ListNode *next;
+//};
+// 
+//
+//typedef struct ListNode ListNode;
+//
+//ListNode* CreateNode(int x) {
+//    ListNode* node = (ListNode*)malloc(sizeof(ListNode));
+//    node->val = x;
+//    node->next = NULL;
+//    return node;
+//}
+//
+//struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
+//    ListNode* head = CreateNode(-1);
+//    ListNode* tail = head;
+//    int count = 0;
+//    while (l1 && l2) {
+//        int x = (l1->val + l2->val + count) % 10;
+//        tail->next = CreateNode(x);
+//        count = l1->val + l2->val + count / 10;
+//        tail = tail->next;
+//        l1 = l1->next;
+//        l2 = l2->next;
+//
+//    }
+//    while (l1) {
+//        int x = (l1->val + count) % 10;
+//        tail->next = CreateNode(x);
+//        count = (l1->val + count) / 10;
+//        tail = tail->next;
+//        l1 = l1->next;
+//    }
+//    while (l2) {
+//        int x = (l2->val + count) % 10;
+//        tail->next = CreateNode(x);
+//        count = (l2->val + count) / 10;
+//        tail = tail->next;
+//        l2 = l2->next;
+//    }
+//
+//    if (count != 0) {
+//        tail->next = CreateNode(count);
+//        tail = tail->next;
+//    }
+//
+//    return head->next;
+//
+//}
+//
+//int main() {
+//    ListNode* n1 = CreateNode(2);
+//    ListNode* n2 = CreateNode(4);
+//    ListNode* n3 = CreateNode(3);
+//    ListNode* n4 = CreateNode(5);
+//    ListNode* n5 = CreateNode(6);
+//    ListNode* n6 = CreateNode(4);
+//    n1->next = n2;
+//    n2->next = n3;
+//    n4->next = n5;
+//    n5->next = n6;
+//    addTwoNumbers(n1, n4);
+//
+//
+//    return 0;
+//}
 
 //【LeetCode 题号 : 1290. 二进制链表转整数】【简单】
 //typedef struct ListNode {
