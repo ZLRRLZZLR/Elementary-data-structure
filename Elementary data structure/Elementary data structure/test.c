@@ -6,6 +6,586 @@
 #include<string.h>
 #include<math.h>
 
+//【LeetCode 题号 : 1609. 奇偶树】【中等】
+///**
+// * Definition for a binary tree node.
+// * struct TreeNode {
+// *     int val;
+// *     struct TreeNode *left;
+// *     struct TreeNode *right;
+// * };
+// */
+//
+//int nodesum(struct TreeNode* root) {
+//    if (NULL == root)
+//        return 0;
+//
+//    return nodesum(root->right) + nodesum(root->left) + root->val;
+//}
+//void _findTilt(struct TreeNode* root, int* psum) {
+//    if (NULL == root) {
+//        *psum += 0;
+//        return;
+//    }
+//    int left = nodesum(root->left);
+//    int right = nodesum(root->right);
+//
+//    *psum += abs(left - right);
+//
+//    _findTilt(root->left, psum);
+//    _findTilt(root->right, psum);
+//
+//}
+//
+//int findTilt(struct TreeNode* root) {
+//    int sum = 0;
+//    _findTilt(root, &sum);
+//    return sum;
+//}
+
+//typedef struct TreeNode {
+//    int val;
+//    struct TreeNode* left;
+//    struct TreeNode* right;
+//    
+//}TreeNode;
+//
+//TreeNode* BuyNode(int x) {
+//	TreeNode* node = (TreeNode*)malloc(sizeof(TreeNode));
+//	node->val = x;
+//	node->left = NULL;
+//	node->right = NULL;
+//
+//	return node;
+//}
+//
+//
+//void _findTilt(struct TreeNode* root, int* psum) {
+//    if (NULL == root) {
+//        *psum += 0;
+//        return;
+//    }
+//    int left = 0, right = 0;
+//    if (NULL == root->left) {
+//        left = 0;
+//    }
+//    else {
+//        left = root->left->val;
+//    }
+//    if (NULL == root->right) {
+//        right = 0;
+//    }
+//    else {
+//        right = root->right->val;
+//    }
+//    *psum += abs(left - right);
+//    _findTilt(root->left, psum);
+//    _findTilt(root->right, psum);
+//
+//}
+//
+//int findTilt(struct TreeNode* root) {
+//    int sum = 0;
+//    _findTilt(root, &sum);
+//    return sum;
+//}
+//
+//int main() {
+//    TreeNode* n1 = BuyNode(4);
+//    TreeNode* n2 = BuyNode(2);
+//    TreeNode* n3 = BuyNode(9);
+//    TreeNode* n4 = BuyNode(3);
+//    TreeNode* n5 = BuyNode(5);
+//
+//    TreeNode* n6 = BuyNode(7);
+//    n1->left = n2;
+//    n1->right = n3;
+//    n2->left = n4;
+//    n2->right = n5;
+//    n3->left = n6;
+//    n3->right = NULL;
+//    findTilt(n1);
+//
+//
+//    return 0;
+//}
+////
+////// 链式结构：表示队列 
+////typedef struct QListNode
+////{
+////	struct QListNode* _next;
+////	QDataType* _data;
+////
+////}QNode;
+////
+////
+////// 队列的结构 
+////typedef struct Queue
+////{
+////	QNode* _front;
+////	QNode* _rear;
+////	int _size;
+////}Queue;
+////
+////// 初始化队列 
+////void QueueInit(Queue* q)
+////{
+////	q->_front = NULL;
+////
+////	q->_rear = NULL;
+////
+////	q->_size = 0;
+////}
+////
+////// 队尾入队列 
+////void QueuePush(Queue* q, QDataType data)
+////{
+////	assert(q);
+////	QNode* newnode = (QNode*)malloc(sizeof(QNode));
+////
+////	if (NULL == newnode)
+////	{
+////		perror("QueuePush:malloc failed");
+////		exit(1);
+////	}
+////
+////	newnode->_data = data;
+////	newnode->_next = NULL;
+////
+////	if (0 == q->_size)
+////	{
+////		q->_front = q->_rear = newnode;
+////	}
+////	else
+////	{
+////		q->_rear->_next = newnode;
+////		q->_rear = q->_rear->_next;
+////	}
+////	q->_size++;
+////}
+////
+////// 队头出队列 
+////void QueuePop(Queue* q)
+////{
+////	assert(q);
+////	assert(q->_size);
+////
+////	QNode* next = q->_front->_next;
+////	free(q->_front);
+////	q->_front = next;
+////
+////	if (q->_size == 1)
+////	{
+////		q->_rear = NULL;
+////	}
+////
+////	q->_size--;
+////
+////}
+////
+////// 获取队列头部元素 
+////QDataType QueueFront(Queue* q)
+////{
+////	assert(q);
+////	assert(q->_size);
+////
+////	return q->_front->_data;
+////}
+////
+////
+////// 检测队列是否为空，如果为空返回非零结果，如果非空返回0 
+////bool QueueEmpty(Queue* q)
+////{
+////	assert(q);
+////
+////	return q->_size == 0;
+////}
+////
+////// 销毁队列 
+////void QueueDestroy(Queue* q)
+////{
+////	assert(q);
+////
+////	QNode* cur = q->_front;
+////	while (cur)
+////	{
+////		QNode* next = cur->_next;
+////		free(cur);
+////
+////		cur = next;
+////	}
+////
+////	q->_front = q->_rear = NULL;
+////	q->_size = 0;
+////}
+////
+////// 层序遍历
+////void BinaryTreeLevelOrder(TreeNode* root, int* arr, int* pi) {
+////	Queue q1;
+////	QueueInit(&q1);
+////	if (root)
+////		QueuePush(&q1, root);
+////
+////	while (!QueueEmpty(&q1)) {
+////		QDataType node = QueueFront(&q1);
+////		arr[(*pi)++] = node->val;
+////		QueuePop(&q1);
+////
+////		if (root->left) {
+////			QueuePush(&q1, root->left);
+////		}
+////
+////
+////		if (root->right) {
+////			QueuePush(&q1, root->right);
+////		}
+////
+////	}
+////
+////	QueueDestroy(&q1);
+////
+////}
+////
+//
+//
+// struct TreeNode {
+//     int val;
+//     struct TreeNode *left;
+//     struct TreeNode *right;
+//};
+// 
+//typedef struct TreeNode TreeNode;
+//typedef TreeNode* QDataType;
+//
+//TreeNode* BuyNode(int x) {
+//	TreeNode* node = (TreeNode*)malloc(sizeof(TreeNode));
+//	node->val = x;
+//	node->left = NULL;
+//	node->right = NULL;
+//
+//	return node;
+//}
+//
+//// 链式结构：表示队列 
+//typedef struct QListNode
+//{
+//	struct QListNode* _next;
+//	QDataType _data;
+//
+//}QNode;
+//
+//
+//// 队列的结构 
+//typedef struct Queue
+//{
+//	QNode* _front;
+//	QNode* _rear;
+//	int _size;
+//}Queue;
+//
+//// 初始化队列 
+//void QueueInit(Queue* q)
+//{
+//	q->_front = NULL;
+//
+//	q->_rear = NULL;
+//
+//	q->_size = 0;
+//}
+//
+//// 队尾入队列 
+//void QueuePush(Queue* q, QDataType data)
+//{
+//	assert(q);
+//	QNode* newnode = (QNode*)malloc(sizeof(QNode));
+//
+//	if (NULL == newnode)
+//	{
+//		perror("QueuePush:malloc failed");
+//		exit(1);
+//	}
+//
+//	newnode->_data = data;
+//	newnode->_next = NULL;
+//
+//	if (0 == q->_size)
+//	{
+//		q->_front = q->_rear = newnode;
+//	}
+//	else
+//	{
+//		q->_rear->_next = newnode;
+//		q->_rear = q->_rear->_next;
+//	}
+//	q->_size++;
+//}
+//
+//// 队头出队列 
+//void QueuePop(Queue* q)
+//{
+//	assert(q);
+//	assert(q->_size);
+//
+//	QNode* next = q->_front->_next;
+//	free(q->_front);
+//	q->_front = next;
+//
+//	if (q->_size == 1)
+//	{
+//		q->_rear = NULL;
+//	}
+//
+//	q->_size--;
+//
+//}
+//
+//// 获取队列头部元素 
+//QDataType QueueFront(Queue* q)
+//{
+//	assert(q);
+//	assert(q->_size);
+//
+//	return q->_front->_data;
+//}
+//
+//
+//// 检测队列是否为空，如果为空返回非零结果，如果非空返回0 
+//bool QueueEmpty(Queue* q)
+//{
+//	assert(q);
+//
+//	return q->_size == 0;
+//}
+//
+//// 销毁队列 
+//void QueueDestroy(Queue* q)
+//{
+//	assert(q);
+//
+//	QNode* cur = q->_front;
+//	while (cur)
+//	{
+//		QNode* next = cur->_next;
+//		free(cur);
+//
+//		cur = next;
+//	}
+//
+//	q->_front = q->_rear = NULL;
+//	q->_size = 0;
+//}
+//
+//// 层序遍历
+//void BinaryTreeLevelOrder(TreeNode* root, int* arr, int* pi) {
+//	Queue q1;
+//	QueueInit(&q1);
+//	if (root)
+//		QueuePush(&q1, root);
+//
+//	while (!QueueEmpty(&q1)) {
+//		QDataType node = QueueFront(&q1);
+//		arr[(*pi)++] = node->val;
+//		QueuePop(&q1);
+//
+//		if (node->left) {
+//			QueuePush(&q1, node->left);
+//		}
+//
+//
+//		if (node->right) {
+//			QueuePush(&q1, node->right);
+//		}
+//
+//	}
+//
+//	QueueDestroy(&q1);
+//
+//}
+//
+//
+//
+//int sumRootToLeaf(struct TreeNode* root) {
+//	int arr[32];
+//	int i = 0;
+//	BinaryTreeLevelOrder(root, arr, &i);
+//	int j = i;
+//	int sum = 0;
+//	i--;
+//	for (; j >= 0; j--) {
+//		if (arr[i] != 0) {
+//			sum += pow(2, i);
+//		}
+//		i--;
+//	}
+//	return sum;
+//}
+//
+//int main() {
+//	TreeNode* n1 = BuyNode(1);
+//	TreeNode* n2 = BuyNode(0);
+//	TreeNode* n3 = BuyNode(1);
+//	TreeNode* n4 = BuyNode(0);
+//	TreeNode* n5 = BuyNode(1);
+//	TreeNode* n6 = BuyNode(0);
+//	TreeNode* n7 = BuyNode(1);
+//	n1->left = n2;
+//	n1->right = n3;
+//	n2->left = n4;
+//	n2->right = n5;
+//	n3->left = n6;
+//	n3->right = n7;
+//	sumRootToLeaf(n1);
+//
+//	return 0;
+//}
+
+//int main() {
+//	printf("%d",101);
+//	return 0;
+//}
+//【LeetCode 题号 : 1544.整理字符串】【简单】
+//#include<stdlib.h>
+//#include<stdbool.h>
+//#include<assert.h>
+//#include<stdio.h>
+//
+//
+//// 支持动态增长的栈
+//typedef int STDataType;
+//
+//typedef struct Stack
+//{
+//	STDataType* _a;
+//	int _top;		// 栈顶
+//	int _capacity;  // 容量 
+//}Stack;
+//
+//// 初始化栈 
+//void StackInit(Stack* ps)
+//{
+//	assert(ps);
+//
+//	ps->_a = NULL;
+//
+//	// top指向栈顶数据的下一个位置
+//	ps->_top = 0;
+//
+//	// top指向栈顶数据
+//	//ps->_top = -1;
+//
+//	ps->_capacity = 0;
+//}
+//
+//// 入栈 
+//void StackPush(Stack* ps, STDataType data)
+//{
+//	assert(ps);
+//
+//	//扩容
+//	if (ps->_capacity == ps->_top)
+//	{
+//		int newcapacity = ps->_capacity == 0 ? 4 : 2 * ps->_capacity;
+//		STDataType* newnode = (STDataType*)realloc(ps->_a, newcapacity * sizeof(STDataType));
+//
+//		if (NULL == newnode)
+//		{
+//			perror("StackInit:realloc");
+//			exit(1);
+//		}
+//
+//		ps->_a = newnode;
+//		ps->_capacity = newcapacity;
+//	}
+//
+//	ps->_a[ps->_top] = data;
+//	ps->_top++;
+//}
+//
+//// 出栈 
+//void StackPop(Stack* ps)
+//{
+//
+//	assert(ps);
+//	assert(ps->_top > 0);
+//
+//	ps->_top--;
+//
+//}
+//
+//// 获取栈顶元素 
+//STDataType StackTop(Stack* ps)
+//{
+//
+//	assert(ps);
+//	assert(ps->_top > 0);
+//
+//	return ps->_a[ps->_top - 1];
+//}
+//
+//// 获取栈中有效元素个数 
+//int StackSize(Stack* ps)
+//{
+//	assert(ps);
+//
+//	return ps->_top;
+//}
+//
+//// 检测栈是否为空，如果为空返回非零结果，如果非空返回0 
+//bool StackEmpty(Stack* ps)
+//{
+//	assert(ps);
+//
+//	return ps->_top == 0;
+//}
+//
+//// 销毁栈 
+//void StackDestroy(Stack* ps)
+//{
+//	assert(ps);
+//
+//	free(ps->_a);
+//	ps->_a = NULL;
+//	ps->_capacity = ps->_top = 0;
+//}
+//
+//char* makeGood(char* s) {
+//	Stack s1;
+//	StackInit(&s1);
+//	char* arr = s;
+//	while (*arr != '\0') {
+//		if (StackEmpty(&s1)) {
+//			StackPush(&s1, *arr++);
+//		}
+//		else if (!StackEmpty(&s1) && abs(StackTop(&s1) - *arr) != 32) {
+//			StackPush(&s1, *arr++);
+//		}
+//		else {
+//			StackPop(&s1);
+//			arr++;
+//		}
+//	}
+//	char tmp[1000];
+//	int i = 0;
+//	while (!StackEmpty(&s1)) {
+//		tmp[i++] = StackTop(&s1);
+//		StackPop(&s1);
+//	}
+//	StackDestroy(&s1);
+//	int j = 0;
+//	for (i--; i >= 0; i--) {
+//		s[j++] = tmp[i];
+//	}
+//	s[j] = '\0';
+//	return s;
+//}
+//
+//int main() {
+//	char s[50] = "leEeetcode";
+//	makeGood(s);
+//
+//	return 0;
+//}
+
 
 ////【LeetCode 题号: 02.05. 链表求和】【中等】
 ///**
