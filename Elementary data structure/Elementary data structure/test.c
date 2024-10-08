@@ -6,8 +6,141 @@
 #include<string.h>
 #include<math.h>
 
+//LeetCode 题号 : 33. 搜索旋转排序数
+//int search(int* nums, int numsSize, int target) {
+//    int left = 0, right = numsSize - 1;
+//    while (left <= right) {
+//        int mid = (left + right) / 2;
+//        if (nums[mid] == target)
+//            return mid;
+//        else if (nums[mid] < nums[right]) {
+//            if (nums[mid] < target && target <= nums[right])
+//                left = mid + 1;
+//            else
+//                right = mid - 1;
+//        }
+//        else {
+//            if (nums[mid] > target && target >= nums[left])
+//                right = mid - 1;
+//            else
+//                left = mid + 1;
+//        }
+//    }
+//    return -1;
+//}
+//LeetCode 题号 : 35. 搜索插入位置
+/*int searchInsert(int* nums, int numsSize, int target) {
+    int left = 0;
+    int right = numsSize - 1;
+
+    if (target > nums[right])
+        return right + 1;
+
+    if (target < nums[left])
+        return left;
+    while (left <= right) {
+        int mid = (left + right) / 2;
+
+        if (target == nums[mid])
+            return mid;
+
+        else if (target > nums[mid])
+            left = mid + 1;
+
+        else
+            right = mid - 1;
+    }
+    return left;
+}
+int main() {
+    int arr[4] = { 1,3,5,6 };
+    searchInsert(arr,4,5);
+    */    return 0;
+}
+
+//OR140 数列
+//#include <stdio.h>
+//
+//int main() {
+//    int n = 0;
+//    long arr[1000000] = { 1,2 };
+//    for (int i = 2; i < 1000000; i++) {
+//        arr[i] = (2 * arr[i - 1] + arr[i - 2]) % 32767;
+//    }
+//    int num = 0;
+//    scanf("%d", &n);
+//    int k = 0;
+//    while (scanf("%d", &k) != EOF) {
+//        printf("%d\n", arr[k - 1]);
+//    }
+//    return 0;
+//}
+//HJ7 取近似值
+//#include <stdio.h>
+//
+//int main() {
+//    double num;
+//    while (scanf("%lf", &num) != EOF) { // 注意 while 处理多个 case
+//        int n = num + 0.5;//浮点数给整形赋值时只获取整形部分，小数被丢弃
+//        // 64 位输出请用 printf("%lld") to 
+//        printf("%d\n", n);
+//    }
+//    return 0;
+//}
 
 
+////面试题 16.05.阶乘尾数
+//int trailingZeroes(int n) {
+//	int count = 0;
+//	while (n >= 5) {
+//		count += n / 5;
+//		n /= 5;
+//	}
+//	/*
+//	for (int i = 0; i <= n; i += 5) {
+//	//判断5的倍数中包含几个5，比如25实际上是5*5有两个
+//	int num = i;
+//	while(num > 0 && num % 5 == 0) {
+//	num /= 5;
+//	count++;
+//}
+//}
+//*/
+//	return count;
+//}
+
+
+////面试题 05.07.配对交换
+//int exchangeBits(int num) {
+//    int odd = 0b10101010101010101010101010101010;//保存偶数位
+//    int even = 0b01010101010101010101010101010101;//保留奇数位
+//    odd &= num;
+//    even &= num;
+//    //偶数位右移一位变成奇数位，奇数位左移一位变成偶数位，然后相加即可
+//    return (odd >> 1) + (even << 1);
+//}
+
+//#include <stdio.h>
+//#include<math.h>
+//
+//int main() {
+//    int n;
+//    while (scanf("%d", &n) != EOF) {
+//        int base = 10;
+//        int count = 0;
+//        for (int i = 0; i <= n; i++) {
+//            int num = pow(i, 2);
+//            if (i == base) {
+//                base *= 10;
+//            }
+//            if (num % base == i) {
+//                ++count;
+//            }
+//        }
+//        printf("%d\n", count);
+//    }
+//    return 0;
+//}
 //// test.cpp
 //#include<stdio.h>
 //int main()
