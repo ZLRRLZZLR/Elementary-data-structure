@@ -6,6 +6,112 @@
 #include<string.h>
 #include<math.h>
 
+void GetNext(int* next, const char* sub)
+{
+    int lensub = strlen(sub);
+    next[0] = -1;
+    next[1] = 0;
+    int i = 2;//下一项
+    int k = 0;//前一项的K
+    while (i < lensub)//next数组还没有遍历完
+    {
+        if ((k == -1) || sub[k] == sub[i - 1])//
+        {
+            next[i] = k + 1;
+            i++;
+            k++;//k = k+1???//下一个K的值新的K值
+        }
+        else
+        {
+            k = next[k];
+        }
+    }
+}
+int KMP(const char* s, const char* sub, int pos)
+{
+    int i = pos;
+    int j = 0;
+    int lens = strlen(s);
+    int lensub = strlen(sub);
+    int* next = (int*)malloc(lensub * sizeof(int));//和子串一样长
+    assert(next != NULL);
+    GetNext(next, sub);
+    while (i < lens && j < lensub)
+    {
+        if ((j == -1) || (s[i] == sub[j]))
+        {
+            i++;
+            j++;
+        }
+        else
+        {
+            j = next[j];
+        }
+    }
+    free(next);
+    if (j >= lensub)
+    {
+        return i - j;
+    }
+    else
+    {
+        return -1;
+    }
+}
+int main()
+{
+    char* str = "ababcabcdabcde";
+    char* sub = "abcd";
+    printf("%d\n", KMP(str, sub, 0));
+    return 0;
+}
+
+/**
+Author：高博
+Date：2021-08-02 21:54
+str:主串
+sub:子串
+*/
+int BF(char* str, char* sub)
+{
+    assert(str != NULL && sub != NULL);
+    if (str == NULL || sub == NULL)
+    {
+        return -1;
+    }
+    int i = 0;
+    int j = 0;
+    int strLen = strlen(str);
+    int subLen = strlen(sub);
+    while (i < strLen && j < subLen)
+    {
+        if (str[i] == sub[j])
+        {
+            i++;
+            j++;
+        }
+        else
+        {
+            //回退
+            i = i - j + 1;
+            j = 0;
+        }
+    }
+    if (j >= subLen)
+    {
+        return i - j;
+    }
+    return -1;
+}
+int main()
+{
+    printf("%d\n", BF("ababcabcdabcde", "abcd"));
+    printf("%d\n", BF("ababcabcdabcde", "abcde"));
+    printf("%d\n", BF("ababcabcdabcde", "abcdef"));
+    return 0;
+}
+
+
 //LeetCode 题号 : 33. 搜索旋转排序数
 //int search(int* nums, int numsSize, int target) {
 //    int left = 0, right = numsSize - 1;
