@@ -6,29 +6,59 @@
 
 
 
-#include <stdio.h>
+////LeetCode 题号 : 1614. 括号的最大嵌套深度
+//int maxDepth(char* s) {
+//    int premax = 0;
+//    int nownum = 0;
+//    char* cur = s;
+//    while (*cur != '\0')
+//    {
+//        if (nownum > premax)
+//        {
+//            premax = nownum;
+//        }
+//        if (*cur == '(')
+//        {
+//            nownum++;
+//        }
+//        else if (*cur == ')') {
+//            nownum--;
+//        }
+//        cur++;
+//    }
+//
+//    return premax;
+//}
+//
+//int main() {
+//
+//    maxDepth("(1+(2*3)+((8)/4))+1");
+//
+//    return 0;
+//}
 
-int main() {
-    int n;
-    while (scanf("%d", &n) != EOF) {
-        int count = 0;
-        for (int i = 7; i < n; i++)
-        {
-            int m = i;
-            while (m)
-            {
-                if (i % 10 == 7 || i % 7 == 0)
-                {
-                    count++;
-                    break;
-                }
-                m /= 10;
-            }
-        }
-        printf("%d", count);
-    }
-    return 0;
-}
+
+//int main() {
+//    int n;
+//    while (scanf("%d", &n) != EOF) {
+//        int count = 0;
+//        for (int i = 7; i < n; i++)
+//        {
+//            int m = i;
+//            while (m)
+//            {
+//                if (i % 10 == 7 || i % 7 == 0)
+//                {
+//                    count++;
+//                    break;
+//                }
+//                m /= 10;
+//            }
+//        }
+//        printf("%d", count);
+//    }
+//    return 0;
+//}
 
 ////面试题 08.05.递归乘法
 //int multiply(int A, int B) {
