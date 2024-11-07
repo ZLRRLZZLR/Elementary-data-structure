@@ -5,70 +5,74 @@
 #include"stdbool.h"
 
 
-
-struct ListNode {
-     int val;
-     struct ListNode *next;
-};
- 
-
-typedef struct ListNode ListNode;
-
-ListNode* BuyNode(int x) {
-    ListNode* node = (ListNode*)malloc(sizeof(ListNode));
-    node->val = x;
-    node->next = NULL;
-
-    return node;
-}
-
-typedef struct ListNode ListNode;
-
-struct ListNode* removeZeroSumSublists(struct ListNode* head) {
-    ListNode* prev = (ListNode*)malloc(sizeof(ListNode));
-    prev->next = head;
-    ListNode* pcur = prev;
-    ListNode* cur = pcur->next;
-    int sum = 0;
-    while (pcur != NULL) {
-        cur = pcur->next;
-        while (cur != NULL)
-        {
-            sum += cur->val;
-            if (sum == 0) {
-                ListNode* del = prev->next;
-                prev->next = cur->next;
-                cur = cur->next;
-                while (del != cur) {
-                    ListNode* tmp = del;
-                    del = del->next;
-                    free(tmp);
-                }
-            }
-            else {
-                cur = cur->next;
-            }
-        }
-        pcur = pcur->next;
-    }
-
-    return prev->next;
-}
-
-int main() {
-    ListNode* node1 = BuyNode(1);
-    ListNode* node2 = BuyNode(2);
-    ListNode* node3 = BuyNode(-3);
-    ListNode* node4 = BuyNode(3);
-    ListNode* node5 = BuyNode(1);
-    node1->next = node2;
-    node2->next = node3;
-    node3->next = node4;
-    node4->next = node5;
-    removeZeroSumSublists(node1);
-
-
-}
+//从链表中删去总和值为零的连续节点
+//struct ListNode {
+//     int val;
+//     struct ListNode *next;
+//};
+// 
+//
+//typedef struct ListNode ListNode;
+//
+//ListNode* BuyNode(int x) {
+//    ListNode* node = (ListNode*)malloc(sizeof(ListNode));
+//    node->val = x;
+//    node->next = NULL;
+//
+//    return node;
+//}
+//
+//typedef struct ListNode ListNode;
+//
+//struct ListNode* removeZeroSumSublists(struct ListNode* head) {
+//    ListNode* prev = (ListNode*)malloc(sizeof(ListNode));
+//    prev->next = head;
+//    ListNode* pcur = prev;
+//    ListNode* cur = pcur->next;
+//    int sum = 0;
+//    while (pcur != NULL) {
+//        cur = pcur->next;
+//        if (pcur->val == 3) {
+//            int i = 0;
+//        }
+//        sum = 0;
+//        while (cur != NULL)
+//        {
+//            sum += cur->val;
+//            if (sum == 0) {
+//                ListNode* del = pcur->next;
+//                pcur->next = cur->next;
+//                cur = cur->next;
+//                while (del != cur) {
+//                    ListNode* tmp = del;
+//                    del = del->next;
+//                    free(tmp);
+//                }
+//            }
+//            else {
+//                cur = cur->next;
+//            }
+//        }
+//        pcur = pcur->next;
+//    }
+//
+//    return prev->next;
+//}
+//
+//int main() {
+//    ListNode* node1 = BuyNode(1);
+//    ListNode* node2 = BuyNode(2);
+//    ListNode* node3 = BuyNode(3);
+//    ListNode* node4 = BuyNode(-3);
+//    ListNode* node5 = BuyNode(4);
+//    node1->next = node2;
+//    node2->next = node3;
+//    node3->next = node4;
+//    node4->next = node5;
+//    removeZeroSumSublists(node1);
+//
+//    return 0;
+//}
 
 ////LeetCode 题号 : 1614. 括号的最大嵌套深度
 //int maxDepth(char* s) {
