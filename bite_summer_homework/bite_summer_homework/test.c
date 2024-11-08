@@ -5,6 +5,40 @@
 #include"stdbool.h"
 
 
+
+
+///**题号: 1022.从根到叶的二进制数之和
+// * Definition for a binary tree node.
+// * struct TreeNode {
+// *     int val;
+// *     struct TreeNode *left;
+// *     struct TreeNode *right;
+// * };
+// */
+//void dfs(struct TreeNode* root, int num, int* psum) {
+//    if (root == NULL) {
+//        return;
+//    }
+//
+//    num = (num << 1) + root->val;
+//
+//    if (root->left == NULL && root->right == NULL) {
+//        *psum += num;
+//        return;
+//    }
+//
+//    dfs(root->left, num, psum);
+//    dfs(root->right, num, psum);
+//
+//}
+//
+//int sumRootToLeaf(struct TreeNode* root) {
+//    int sum = 0;
+//    dfs(root, 0, &sum);
+//    return sum;
+//}
+
+
 //从链表中删去总和值为零的连续节点
 //struct ListNode {
 //     int val;
