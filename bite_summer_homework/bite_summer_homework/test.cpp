@@ -75,7 +75,7 @@ public:
                     if (q.front()->val % 2 == 0)
                         return false;
                     else {
-                        if (tmp > q.front()->val)
+                        if (tmp >= q.front()->val)
                             return false;
                         else {
                             tmp = q.front()->val;
@@ -83,14 +83,13 @@ public:
                     }
                     if (q.front()->left) {
                         q.push(q.front()->left);
-                        levelnum++;
                     }
                     if (q.front()->right) {
                         q.push(q.front()->right);
-                        levelnum++;
                     }
                     q.pop();
                 }
+                levelnum = q.size();
 
             }
             else {
@@ -101,7 +100,7 @@ public:
                     if (q.front()->val % 2 != 0)
                         return false;
                     else {
-                        if (tmp < q.front()->val)
+                        if (tmp <= q.front()->val)
                             return false;
                         else {
                             tmp = q.front()->val;
@@ -109,14 +108,13 @@ public:
                     }
                     if (q.front()->left) {
                         q.push(q.front()->left);
-                        levelnum++;
                     }
                     if (q.front()->right) {
                         q.push(q.front()->right);
-                        levelnum++;
                     }
                     q.pop();
                 }
+                levelnum = q.size();
             }
             level++;
         }
@@ -126,8 +124,25 @@ public:
 
 int main() {
 
-    TreeNode* n1
-    Solution().isEvenOddTree();
+    TreeNode n1(5);
+    TreeNode* p1 = &n1;
+    TreeNode n2(4);
+    TreeNode* p2 = &n2;
+    TreeNode n3(2);
+    TreeNode* p3 = &n3;
+    TreeNode n4(3);
+    TreeNode* p4 = &n4;
+    TreeNode n5(3);
+    TreeNode* p5 = &n5;
+    TreeNode n6(7);
+    TreeNode* p6 = &n6;
+    p1->left = p2;
+    p1->right = p3;
+    p2->left = p4;
+    p2->right = p5;
+    p3->left = p6;
+
+    Solution().isEvenOddTree(p1);
     return 0;
 }
 
